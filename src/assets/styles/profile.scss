@@ -1,0 +1,110 @@
+@import "variables";
+.profile-page {
+    background: $white;
+    box-shadow: -12px 4px 19px 0px rgba(0, 0, 0, 0.10);
+    margin-left: auto;
+    @media(max-width:767px){
+      width: 100%;
+    }
+    .profile-section1{
+      display: flex;
+      flex-direction: column !important;
+      justify-content: space-between;
+      background-image: url('../images/profile/bg-curve.svg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      padding: 1rem;
+      .logout-text {
+        color: $black-shade-1;
+        font-size: $font-size;
+        font-weight: 500;
+        line-height: normal;
+        letter-spacing: 0.24px;
+        padding-right: 0.8rem;
+      }
+      .profile-camera {
+        position: relative;
+        width: 200px;
+        margin: auto;
+        padding-top: 5rem;
+        img.upload-img {
+          position: absolute;
+          bottom: 5px;
+          right: 0;
+          cursor: pointer;
+        }
+        .profile-user{
+          border-radius: 200px;
+          border: 5px solid $light-gray;
+        }
+      }
+    }    
+    .profile-section2 {
+      padding: 1rem 2rem;
+      label{
+        color: $black-shade-1;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: normal;
+        letter-spacing: 0.35px;
+      }
+      .MuiTextField-root {
+        margin-top: 10px;
+        margin-bottom: 0px;
+      }
+      .MuiInputBase-root {
+        padding: 4.5px 0px;
+        border-radius: 10px;
+        border: 1px solid $black-shade-3;
+        height: 45px;
+        // background: $light-gray;
+        color: $black-shade-3;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: normal;
+        letter-spacing: 0.24px;
+        fieldset{
+          display: none;
+        }
+        input {
+            color: $black;
+        }
+      }
+      .profile-inner{
+        margin-top: 0px;
+        width: 100%;
+        margin-left: 0px;
+        padding-bottom: 1rem;
+        @media (max-width:599px){
+          padding-bottom: 0rem;
+        }
+        .MuiGrid-root{
+          padding: 0px;
+          @media (max-width:599px){
+            padding-bottom: 1rem;
+          }
+        }
+        .Organisation{
+          .MuiInputBase-root{
+            padding-left: 5px;
+          }
+        }
+      }
+      .lab-list{
+        span {
+          padding: 10px 24px;
+          border-radius: 6px;
+          background: $light-yellow-1;
+          display: inline-block;
+          margin-right: 0.5rem;
+          margin-top: 0.5rem;
+          color: $black-shade-2;
+          text-align: center;
+          font-size: 16px;
+          font-weight: 600;
+          line-height: normal;
+          letter-spacing: 0.24px;
+        }
+      }
+    }
+  }

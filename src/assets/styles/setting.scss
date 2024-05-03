@@ -1,0 +1,473 @@
+@import "variables";
+
+// comman style  start
+.setting-section2 {
+    label {
+        color: $black-shade-1;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: normal;
+        letter-spacing: 0.35px;
+    }
+
+    .MuiTextField-root {
+        margin-top: 10px;
+        margin-bottom: 0px;
+    }
+
+    .MuiInputBase-root {
+        padding: 4.5px 0px;
+        border-radius: 10px;
+        border: 1px solid $black-shade-3;
+        height: 50px;
+        color: $black-shade-3;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: normal;
+        letter-spacing: 0.24px;
+
+        fieldset {
+            display: none;
+        }
+
+        input {
+            color: $black;
+        }
+    }
+
+    .profile-inner {
+        margin-top: 0px;
+        width: 100%;
+        margin-left: 0px;
+        padding-bottom: 1rem;
+
+        @media (max-width:599px) {
+            padding-bottom: 0rem;
+        }
+
+        .MuiGrid-root {
+            padding: 0px;
+
+            @media (max-width:599px) {
+                padding-bottom: 1rem;
+            }
+        }
+
+        .Organisation {
+            .MuiInputBase-root {
+                padding-left: 5px;
+            }
+        }
+    }
+}
+@media (max-width: 599px){
+    #panel2bh-content .setting-section2 .profile-inner {
+        padding-bottom: 1rem;
+    }
+}
+
+// comman style end 
+p.setting-title {
+    color: $black-shade-2;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: normal;
+    padding: 20px 16px;
+}
+
+.setting-sidebar {
+    height: calc(100vh - 80px);
+    width: 240px;
+
+    .app-drawer-list-item-active {
+        background: #FFDC6B;
+    }
+
+    .MuiListItemButton-root {
+        padding: 10px;
+
+        &:hover {
+            background-color: transparent !important;
+        }
+    }
+
+    .MuiListItemText-root {
+        span {
+            color: $black-shade-3;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: normal;
+            letter-spacing: 0.24px;
+            white-space: nowrap;
+        }
+    }
+
+    .app-drawer-list-item-active {
+        .MuiListItemText-root {
+            span {
+                color: $black-shade-1;
+            }
+        }
+    }
+}
+
+.setting-page .MuiDrawer-docked .MuiDrawer-paper {
+    position: relative;
+}
+
+.search-field-inner.setting-search .MuiInputBase-root {
+    background: $light-gray;
+    border: 0px;
+    width: 100%;
+}
+
+.alerts-text {
+    margin-top: 1rem;
+    line-height: normal;
+
+    p {
+        &:first-child {
+            color: $black-shade-2;
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            margin-bottom: 0.5rem;
+        }
+
+        &:last-child {
+            color: $black-shade-3;
+            font-size: 14px;
+            font-weight: 400;
+            letter-spacing: 0.24px;
+        }
+    }
+}
+
+.notific-inner {
+    letter-spacing: 0.24px;
+    line-height: normal;
+    font-size: 16px;
+
+    p {
+        &:first-child {
+            color: $black-shade-1;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 14px;
+        }
+
+        &:last-child {
+            color: $black-shade-2;
+            font-weight: 400;
+            font-size: 14px;
+        }
+    }
+}
+
+@media (min-width:900px) {
+    svg.mobile-arrow {
+        display: none;
+    }
+}
+
+@media (max-width:899px) {
+
+    // .mobile-class .setting-sidebar {
+    //     display: none;
+    // }
+    .mobile-class {
+        display: none;
+    }
+}
+
+.notification-page {
+    .p-top {
+        padding-top: 0px !important;
+        padding-left: 0px !important;
+
+        @media (max-width:1199px) {
+            padding-top: 16px !important;
+        }
+    }
+}
+
+@media (max-width:899px) {
+    .notification-page .title-main {
+        display: block;
+    }
+}
+
+.profile-setting-page {
+    padding-bottom: 5rem;
+
+    .profile-camera {
+        position: relative;
+        width: 200px;
+
+        @media(max-width:1199px) {
+            margin: auto;
+        }
+
+        img.upload-img {
+            position: absolute;
+            bottom: 5px;
+            right: 0;
+            cursor: pointer;
+        }
+
+        .profile-user {
+            border-radius: 200px;
+            border: 5px solid $light-gray;
+        }
+    }
+
+    .MuiAccordionDetails-root {
+        padding: 10px 0px 0px;
+    }
+
+    .edit-details {
+        position: fixed;
+        bottom: 0px;
+        background: $white;
+        margin-left: 3px;
+        padding: 1rem;
+        width: calc(100% - 530px);
+    }
+}
+
+main.narrow-class .profile-setting-page .edit-details {
+    width: calc(100% - 338px);
+}
+
+@media (min-width:900px) {
+    .close-mobile {
+        display: none;
+    }
+}
+
+@media (max-width:1199px) {
+    .profile-setting-page {
+        .accordion-section {
+            padding-left: 0px;
+        }
+    }
+
+    .profile-setting-page .title-main {
+        display: block;
+
+        button {
+            margin-top: 1rem;
+        }
+    }
+}
+
+@media (max-width:899px) {
+    .mobile-arrow {
+        margin: 24px 0px 0px 20px;
+    }
+
+    .profile-setting-page .edit-details {
+        width: calc(100% - 295px);
+    }
+
+    main.narrow-class .profile-setting-page .edit-details {
+        width: calc(100% - 99px);
+    }
+
+    .non-mobile-class,
+    .mobile-class {
+        position: fixed;
+        background: $white;
+        z-index: 9;
+        overflow-y: auto;
+    }
+
+    .close-mobile {
+        text-align: right;
+        position: absolute;
+        right: 9px;
+        top: 10px;
+    }
+
+    .side-hide {
+        display: none;
+    }
+
+    .mobile-class.side-hide {
+        display: block;
+        position: fixed;
+        z-index: 1;
+        height: 100%;
+    }
+    .side-show{
+        position: fixed;
+        z-index: 3;
+        height: 100%;
+    }
+}
+
+.user-setting-page {
+    .table-outer {
+        .MuiTableContainer-root {
+            border-radius: 10px;
+        }
+    }
+
+    .search-field-inner {
+        .MuiInputBase-root {
+            width: auto;
+        }
+    }
+}
+
+.setting-addnew {
+    .MuiTextField-root {
+        margin: 0px;
+    }
+
+    .MuiInputBase-root {
+        margin-top: 10px;
+        margin-bottom: 20px;
+    }
+}
+
+.bg-gray-input {
+    .MuiInputBase-root {
+        background: $light-gray;
+    }
+}
+
+p.change-you {
+    color: $black-shade-3;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: 0.24px;
+    margin-top: 1rem;
+}
+
+@media (max-width:767px) {
+    .user-setting-page .title-main {
+        display: block;
+
+        button {
+            margin-top: 1rem;
+        }
+    }
+}
+
+// role page start 
+$width0: 900px;
+$width1: 200px;
+
+.role-setting-page {
+    position: relative;
+    padding-left: 4px;
+
+    .edit-details {
+        position: sticky;
+        left: 0;
+        width: 100%;
+        bottom: 0;
+        background: $white;
+        z-index: 2;
+    }
+
+    @media (max-width:1199px) {
+        .title-main {
+            display: block;
+
+            button {
+                margin-top: 1rem;
+            }
+        }
+    }
+}
+
+p.Access-control {
+    color: $black-shade-2;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: 0.3px;
+    text-align: center;
+    padding-bottom: 15px;
+}
+
+.role-table {
+    margin-right: -30rem;
+
+    th.MuiTableCell-root {
+        background-color: $light-yellow-1;
+        color: $black-shade-1;
+        text-align: center;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: normal;
+        letter-spacing: 0.24px;
+        padding: 10px 16px;
+
+        &:first-child {
+            text-align: left;
+        }
+    }
+
+    th.MuiTableCell-root {
+        width: $width1;
+
+        &:first-child {
+            width: $width0;
+        }
+    }
+
+    td.MuiTableCell-root {
+        width: $width1;
+        text-align: center;
+        color: $black-shade-2;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: normal;
+        letter-spacing: 0.24px;
+        padding: 5px 0px;
+
+        &:first-child {
+            width: $width0;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        .MuiRadio-root {
+            svg {
+                width: 30px;
+                height: 30px;
+            }
+        }
+
+        .Mui-checked {
+            color: $primary-color !important;
+        }
+    }
+
+    td.procedure-profile {
+        white-space: normal !important;
+        border: 0px;
+        padding: 15px 0px 15px 0px;
+
+        p {
+            letter-spacing: 0.24px;
+            line-height: normal;
+
+            &:first-child {
+                color: $black-shade-1;
+                font-weight: 600;
+            }
+
+            &:last-child {
+                color: $black-shade-2;
+                font-weight: 400;
+                margin-top: 0.5rem;
+            }
+        }
+    }
+}
+
+// role page end 

@@ -1,0 +1,104 @@
+@import "variables";
+$width0: 900px;
+$width1: 200px;
+.procedure-table {
+    th.MuiTableCell-root {
+        background-color: $light-yellow-1;
+        color: $black-shade-1;
+        text-align: center;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: normal;
+        letter-spacing: 0.24px;
+        margin: auto;
+        width: $width1;
+        td{
+            &:first-child {               
+                width: auto;
+                margin-left: 0px;
+            }
+        }
+        &:first-child {
+            text-align: left;
+            width: $width0;       
+            .MuiFormControl-root {
+                width: 24%;
+            }     
+        }
+    }
+    td.MuiTableCell-root {
+        width: $width1;
+        text-align: center;
+        color: $black-shade-2;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: normal;
+        letter-spacing: 0.24px;
+        &:first-child {
+            width: $width0;
+            text-align: left;            
+        }
+    }
+}
+.proceduredetails-page{
+    position: relative;
+    .top-section , .edit-details{
+        position: fixed;
+        background-color: $white;
+        z-index: 9;
+    }
+    .top-section{       
+        top: 65px; 
+    }
+    .edit-details{       
+        bottom: 0px;  
+        z-index: 99 !important;    
+    }    
+    .main-proceduredetails{
+        padding: 8rem 1.5rem;
+        // height:100vh;
+        // overflow-y:scroll;     
+        @media (max-width:899px){
+            padding-top: 15px;
+        }   
+    }
+    @media (max-width:899px){
+        .top-section{
+            position: relative; 
+            width: 100% !important;     
+            top: 0px !important;      
+        }
+    }
+}
+main.wide-class .proceduredetails-page .top-section , main.wide-class .proceduredetails-page .edit-details , main.wide-class .runzdetails-page .edit-details{
+    width: calc(100% - 290px);
+}
+main.narrow-class .proceduredetails-page .top-section , main.narrow-class .proceduredetails-page .edit-details , main.narrow-class .runzdetails-page .edit-details{
+    width: calc(100% - 95px);
+}
+button.edit-btn {
+    box-shadow: none !important;
+    background: transparent !important;
+    padding-right: 0px !important;
+    text-transform: capitalize;
+    color: $black-shade-1;
+    font-size: 20px;
+    font-weight: 300;
+    line-height: normal;
+    letter-spacing: 0.3px;
+}
+.menuItem{
+    font-size: 12px;
+    border-bottom: 1px solid $light-gray;
+}
+.menuItem:hover{
+    background-color: $black-shade-2;
+}
+@media (max-width:899px){
+    main.wide-class .proceduredetails-page .top-section , main.wide-class .proceduredetails-page .edit-details , main.wide-class .runzdetails-page .edit-details,
+    main.narrow-class .proceduredetails-page .top-section , main.narrow-class .proceduredetails-page .edit-details , main.narrow-class .runzdetails-page .edit-details,
+    main.narrow-class .profile-setting-page .edit-details{
+        width: 100% !important;
+        z-index: 1;
+    }
+}
