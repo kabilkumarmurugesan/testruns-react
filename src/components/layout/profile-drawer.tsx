@@ -198,16 +198,16 @@ export default function AppProfileDrawer({
               'departmentId',
               isSucess?.get_user?.departmentId?.map(
                 (item: any) =>
-                  departmentData?.find((obj: any) => obj.id == item),
+                  departmentData?.find((obj: any) => obj.id === item),
               ) || [],
             );
             formik.setFieldValue(
               'laboratoryId',
               isSucess?.get_user?.laboratoryId?.map(
-                (item: any) => labData?.find((obj: any) => obj.id == item),
+                (item: any) => labData?.find((obj: any) => obj.id === item),
               ) || [],
             );
-            formik.setFieldValue('role', roleData?.find((obj: any) => obj.id == isSucess?.get_user?.role ) || [],);
+            formik.setFieldValue('role', roleData?.find((obj: any) => obj.id === isSucess?.get_user?.role ) || [],);
             formik.setFieldValue(
               'institution',
               isSucess?.get_user?.instituteId || '',

@@ -587,7 +587,6 @@ export default function ProcedureDetails() {
                           height: 650,
                           paste_data_images: false,
                           menubar: true,
-                          selector: "textarea",
                           plugins: [
                             "advlist",
                             "paste",
@@ -708,7 +707,7 @@ export default function ProcedureDetails() {
                             editor.ui.registry.addButton("customDateButton", {
                               icon: "insert-time",
                               tooltip: "Insert Current Date",
-                              disabled: true,
+                              enabled: false,
                               onAction: function (_) {
                                 editor.insertContent(toTimeHtml(new Date()));
                               },
@@ -716,8 +715,8 @@ export default function ProcedureDetails() {
                                 var editorEventCallback = function (
                                   eventApi: any
                                 ) {
-                                  buttonApi?.setDisabled(
-                                    eventApi.element.nodeName.toLowerCase() ===
+                                  buttonApi.setEnabled(
+                                    eventApi.element.nodeName.toLowerCase() !==
                                       "time"
                                   );
                                 };

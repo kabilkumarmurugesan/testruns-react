@@ -21,17 +21,6 @@ import { MoreVertOutlined } from "@mui/icons-material";
 import AssignPopup from "../../components/AssignPopup";
 import AddPeoplePopup from "../../components/AddPeoplePopup";
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
-
 export default function TableFilters({
   columns,
   handleMenuCheckboxChange,
@@ -51,30 +40,14 @@ export default function TableFilters({
 }: any) {
   const [columnAnchorEl, setColumnAnchorEl] =
     React.useState<null | HTMLElement>(null);
-  const [filterPopoverEl, setFilterPopoverEl] =
-    React.useState<null | HTMLElement>(null);
   const columnAnchorOpen = Boolean(columnAnchorEl);
-  const filterAnchorOpen = Boolean(filterPopoverEl);
   const [openAssign, setAssignOpen] = React.useState(false);
-  const [filterStatus, setFilterStatus] = React.useState(null);
-  const [filterAvailability, setFilterAvailability] = React.useState(null);
-  const [filterSearchBy, setFilterSearchBy] = React.useState(null);
-  const [filterSearchValue, setFilterSearchValue] = React.useState(null);
-  const [filterType, setFilterType] = React.useState(null);
-  const [filterOptions, setFilterOptions] = React.useState([]);
-  const [filterKey, setFilterKey] = React.useState(null);
   const [runsOpen, setRunsOpen] = React.useState(false);
   const [typePopup, settypePopup] = React.useState("");
   const handleColumnPopoverClick = (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     setColumnAnchorEl(event.currentTarget);
-  };
-
-  const handleFilterPopoverClick = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    setFilterPopoverEl(event.currentTarget);
   };
 
   const loginUserSliceData = useSelector((state: any) => state.userLogin.data);
@@ -85,29 +58,9 @@ export default function TableFilters({
     setColumnAnchorEl(null);
   };
 
-  const handleFilterPopoverClose = () => {
-    setFilterPopoverEl(null);
-  };
-
   const handleAssignClick = (val: string) => {
     setRunsOpen(true);
     settypePopup(val);
-  };
-
-  const handleClearFilter = () => {
-    setFilterStatus(null);
-    setFilterAvailability(null);
-    setFilterSearchBy(null);
-    setFilterSearchValue(null);
-    setFilterOptions([]);
-    setFilterType(null);
-    applyFilters("search", null);
-    handleFilterPopoverClose();
-    setFilterKey(null);
-  };
-
-  const Placeholder = ({ children }: any) => {
-    return <div>{children}</div>;
   };
 
   return (
@@ -177,7 +130,7 @@ export default function TableFilters({
                 className="common-checkbox"
                 style={{ marginBottom: "0rem" }}
               />
-              {module == "procedures" && (
+              {module === "procedures" && (
                 <Button
                   className="delete-actions"
                   onClick={deleteRecord}
@@ -187,7 +140,7 @@ export default function TableFilters({
                   Delete
                 </Button>
               )}
-              {module == "assets" && (
+              {module === "assets" && (
                 <Button
                   className="delete-actions"
                   onClick={deleteRecord}
@@ -197,7 +150,7 @@ export default function TableFilters({
                   Delete
                 </Button>
               )}
-              {module == "users" && (
+              {module === "users" && (
                 <Button
                   className="delete-actions"
                   onClick={deleteRecord}
@@ -207,7 +160,7 @@ export default function TableFilters({
                   Delete
                 </Button>
               )}
-              {module == "runs" && (
+              {module === "runs" && (
                 <Button
                   className="delete-actions"
                   onClick={deleteRecord}
@@ -228,7 +181,7 @@ export default function TableFilters({
                 runzRow={runzRow}
                 typePopup={typePopup}
               />
-              {module == "runs" && (
+              {module === "runs" && (
                 <Button
                   className="delete-actions"
                   onClick={() => handleAssignClick("share")}

@@ -15,17 +15,13 @@ import CloseIcon from "@mui/icons-material/Close";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined";
 import Avatars from "../../assets/images/Avatars.svg";
 import AddIcon from "@mui/icons-material/Add";
 import AddPeoplePopup from "../../components/AddPeoplePopup";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchProcedureData,
-  deleteProcedureData,
-} from "../../api/procedureAPI";
+import { fetchProcedureData } from "../../api/procedureAPI";
 import {
   fetchSingleRunsData,
   fetchUpdateRunsData,
@@ -111,9 +107,7 @@ const RunsForm = React.forwardRef(
     const confirmationPopupRef: any = React.useRef();
     const successPopupRef: any = React.useRef();
     const dueDateInputRef: any = React.useRef(null);
-    const Placeholder = ({ children }: any) => {
-      return <div>{children}</div>;
-    };
+ 
     const [runsOpen, setRunsOpen] = React.useState(false);
     const [runCreate, setRunsCreate] = React.useState(false);
     const runzSliceData = useSelector((state: any) => state.runs.data);

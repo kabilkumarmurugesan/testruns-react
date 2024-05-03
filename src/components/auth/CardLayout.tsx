@@ -93,7 +93,7 @@ export const CardLayout = ({ children }: any, props: any) => {
             window.localStorage.setItem("isLoggedIn", "true");
             toast(
               `${
-                socailType == "signUp"
+                socailType === "signUp"
                   ? "Signup with Google completed successfully!"
                   : "You've successfully logged in with Google!"
               }`,
@@ -188,7 +188,7 @@ export const CardLayout = ({ children }: any, props: any) => {
             window.localStorage.setItem("isLoggedIn", "true");
             toast(
               `${
-                socailType == "SignUp"
+                socailType === "SignUp"
                   ? "Signup with Microsoft completed successfully!"
                   : "You've successfully logged in with Microsoft!"
               }`,

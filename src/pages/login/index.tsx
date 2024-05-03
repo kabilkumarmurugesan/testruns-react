@@ -9,8 +9,6 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import CircularProgress from "@mui/material/CircularProgress";
 import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-
 import Checkbox from "@mui/material/Checkbox";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -23,6 +21,7 @@ import { useDispatch } from "react-redux";
 import { fetchLoginUser, fetchSingleUserData } from "../../api/userAPI";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import { FormControlLabel } from "@mui/material";
 
 const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 
@@ -115,7 +114,7 @@ const Login = () => {
 
           .catch((error) => {
             console.error(error.code);
-            if (error.code == "auth/invalid-login-credentials") {
+            if (error.code === "auth/invalid-login-credentials") {
               toast(
                 "Login attempt unsuccessful. Please check your username and password!",
                 {

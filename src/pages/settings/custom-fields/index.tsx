@@ -128,6 +128,7 @@ const CustomFields = () => {
     setIsDeselectAllChecked,
     setIsselectAllChecked,
     setTableHeaderVisible
+    
   );
   const handledAllchange = handledAllSelected(
     isselectAllChecked,

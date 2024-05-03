@@ -1678,7 +1678,6 @@ export default function RunsDetails() {
                       init={{
                         height: 500,
                         menubar: true,
-                        selector: "textarea",
                         plugins: [
                           "advlist",
                           "autolink",
@@ -1756,8 +1755,7 @@ export default function RunsDetails() {
                       init={{
                         height: 500,
                         menubar: true,
-                        selector: "textarea",
-                        plugins: [
+                         plugins: [
                           "advlist",
                           "autolink",
                           "lists",

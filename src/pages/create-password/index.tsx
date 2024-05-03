@@ -9,13 +9,13 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import InputLabel from '@mui/material/InputLabel';
 import { withCardLayout } from '../../components/auth';
-import { navigate } from 'gatsby';
-import { useFormik } from 'formik';
+ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import '../../assets/styles/App.scss';
 import { ToastContainer, toast } from 'react-toastify';
 import { updatePassword } from 'firebase/auth';
 import { auth } from '../../firebase.config';
+import { useNavigate } from 'react-router';
 
 const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 
@@ -33,6 +33,7 @@ const validationSchema = Yup.object().shape({
 });
 
 const ResetPassword = () => {
+  const navigate = useNavigate()
   // const [showPassword, setShowPassword] = React.useState(false);
   // const [showPassword2, setShowPassword2] = React.useState(false);
   interface FormValidation {

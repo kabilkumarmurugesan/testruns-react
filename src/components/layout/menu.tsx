@@ -7,7 +7,6 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  Toolbar,
 } from "@mui/material";
 import mypage from "../../assets/images/mypage.svg";
 import runs from "../../assets/images/runs.svg";
@@ -39,7 +38,7 @@ export default function AppMenu(props: any) {
       icon: mypage,
       activeIcon: mypageActive,
       path: "/mypage",
-      isActive: credencial == undefined ? false : true,
+      isActive: credencial === undefined ? false : true,
     },
     {
       id: 2,
@@ -79,7 +78,7 @@ export default function AppMenu(props: any) {
       icon: settings,
       activeIcon: settingsActive,
       path: "/settings/notifications",
-      isActive: credencial == undefined ? false : true,
+      isActive: credencial === undefined ? false : true,
     },
     // {
     //   id: 7,
@@ -90,14 +89,14 @@ export default function AppMenu(props: any) {
     // },
   ];
 
-  const [selectedItem, setSelectedItem] = React.useState<any>(menuOption[0].id);
+  // const [selectedItem, setSelectedItem] = React.useState<any>(menuOption[0].id);
   const redirectTo = (item: any) => {
-    setSelectedItem(item.id);
+    // setSelectedItem(item.id);
     navigate(item.path);
   };
   const selectPath = (item: any) => {
     if (typeof window !== "undefined") {
-      return window.location.pathname.split("/")[1] == item.split("/")[1];
+      return window.location.pathname.split("/")[1] === item.split("/")[1];
     }
   };
 
@@ -151,9 +150,6 @@ export default function AppMenu(props: any) {
               ))}
           </List>
         </Box>
-        {/* { props.width === 290 &&   <Box className="upgrade-seaction">
-          <img src={upgrade} />
-        </Box>} */}
       </Drawer>
     </>
   );

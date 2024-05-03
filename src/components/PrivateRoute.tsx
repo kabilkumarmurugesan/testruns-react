@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { darkTheme, lightTheme } from "../utils/theme";
 import { Box, CssBaseline, ThemeProvider } from "@mui/material";
 import AppHeader from "./layout/header";
@@ -10,6 +10,11 @@ import { useNavigate } from "react-router";
 
 const PrivateRoute = ({ children }: any) => {
   const navigate = useNavigate();
+  const [width, setWidth] = useState(95);
+  const [classn, setClassn] = useState<any>("closemenu");
+  const [editProfile, setEditProfile] = useState(false);
+  const [notificationList, setNotificationList] = useState(false);
+  const [theme, setTheme] = useState(lightTheme);
   if (typeof window !== "undefined") {
     const storedData = localStorage.getItem("isLoggedIn");
     if (!storedData) {
@@ -17,11 +22,6 @@ const PrivateRoute = ({ children }: any) => {
       return null;
     }
   }
-  const [width, setWidth] = React.useState(95);
-  const [classn, setClassn] = React.useState<any>("closemenu");
-  const [editProfile, setEditProfile] = React.useState(false);
-  const [notificationList, setNotificationList] = React.useState(false);
-  const [theme, setTheme] = React.useState(lightTheme);
 
   const toggleDrawer = () => {
     setWidth(width === 290 ? 95 : 290);

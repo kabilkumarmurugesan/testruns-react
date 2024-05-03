@@ -2,14 +2,7 @@ import React from 'react';
 import { Box, Typography } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
 
-interface CommonPaginationProps {
-  currentPage: number;
-  perPage: number;
-  handlePageChange: (event: React.ChangeEvent<unknown>, page: number) => void;
-  currentPageNumber: any[];
-  totalRecords: any[];
-}
-
+ 
 const TablePagination: React.FC<any> = ({
   currentPage,
   perPage,

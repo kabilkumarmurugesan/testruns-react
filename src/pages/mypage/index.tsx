@@ -1,14 +1,6 @@
 import React from "react";
 import PrivateRoute from "../../components/PrivateRoute";
-import {
-  Box,
-  Divider,
-  FormControl,
-  Grid,
-  Chip,
-  Select,
-  Typography,
-} from "@mui/material";
+import { Box, Divider, Grid, Chip, Typography } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -24,27 +16,20 @@ import {
 import { fetchCalendarEventData } from "../../api/myPageAPI";
 import { useDispatch, useSelector } from "react-redux";
 import Avatar from "@mui/material/Avatar";
-import data from '../../assets/images/profile/user2.svg'
+import data from "../../assets/images/profile/user2.svg";
 import TablePagination from "../../components/table/TablePagination";
-import { MypageRowData } from "../../modals/mypage.modal";
 import TablePopup from "../../components/table/TablePopup";
 import moment from "moment";
 import TableSkeleton from "../../components/table/TableSkeleton";
 import { fetchRunsData } from "../../api/RunsAPI";
 import "react-calendar/dist/Calendar.css";
 import { useNavigate } from "react-router";
-
-const rows: MypageRowData[] = [];
-
-type ValuePiece = Date | null;
-
-type Value = ValuePiece | [ValuePiece, ValuePiece];
+import Emptystate from "../../assets/images/Emptystate.svg";
 
 export default function MyPage() {
   const dispatch: any = useDispatch();
   const navigate = useNavigate();
 
-  const [viewAllNotifications, setViewAllNotifications] = useState(false);
   const loginUserSliceData = useSelector((state: any) => state.userLogin.data);
 
   const [queryStrings, setQueryString] = React.useState({
@@ -56,17 +41,12 @@ export default function MyPage() {
     sortOrder: "desc",
   });
 
-  const [notificationMesssage, setNotificationMesssage] = React.useState([]);
-   const [selectedDate, setSelectedDate] = useState(
+  const [selectedDate, setSelectedDate] = useState(
     moment(new Date()).format("MM/DD/YYYY")
   );
   const [value, onChange] = useState<any>(
     moment(new Date()).format("MM/DD/YYYY")
   );
-  const [viewAll, setViewAll] = useState(false);
-  const [viewAlls, setViewAlls] = useState(false);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [localRowsPerPage, setLocalRowsPerPage] = useState(5);
   const [CalendarContent, setCalendarContent] = useState([]);
   const [calendarEventData, setCalendarEventData] = useState([]);
   const [CalendarMark, setCalendarMark] = useState<any>([]);
@@ -119,13 +99,7 @@ export default function MyPage() {
       userId: loginUserSliceData?.verifyToken?._id,
     };
 
-    dispatch(fetchNotificationMessageData(payload))
-      .then((res: any) => {
-        setNotificationMesssage(res?.data?.get_notification_message);
-      })
-      .catch((err: any) => {
-        console.error(err);
-      });
+    dispatch(fetchNotificationMessageData(payload));
   };
 
   React.useEffect(() => {
@@ -232,14 +206,14 @@ export default function MyPage() {
 
   React.useEffect(() => {
     if (
-      moment(selectedDate).format("MM/DD/YYYY") ==
+      moment(selectedDate).format("MM/DD/YYYY") ===
       moment(new Date()).format("MM/DD/YYYY")
     ) {
       let arr: any = [];
 
       calendarEventData?.map((item: any) => {
         if (
-          moment(item?.dueDate).format("MM/DD/YYYY") ==
+          moment(item?.dueDate).format("MM/DD/YYYY") ===
           moment(new Date()).format("MM/DD/YYYY")
         ) {
           arr.push(item);
@@ -318,7 +292,7 @@ export default function MyPage() {
                       width: "100%",
                     }}
                   >
-                    <img src={Emptystate} alt="" />
+                    <img src={Emptystate} alt="Emptystate" />
                     <Typography className="no-remainder">
                       Runs not found.
                     </Typography>
@@ -436,7 +410,7 @@ export default function MyPage() {
                                 ? "#faaa49"
                                 : row.status === "Stopped"
                                 ? "#e2445c"
-                                : row?.status == "Submitted"
+                                : row?.status === "Submitted"
                                 ? "#a01fb1"
                                 : "#00bf70",
                             padding: "6px",
@@ -530,7 +504,7 @@ export default function MyPage() {
                   )
                 ) : (
                   <Box sx={{ textAlign: "center", padding: "15%" }}>
-                    <img src={Emptystate} alt="" />
+                    <img src={Emptystate} alt="Emptystate" />
                     <Typography className="no-remainder">
                       No notifications yet!
                     </Typography>
@@ -660,7 +634,7 @@ export default function MyPage() {
                       ))
                     ) : (
                       <Box sx={{ textAlign: "center" }}>
-                        <img src={Emptystate} alt="" />
+                        <img src={Emptystate} alt="Emptystate" />
                         <Typography className="no-remainder">
                           No reminders yet!
                         </Typography>

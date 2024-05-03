@@ -1,7 +1,7 @@
 /* eslint-disable no-var */
 /* eslint-disable react/display-name */
-import React from 'react';
-import Dialog from '@mui/material/Dialog';
+import React from "react";
+import Dialog from "@mui/material/Dialog";
 import {
   Box,
   Button,
@@ -17,57 +17,45 @@ import {
   Divider,
   IconButton,
   CircularProgress,
-} from '@mui/material';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import dayjs from 'dayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
-import CloseIcon from '@mui/icons-material/Close';
-import '../../assets/styles/asset-popup.scss';
-import { Organization } from '../../modals';
-import {
-  AvailabilityList,
-  DepartmentList,
-  LaboratoryList,
-  OrganizationList,
-  StatusList,
-} from '../../utils/data';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { useDispatch, useSelector } from 'react-redux';
-import { postAssetsData } from '../../api/assetsAPI';
-import {
-  fetchDepartmentById,
-  fetchDepartmentData,
-} from '../../api/departmentAPI';
-import { fetchLabById, fetchLabData } from '../../api/labAPI';
-import SuccessPopup from '../../components/SuccessPopup';
-import Confirmationpopup from '../../components/ConfirmationPopup';
-import moment from 'moment';
-import test from '../../assets/images/test.svg';
-import preview from '../../assets/images/profile/preview.jpg';
-import { toast } from 'react-toastify';
-import AWS from 'aws-sdk';
+} from "@mui/material";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined";
+import CloseIcon from "@mui/icons-material/Close";
+import "../../assets/styles/asset-popup.scss";
+import { Organization } from "../../modals";
+import { OrganizationList } from "../../utils/data";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { useDispatch, useSelector } from "react-redux";
+import { postAssetsData } from "../../api/assetsAPI";
+import { fetchLabById } from "../../api/labAPI";
+import SuccessPopup from "../../components/SuccessPopup";
+import Confirmationpopup from "../../components/ConfirmationPopup";
+import moment from "moment";
+import preview from "../../assets/images/profile/preview.svg";
+import { toast } from "react-toastify";
+import AWS from "aws-sdk";
 
 const validationSchema = Yup.object().shape({
   // name: Yup.string().required('Asset Name is required'),
   name: Yup.string()
     .trim()
-    .required('Asset Name is required')
-    .max(25, 'Must be 25 characters'),
-  perchasedDate: Yup.string().required('Purchase date is required'),
-  expiryDate: Yup.string().required('Expiry date is required'),
+    .required("Asset Name is required")
+    .max(25, "Must be 25 characters"),
+  perchasedDate: Yup.string().required("Purchase date is required"),
+  expiryDate: Yup.string().required("Expiry date is required"),
   departmentId: Yup.array()
-    .min(1, 'Please select at least one Department')
-    .required('Department is required'),
+    .min(1, "Please select at least one Department")
+    .required("Department is required"),
   laboratoryId: Yup.array()
-    .min(1, 'Please select at least one Laboratory')
-    .required('Laboratory is required'),
-  organisationId: Yup.string().required('Organisation is required'),
-  status: Yup.string().required('Status is required'),
+    .min(1, "Please select at least one Laboratory")
+    .required("Laboratory is required"),
+  organisationId: Yup.string().required("Organisation is required"),
+  status: Yup.string().required("Status is required"),
   // assets_image: Yup.string().required(),
-  availability: Yup.string().required('Availability is required'),
+  availability: Yup.string().required("Availability is required"),
   // assets_id: Yup.string().required(),
   // lastUsedDate: Yup.string().required(),
 });
@@ -75,7 +63,7 @@ const validationSchema = Yup.object().shape({
 const Addnewpopup = React.forwardRef(
   (
     { closeFormPopup, reload, openConfirmationPopup, fetchData, type }: any,
-    ref,
+    ref
   ) => {
     const [formPopup, setFormPopup] = React.useState(false);
     const [organizations] = React.useState<Organization[]>(OrganizationList);
@@ -96,45 +84,45 @@ const Addnewpopup = React.forwardRef(
     const [uploadedFile, setUploadedFile] = React.useState(null);
     const [loader, setLoader] = React.useState(false);
     const singleUserData = useSelector(
-      (state: any) => state.user?.data?.get_user,
+      (state: any) => state.user?.data?.get_user
     );
 
     const departmentSliceData = useSelector(
-      (state: any) => state.department.data?.get_all_departments,
+      (state: any) => state.department.data?.get_all_departments
     );
     const labSliceData = useSelector(
-      (state: any) => state.lab.data?.get_all_labs,
+      (state: any) => state.lab.data?.get_all_labs
     );
     const organizationSliceData = useSelector(
-      (state: any) => state.organization.data?.get_all_organisations,
+      (state: any) => state.organization.data?.get_all_organisations
     );
 
     React.useImperativeHandle(ref, () => ({
       open(state: any) {
         setFormPopup(state);
-        formik.setFieldValue('organisationId', singleUserData?.organisationId);
+        formik.setFieldValue("organisationId", singleUserData?.organisationId);
         formik.setFieldValue(
-          'departmentId',
-          singleUserData?.departmentId?.map(
-            (item: any) => departmentData?.find((obj: any) => obj?.id == item),
-          ) || [],
+          "departmentId",
+          singleUserData?.departmentId?.map((item: any) =>
+            departmentData?.find((obj: any) => obj?.id == item)
+          ) || []
         );
         setDepartments(
-          singleUserData?.departmentId?.map(
-            (item: any) => departmentData?.find((obj: any) => obj?.id == item),
-          ),
+          singleUserData?.departmentId?.map((item: any) =>
+            departmentData?.find((obj: any) => obj?.id == item)
+          )
         );
         dispatch(fetchLabById({ departmentId: singleUserData.departmentId }));
         formik.setFieldValue(
-          'laboratoryId',
-          singleUserData?.laboratoryId?.map(
-            (item: any) => labData?.find((obj: any) => obj?.id == item),
-          ) || [],
+          "laboratoryId",
+          singleUserData?.laboratoryId?.map((item: any) =>
+            labData?.find((obj: any) => obj?.id == item)
+          ) || []
         );
         setLaboratory(
-          singleUserData?.laboratoryId?.map(
-            (item: any) => labData?.find((obj: any) => obj?.id == item),
-          ),
+          singleUserData?.laboratoryId?.map((item: any) =>
+            labData?.find((obj: any) => obj?.id == item)
+          )
         );
       },
     }));
@@ -150,26 +138,26 @@ const Addnewpopup = React.forwardRef(
 
     React.useEffect(() => {
       formik.setFieldValue(
-        'departmentId',
-        singleUserData?.departmentId?.map(
-          (item: any) => departmentData?.find((obj: any) => obj?.id == item),
-        ) || [],
+        "departmentId",
+        singleUserData?.departmentId?.map((item: any) =>
+          departmentData?.find((obj: any) => obj?.id == item)
+        ) || []
       );
       setDepartments(
-        singleUserData?.departmentId?.map(
-          (item: any) => departmentData?.find((obj: any) => obj?.id == item),
-        ),
+        singleUserData?.departmentId?.map((item: any) =>
+          departmentData?.find((obj: any) => obj?.id == item)
+        )
       );
       formik.setFieldValue(
-        'laboratoryId',
-        singleUserData?.laboratoryId?.map(
-          (item: any) => labData?.find((obj: any) => obj?.id == item),
-        ) || [],
+        "laboratoryId",
+        singleUserData?.laboratoryId?.map((item: any) =>
+          labData?.find((obj: any) => obj?.id == item)
+        ) || []
       );
       setLaboratory(
-        singleUserData?.laboratoryId?.map(
-          (item: any) => labData?.find((obj: any) => obj?.id == item),
-        ),
+        singleUserData?.laboratoryId?.map((item: any) =>
+          labData?.find((obj: any) => obj?.id == item)
+        )
       );
     }, [organizationSliceData]);
 
@@ -181,9 +169,8 @@ const Addnewpopup = React.forwardRef(
           id: obj._id,
         }));
 
-        const matchedData = laboratory?.filter(
-          (lab: any) =>
-            transformedLabs?.some((transLab: any) => transLab?.id === lab?.id),
+        const matchedData = laboratory?.filter((lab: any) =>
+          transformedLabs?.some((transLab: any) => transLab?.id === lab?.id)
         );
 
         formik.setValues({
@@ -211,7 +198,7 @@ const Addnewpopup = React.forwardRef(
           name: values.name,
           organisationId: values.organisationId,
           perchasedDate: values.perchasedDate,
-          lastUsedDate:"Not yet used",
+          lastUsedDate: "Not yet used",
           availability: values.availability,
           expiryDate: values.expiryDate,
           departmentId: deptArray,
@@ -221,7 +208,7 @@ const Addnewpopup = React.forwardRef(
         };
 
         if (uploadedFile !== null) {
-          assetValues['assetImageUrl'] = uploadedFile;
+          assetValues["assetImageUrl"] = uploadedFile;
         }
 
         await dispatch(postAssetsData(assetValues))
@@ -231,10 +218,10 @@ const Addnewpopup = React.forwardRef(
               clearForm();
               fileUploadField.current.value = null;
             } else {
-              toast('Something went worng !', {
+              toast("Something went worng !", {
                 style: {
-                  background: '#d92828',
-                  color: '#fff',
+                  background: "#d92828",
+                  color: "#fff",
                 },
               });
             }
@@ -243,14 +230,14 @@ const Addnewpopup = React.forwardRef(
             console.error(error);
             toast(error.message, {
               style: {
-                background: '#d92828',
-                color: '#fff',
+                background: "#d92828",
+                color: "#fff",
               },
             });
           });
         // dispatch(fetchAssetsData(queryStrings));
       } else {
-        formik.setFieldError('name', 'Invalid first name');
+        formik.setFieldError("name", "Invalid first name");
       }
     };
 
@@ -266,8 +253,8 @@ const Addnewpopup = React.forwardRef(
       reload();
       toast(`Assets have been created successfully!`, {
         style: {
-          background: '#00bf70',
-          color: '#fff',
+          background: "#00bf70",
+          color: "#fff",
         },
       });
     };
@@ -278,17 +265,17 @@ const Addnewpopup = React.forwardRef(
 
     const formik: any = useFormik({
       initialValues: {
-        name: '',
+        name: "",
         perchasedDate: null,
         expiryDate: null,
         departmentId: [],
         laboratoryId: [],
-        organisationId: '',
-        status: '',
+        organisationId: "",
+        status: "",
         // assets_image: '',
-        availability: '',
+        availability: "",
         // assets_id: 'ASSE-1000',
-        lastUsedDate: '',
+        lastUsedDate: "",
       },
       validationSchema: validationSchema,
       onSubmit: onSubmit,
@@ -300,12 +287,12 @@ const Addnewpopup = React.forwardRef(
           label: item.name,
           value: item.name,
           id: item._id,
-        })),
+        }))
       );
       const mappedDepartments = (singleUserData?.departmentId || [])
         .map((id: string) => {
           var department = departmentSliceData?.find(
-            (obj: any) => obj._id === id,
+            (obj: any) => obj._id === id
           );
 
           if (department) {
@@ -319,7 +306,7 @@ const Addnewpopup = React.forwardRef(
           return null; // Handle the case where the department with the specified ID is not found
         })
         .filter((department: any) => department !== null);
- 
+
       const mappedDLabs = singleUserData?.laboratoryId
         ?.map((id: string) => {
           var lab = labSliceData?.find((obj: any) => obj._id === id);
@@ -350,7 +337,7 @@ const Addnewpopup = React.forwardRef(
       }
     };
     const handleDateChanges = (selectedDate: any, name: any) => {
-      const formattedDate = moment(selectedDate.$d).format('MM/DD/YYYY');
+      const formattedDate = moment(selectedDate.$d).format("MM/DD/YYYY");
       formik.handleChange(name)(formattedDate);
     };
 
@@ -359,16 +346,16 @@ const Addnewpopup = React.forwardRef(
 
       const s3 = new AWS.S3({
         // params: { Bucket: S3_BUCKET, folderName: "profile" },
-        region: 'us-east-1',
+        region: "us-east-1",
         accessKeyId: process.env.ACCESSKEYID,
         secretAccessKey: process.env.SECRETACCESSKEYID,
       });
       const keyPath = `profile/${Date.now()}`;
       const params = {
-        Bucket: 'test-run-v2',
+        Bucket: "test-run-v2",
         Key: keyPath,
         Body: selectedFile,
-        ACL: 'public-read',
+        ACL: "public-read",
         // ContentType: selectedFile.type
       };
       setLoader(true);
@@ -379,8 +366,8 @@ const Addnewpopup = React.forwardRef(
           setUploadedFile(res.Location);
           toast(`Image has been uploaded successfully!`, {
             style: {
-              background: '#00bf70',
-              color: '#fff',
+              background: "#00bf70",
+              color: "#fff",
             },
           });
         })
@@ -389,11 +376,11 @@ const Addnewpopup = React.forwardRef(
           setLoader(false);
         });
       await result.catch((error: any) => {
-        console.error('Failed to upload');
+        console.error("Failed to upload");
         toast(`Failed to upload !`, {
           style: {
-            background: '#e2445c',
-            color: '#fff',
+            background: "#e2445c",
+            color: "#fff",
           },
         });
       });
@@ -429,7 +416,7 @@ const Addnewpopup = React.forwardRef(
                   }}
                 />
               </Box>
-              <Grid container spacing={2} sx={{ width: '100%', m: 0 }}>
+              <Grid container spacing={2} sx={{ width: "100%", m: 0 }}>
                 <Grid
                   item
                   xs={12}
@@ -437,28 +424,28 @@ const Addnewpopup = React.forwardRef(
                   md={5}
                   lg={4}
                   sx={{
-                    padding: '0px !important',
+                    padding: "0px !important",
                     paddingRight: {
-                      xs: '0px !important',
-                      md: '30px !important',
+                      xs: "0px !important",
+                      md: "30px !important",
                     },
                   }}
                 >
                   <Box>
                     <Box
                       style={{
-                        width: '220px',
-                        height: '220px',
-                        padding: !loader ? '10px' : '86px',
-                        background: '#e4e5e7',
-                        margin: 'auto',
+                        width: "220px",
+                        height: "220px",
+                        padding: !loader ? "10px" : "86px",
+                        background: "#e4e5e7",
+                        margin: "auto",
                       }}
                     >
                       {!loader ? (
                         <img
                           src={uploadedFile === null ? preview : uploadedFile}
                           alt="assetimg"
-                          style={{ width: '100%', height: '100%' }}
+                          style={{ width: "100%", height: "100%" }}
                         />
                       ) : (
                         <CircularProgress color="inherit" />
@@ -466,7 +453,7 @@ const Addnewpopup = React.forwardRef(
                     </Box>
                     <Box
                       className="edit-profile-btn"
-                      sx={{ mt: 3, mb: 3, pb: '0px !important' }}
+                      sx={{ mt: 3, mb: 3, pb: "0px !important" }}
                     >
                       <span className="file-wrapper">
                         <input
@@ -568,17 +555,17 @@ const Addnewpopup = React.forwardRef(
                   md={7}
                   lg={8}
                   sx={{
-                    padding: '0px !important',
-                    paddingTop: { xs: '30px !important', md: '0px !important' },
+                    padding: "0px !important",
+                    paddingTop: { xs: "30px !important", md: "0px !important" },
                   }}
                 >
                   <Box>
                     <Grid container spacing={2} className="asset-popup">
                       <Grid item xs={12} sm={12} md={12} lg={12}>
-                        <Box style={{ position: 'relative' }}>
+                        <Box style={{ position: "relative" }}>
                           <label>
                             Assets name
-                            <span style={{ color: '#E2445C' }}>*</span>
+                            <span style={{ color: "#E2445C" }}>*</span>
                           </label>
                           <TextField
                             margin="normal"
@@ -615,19 +602,19 @@ const Addnewpopup = React.forwardRef(
                         sm={6}
                         md={6}
                         lg={6}
-                        sx={{ paddingRight: { sm: '1rem !important' } }}
+                        sx={{ paddingRight: { sm: "1rem !important" } }}
                       >
-                        <Box style={{ position: 'relative' }}>
+                        <Box style={{ position: "relative" }}>
                           <label>
                             Purchase date
-                            <span style={{ color: '#E2445C' }}>*</span>
+                            <span style={{ color: "#E2445C" }}>*</span>
                           </label>
                           <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DatePicker
-                            disableFuture
+                              disableFuture
                               format="MM/DD/YYYY"
                               onChange={(selectedDate: any) =>
-                              handleDateChanges(selectedDate, 'perchasedDate')
+                                handleDateChanges(selectedDate, "perchasedDate")
                               }
                               value={formik.values.perchasedDate}
                               inputRef={purchasedDateInputRef}
@@ -638,10 +625,10 @@ const Addnewpopup = React.forwardRef(
                               <Typography
                                 className="error-field"
                                 style={{
-                                  color: '#E2445C',
-                                  position: 'absolute',
-                                  top: '2em',
-                                  right: '9.4em',
+                                  color: "#E2445C",
+                                  position: "absolute",
+                                  top: "2em",
+                                  right: "9.4em",
                                 }}
                               >
                                 Purchase date required
@@ -656,24 +643,24 @@ const Addnewpopup = React.forwardRef(
                         md={6}
                         lg={6}
                         sx={{
-                          paddingLeft: { sm: '1rem !important' },
+                          paddingLeft: { sm: "1rem !important" },
                           paddingTop: {
-                            xs: '0rem !important',
-                            sm: '1rem !important',
+                            xs: "0rem !important",
+                            sm: "1rem !important",
                           },
                         }}
                       >
                         <Box>
-                          <label style={{ whiteSpace: 'nowrap' }}>
+                          <label style={{ whiteSpace: "nowrap" }}>
                             Guaranty/warranty/expiry date
-                            <span style={{ color: '#E2445C' }}>*</span>
+                            <span style={{ color: "#E2445C" }}>*</span>
                           </label>
                           <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DatePicker
                               disablePast
                               format="MM/DD/YYYY"
                               onChange={(selectedDate: any) =>
-                                handleDateChanges(selectedDate, 'expiryDate')
+                                handleDateChanges(selectedDate, "expiryDate")
                               }
                               value={formik.values.expiryDate}
                               inputRef={expiryDateInputRef}
@@ -684,10 +671,10 @@ const Addnewpopup = React.forwardRef(
                               <Typography
                                 className="error-field"
                                 style={{
-                                  color: '#E2445C',
-                                  position: 'absolute',
-                                  top: '17em',
-                                  right: '4.2em',
+                                  color: "#E2445C",
+                                  position: "absolute",
+                                  top: "17em",
+                                  right: "4.2em",
                                 }}
                               >
                                 Guaranty/warranty/expiry date required
@@ -698,10 +685,10 @@ const Addnewpopup = React.forwardRef(
                     </Grid>
                     <Grid container spacing={2} className="asset-popup">
                       <Grid item xs={12} sm={12} md={12} lg={12}>
-                        <Box style={{ position: 'relative' }}>
-                          <label style={{ display: 'block' }}>
+                        <Box style={{ position: "relative" }}>
+                          <label style={{ display: "block" }}>
                             Organisation
-                            <span style={{ color: '#E2445C' }}>*</span>
+                            <span style={{ color: "#E2445C" }}>*</span>
                           </label>
                           <Select
                             MenuProps={{
@@ -712,7 +699,7 @@ const Addnewpopup = React.forwardRef(
                             displayEmpty
                             IconComponent={ExpandMoreOutlinedIcon}
                             renderValue={
-                              formik.values.organisationId !== ''
+                              formik.values.organisationId !== ""
                                 ? undefined
                                 : () => (
                                     <Placeholder>
@@ -757,10 +744,10 @@ const Addnewpopup = React.forwardRef(
                       className="asset-popup multi-selection"
                     >
                       <Grid item xs={12} sm={12} md={12} lg={12}>
-                        <Box style={{ position: 'relative' }}>
-                          <label style={{ display: 'block' }}>
+                        <Box style={{ position: "relative" }}>
+                          <label style={{ display: "block" }}>
                             Department/s
-                            <span style={{ color: '#E2445C' }}>*</span>
+                            <span style={{ color: "#E2445C" }}>*</span>
                           </label>
                           <Autocomplete
                             multiple
@@ -781,7 +768,7 @@ const Addnewpopup = React.forwardRef(
                               <TextField
                                 {...params}
                                 placeholder={
-                                  departments?.length == 0 ? 'Department/s' : ''
+                                  departments?.length == 0 ? "Department/s" : ""
                                 }
                               />
                             )}
@@ -790,7 +777,7 @@ const Addnewpopup = React.forwardRef(
                             renderOption={(
                               props,
                               option: any,
-                              { selected },
+                              { selected }
                             ) => (
                               <React.Fragment>
                                 <li {...props}>
@@ -817,14 +804,14 @@ const Addnewpopup = React.forwardRef(
                               });
                               const dept: any = [];
                               selectedOptions?.map((item: any) =>
-                                dept.push(item?.id),
+                                dept.push(item?.id)
                               );
                               dispatch(fetchLabById({ departmentId: dept }));
                             }}
                             onBlur={() => {
                               var dept: any = [];
                               departments?.map((item: any) =>
-                                dept.push(item?.id),
+                                dept.push(item?.id)
                               );
                               dispatch(fetchLabById({ departmentId: dept }));
                             }}
@@ -844,10 +831,10 @@ const Addnewpopup = React.forwardRef(
                       className="asset-popup multi-selection"
                     >
                       <Grid item xs={12} sm={12} md={12} lg={12}>
-                        <Box style={{ position: 'relative' }}>
-                          <label style={{ display: 'block' }}>
+                        <Box style={{ position: "relative" }}>
+                          <label style={{ display: "block" }}>
                             Laboratory/ies
-                            <span style={{ color: '#E2445C' }}>*</span>
+                            <span style={{ color: "#E2445C" }}>*</span>
                           </label>
                           <Autocomplete
                             multiple
@@ -868,8 +855,8 @@ const Addnewpopup = React.forwardRef(
                                 {...params}
                                 placeholder={
                                   laboratory?.length == 0
-                                    ? 'Laboratory/ies'
-                                    : ''
+                                    ? "Laboratory/ies"
+                                    : ""
                                 }
                               />
                             )}
@@ -878,7 +865,7 @@ const Addnewpopup = React.forwardRef(
                             renderOption={(
                               props,
                               option: any,
-                              { selected },
+                              { selected }
                             ) => (
                               <React.Fragment>
                                 <li {...props}>
@@ -914,11 +901,11 @@ const Addnewpopup = React.forwardRef(
                         sm={6}
                         md={6}
                         lg={6}
-                        sx={{ paddingRight: { sm: '1rem !important' } }}
+                        sx={{ paddingRight: { sm: "1rem !important" } }}
                       >
-                        <Box style={{ position: 'relative' }}>
-                          <label style={{ display: 'block' }}>
-                            Status<span style={{ color: '#E2445C' }}>*</span>
+                        <Box style={{ position: "relative" }}>
+                          <label style={{ display: "block" }}>
+                            Status<span style={{ color: "#E2445C" }}>*</span>
                           </label>
 
                           <Select
@@ -930,7 +917,7 @@ const Addnewpopup = React.forwardRef(
                             displayEmpty
                             IconComponent={ExpandMoreOutlinedIcon}
                             renderValue={
-                              formik.values.status !== ''
+                              formik.values.status !== ""
                                 ? undefined
                                 : () => <Placeholder>Select Status</Placeholder>
                             }
@@ -949,8 +936,8 @@ const Addnewpopup = React.forwardRef(
                               Boolean(formik.errors.status)
                             }
                           >
-                            <MenuItem value={'Active'}>Active</MenuItem>
-                            <MenuItem value={'Inactive'}>In-Active</MenuItem>
+                            <MenuItem value={"Active"}>Active</MenuItem>
+                            <MenuItem value={"Inactive"}>In-Active</MenuItem>
                             {/* {StatusList.map((item: any) => (
                               <MenuItem key={item.id} value={item.state}>
                                 {item.name}
@@ -971,17 +958,17 @@ const Addnewpopup = React.forwardRef(
                         md={6}
                         lg={6}
                         sx={{
-                          paddingLeft: { sm: '1rem !important' },
+                          paddingLeft: { sm: "1rem !important" },
                           paddingTop: {
-                            xs: '0rem !important',
-                            sm: '1rem !important',
+                            xs: "0rem !important",
+                            sm: "1rem !important",
                           },
                         }}
                       >
-                        <Box style={{ position: 'relative' }}>
-                          <label style={{ display: 'block' }}>
+                        <Box style={{ position: "relative" }}>
+                          <label style={{ display: "block" }}>
                             Availability
-                            <span style={{ color: '#E2445C' }}>*</span>
+                            <span style={{ color: "#E2445C" }}>*</span>
                           </label>
 
                           <Select
@@ -993,7 +980,7 @@ const Addnewpopup = React.forwardRef(
                             displayEmpty
                             IconComponent={ExpandMoreOutlinedIcon}
                             renderValue={
-                              formik.values.availability !== ''
+                              formik.values.availability !== ""
                                 ? undefined
                                 : () => (
                                     <Placeholder>
@@ -1016,9 +1003,9 @@ const Addnewpopup = React.forwardRef(
                               Boolean(formik.errors.availability)
                             }
                           >
-                            <MenuItem value={'Available'}>Available</MenuItem>
-                            <MenuItem value={'In_Use'}>In Use</MenuItem>
-                            <MenuItem value={'Not_Available'}>
+                            <MenuItem value={"Available"}>Available</MenuItem>
+                            <MenuItem value={"In_Use"}>In Use</MenuItem>
+                            <MenuItem value={"Not_Available"}>
                               Not Available
                             </MenuItem>
                             {/* {AvailabilityList.map((item) => (
@@ -1042,8 +1029,8 @@ const Addnewpopup = React.forwardRef(
               <Divider sx={{ py: 1 }} />
               <Box
                 sx={{
-                  display: { xs: 'block', sm: 'flex' },
-                  justifyContent: 'flex-end',
+                  display: { xs: "block", sm: "flex" },
+                  justifyContent: "flex-end",
                   mt: 3,
                 }}
               >
@@ -1064,7 +1051,7 @@ const Addnewpopup = React.forwardRef(
                   className="add-btn"
                   disabled={!formik.isValid}
                 >
-                  {type === 'edit' ? 'Update' : 'Create'}
+                  {type === "edit" ? "Update" : "Create"}
                 </Button>
               </Box>
             </Box>
@@ -1079,6 +1066,6 @@ const Addnewpopup = React.forwardRef(
         />
       </div>
     );
-  },
+  }
 );
 export default Addnewpopup;

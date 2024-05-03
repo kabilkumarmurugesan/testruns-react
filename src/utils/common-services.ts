@@ -37,7 +37,7 @@ export const handledAllSelected =
     setRowId: React.Dispatch<React.SetStateAction<any[]>>,
   ) =>
   () => {
-    const allChecked = Rows.every((row: any) => row.is_checked);
+    // const allChecked = Rows.every((row: any) => row.is_checked);
     // if (!allChecked) {
     const updatedRows = Rows.map((row: any) => ({ ...row, is_checked: true }));
     const rowsId = [];

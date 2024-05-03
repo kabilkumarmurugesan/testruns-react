@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   AppBar,
   IconButton,
@@ -8,18 +8,18 @@ import {
   Menu,
   MenuItem,
   Badge,
-} from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
-import { MoreVertOutlined } from '@mui/icons-material';
-import help from '../../assets/images/help.svg';
-import notification from '../../assets/images/notification.svg';
-import account from '../../assets/images/account.svg';
-import '../../assets/styles/App.scss';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import { fetchNotificationMessageData } from '../../api/notificationMessageAPI';
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import { MoreVertOutlined } from "@mui/icons-material";
+import help from "../../assets/images/help.svg";
+import notification from "../../assets/images/notification.svg";
+import account from "../../assets/images/account.svg";
+import "../../assets/styles/App.scss";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { fetchNotificationMessageData } from "../../api/notificationMessageAPI";
 
-const mobileMenuId = 'primary-search-account-menu-mobile';
+const mobileMenuId = "primary-search-account-menu-mobile";
 
 function AppHeader(props: any) {
   const dispatch: any = useDispatch();
@@ -60,8 +60,8 @@ function AppHeader(props: any) {
         const notifications: any = NotificationMessageSliceData?.message;
         setisAnyRead(
           notifications?.some(
-            (notification: any) => notification.isRead === false,
-          ),
+            (notification: any) => notification.isRead === false
+          )
         );
       })
       .catch((err: any) => {
@@ -73,13 +73,13 @@ function AppHeader(props: any) {
     <Menu
       anchorEl={mobileMoreAnchorEl}
       anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       keepMounted
       transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       id={mobileMenuId}
       open={isMobileMenuOpen}
@@ -101,7 +101,7 @@ function AppHeader(props: any) {
           <Badge
             color="secondary"
             // variant={isAnyRead==true?"dot":"standard"}
-            variant={isAnyRead == true ? 'dot' : 'standard'}
+            variant={isAnyRead ? "dot" : "standard"}
             // invisible={isAnyRead==true?false:true}
             className="red-badge"
           >
@@ -129,22 +129,22 @@ function AppHeader(props: any) {
           <img
             className="app-bar-images"
             src={
-              loginUserSliceData?.verifyToken?.imageUrl !== '' &&
+              loginUserSliceData?.verifyToken?.imageUrl !== "" &&
               loginUserSliceData?.verifyToken?.imageUrl !== null
                 ? loginUserSliceData?.verifyToken?.imageUrl
                 : account
             }
             alt="account_icon"
-            style={{ width: '25px', height: '25px', borderRadius: '16px' }}
+            style={{ width: "25px", height: "25px", borderRadius: "16px" }}
           />
         </IconButton>
         <Typography
           variant="inherit"
           className="app-bar-username"
-          style={{ textTransform: 'capitalize' }}
+          style={{ textTransform: "capitalize" }}
         >
           Hi {loginUserSliceData?.verifyToken?.firstName}
-        </Typography>{' '}
+        </Typography>{" "}
       </MenuItem>
     </Menu>
   );
@@ -176,7 +176,7 @@ function AppHeader(props: any) {
           <Box sx={{ flexGrow: 1 }} />
           <Box
             className="header-right-side"
-            sx={{ display: { xs: 'none', md: 'flex' } }}
+            sx={{ display: { xs: "none", md: "flex" } }}
           >
             <IconButton size="large" aria-label="help icon" color="inherit">
               <img src={help} alt="help_icon" className="app-bar-images" />
@@ -190,7 +190,7 @@ function AppHeader(props: any) {
               <Badge
                 color="secondary"
                 // variant={isAnyRead==true?"dot":"standard"}
-                variant={isAnyRead == true ? 'dot' : 'standard'}
+                variant={isAnyRead ? "dot" : "standard"}
                 // invisible={isAnyRead==true?false:true}
                 className="red-badge"
               >
@@ -210,15 +210,15 @@ function AppHeader(props: any) {
               <Typography
                 variant="inherit"
                 className="app-bar-username"
-                style={{ textTransform: 'capitalize' }}
+                style={{ textTransform: "capitalize" }}
               >
                 Hi {loginUserSliceData?.verifyToken?.firstName}
               </Typography>
               <div>
                 <img
-                  style={{ cursor: 'pointer', borderRadius: '13px' }}
+                  style={{ cursor: "pointer", borderRadius: "13px" }}
                   src={
-                    loginUserSliceData?.verifyToken?.imageUrl !== '' &&
+                    loginUserSliceData?.verifyToken?.imageUrl !== "" &&
                     loginUserSliceData?.verifyToken?.imageUrl !== null
                       ? loginUserSliceData?.verifyToken?.imageUrl
                       : account
@@ -228,7 +228,7 @@ function AppHeader(props: any) {
               </div>
             </IconButton>
           </Box>
-          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+          <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
               aria-label="show more"

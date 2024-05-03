@@ -1,61 +1,54 @@
-import * as React from 'react';
-import { alpha } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import TableSortLabel from '@mui/material/TableSortLabel';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
-import Checkbox from '@mui/material/Checkbox';
-import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
-import DeleteIcon from '@mui/icons-material/Delete';
-import FilterListIcon from '@mui/icons-material/FilterList';
-import { visuallyHidden } from '@mui/utils';
-import SuccessPopup from '../../components/SuccessPopup';
-import Confirmationpopup from '../../components/ConfirmationPopup';
-import ProcedureForm from '../../pages/procedures/ProcedureForm';
-import { Button } from '@mui/material';
-import PrivateRoute from '../../components/PrivateRoute';
-import AddIcon from '@mui/icons-material/Add';
-import '../../assets/styles/procedure.scss';
-import { ProceduresRowData } from '../../modals/Procedures.modal';
-import { ProceduresHead } from '../../modals/Procedures.modal';
+import * as React from "react";
+import { alpha } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import TableSortLabel from "@mui/material/TableSortLabel";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import Checkbox from "@mui/material/Checkbox";
+import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
+import DeleteIcon from "@mui/icons-material/Delete";
+import FilterListIcon from "@mui/icons-material/FilterList";
+import { visuallyHidden } from "@mui/utils";
+import SuccessPopup from "../../components/SuccessPopup";
+import Confirmationpopup from "../../components/ConfirmationPopup";
+import ProcedureForm from "../../pages/procedures/ProcedureForm";
+import { Button } from "@mui/material";
+import PrivateRoute from "../../components/PrivateRoute";
+import AddIcon from "@mui/icons-material/Add";
+import "../../assets/styles/procedure.scss";
+import { ProceduresRowData } from "../../modals/Procedures.modal";
 import {
   handleCheckboxChange,
   handleDeCheckboxChange,
   handledAllSelected,
-} from '../../utils/commonServices';
-import { ProceduresHeaders } from '../../utils/data';
-import { DepartmentList, LaboratoryList } from '../../utils/data';
-import { navigate } from 'gatsby';
-import TableFilters from '../../components/table/TableFilters';
-import TablePagination from '../../components/table/TablePagination';
+} from "../../utils/commonServices";
+import { ProceduresHeaders } from "../../utils/data";
+import { DepartmentList, LaboratoryList } from "../../utils/data";
+import TableFilters from "../../components/table/TableFilters";
+import TablePagination from "../../components/table/TablePagination";
 import {
   FormControl,
   InputAdornment,
   MenuItem,
-  Pagination,
   Select,
   TextField,
-  InputLabel,
-} from '@mui/material';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+} from "@mui/material";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 // import "../../assets/styles/App.scss";
-import '../../../src/assets/styles/App.scss';
-import { Filter } from '@mui/icons-material';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
-import search from '../../assets/images/search.svg';
-import Autocomplete from '@mui/material/Autocomplete';
+import "../../../src/assets/styles/App.scss";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined";
+import search from "../../assets/images/search.svg";
+import Autocomplete from "@mui/material/Autocomplete";
+import { useNavigate } from "react-router";
 
 function createData(
   is_checked: boolean,
@@ -71,7 +64,7 @@ function createData(
   isActive: number,
   createdAt: string,
   updatedAt: string,
-  deletedAt: string,
+  deletedAt: string
 ): ProceduresRowData {
   return {
     is_checked,
@@ -94,83 +87,83 @@ function createData(
 const rows: any = [
   createData(
     false,
-    '1',
-    'MD5 Algorithm',
-    'ID1001',
-    '',
-    'DEPT-1001',
-    'LAB-1001',
-    '',
-    '',
-    '',
+    "1",
+    "MD5 Algorithm",
+    "ID1001",
+    "",
+    "DEPT-1001",
+    "LAB-1001",
+    "",
+    "",
+    "",
     1,
-    'Username',
-    '02/10/2023',
-    '',
+    "Username",
+    "02/10/2023",
+    ""
   ),
   createData(
     false,
-    '2',
-    'MD5 Algorithm',
-    'ID1002',
-    '',
-    'DEPT-1002',
-    'LAB-1001',
-    '',
-    '',
-    '',
+    "2",
+    "MD5 Algorithm",
+    "ID1002",
+    "",
+    "DEPT-1002",
+    "LAB-1001",
+    "",
+    "",
+    "",
     1,
-    'Username',
-    '02/10/2023',
-    '',
+    "Username",
+    "02/10/2023",
+    ""
   ),
   createData(
     false,
-    '3',
-    'SHA256 Algorithm',
-    'ID1002',
-    '',
-    'DEPT-1003',
-    'LAB-1002',
-    '',
-    '',
-    '',
+    "3",
+    "SHA256 Algorithm",
+    "ID1002",
+    "",
+    "DEPT-1003",
+    "LAB-1002",
+    "",
+    "",
+    "",
     1,
-    'Username',
-    '02/10/2023',
-    '',
+    "Username",
+    "02/10/2023",
+    ""
   ),
   createData(
     false,
-    '4',
-    'Crypto Algorithm',
-    'ID1003',
-    '',
-    'DEPT-1003',
-    'LAB-1004',
-    '',
-    '',
-    '',
+    "4",
+    "Crypto Algorithm",
+    "ID1003",
+    "",
+    "DEPT-1003",
+    "LAB-1004",
+    "",
+    "",
+    "",
     2,
-    'Username',
-    '02/10/2023',
-    '',
+    "Username",
+    "02/10/2023",
+    ""
   ),
   createData(
     false,
-    '5',
-    'Data Mining',
-    'ID1003',
-    '',
-    'DEPT-1002',
-    'LAB-1003',
-    '',
-    '',
-    '',
+    "5",
+    "Data Mining",
+    "ID1003",
+    "",
+    "DEPT-1002",
+    "LAB-1003",
+    "",
+    "",
+    "",
     2,
-    'Username',
-    '02/10/2023',
-    '',
+    "Username",
+    "02/10/2023",
+    ""
   ),
 ];
 
@@ -184,16 +177,16 @@ function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   return 0;
 }
 
-type Order = 'asc' | 'desc';
+type Order = "asc" | "desc";
 
 function getComparator<Key extends keyof any>(
   order: Order,
-  orderBy: Key,
+  orderBy: Key
 ): (
   a: { [key in Key]: number | string },
-  b: { [key in Key]: number | string },
+  b: { [key in Key]: number | string }
 ) => number {
-  return order === 'desc'
+  return order === "desc"
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
@@ -213,7 +206,7 @@ const getLaboratory = (id: any) => {
 // with exampleArray.slice().sort(exampleComparator)
 function stableSort<T>(
   array: readonly T[],
-  comparator: (a: T, b: T) => number,
+  comparator: (a: T, b: T) => number
 ) {
   const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
   stabilizedThis.sort((a, b) => {
@@ -233,7 +226,7 @@ interface EnhancedTableProps {
   numSelected: number;
   onRequestSort: (
     event: React.MouseEvent<unknown>,
-    property: keyof ProceduresRowData,
+    property: keyof ProceduresRowData
   ) => void;
   onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
   order: Order;
@@ -258,10 +251,11 @@ function EnhancedTableHead(props: EnhancedTableProps) {
       onRequestSort(event, property);
     };
 
+  const navigate = useNavigate();
   const [answer, setAnswer] = React.useState<any>({});
 
   const Placeholder = ({ children }: any) => {
-    return <div style={{ fontSize: '12px' }}>{children}</div>;
+    return <div style={{ fontSize: "12px" }}>{children}</div>;
   };
   return (
     <TableHead>
@@ -269,31 +263,31 @@ function EnhancedTableHead(props: EnhancedTableProps) {
         {headCells.map((headCell: any) => (
           <TableCell
             key={headCell.id}
-            align={headCell.numeric ? 'right' : 'left'}
-            padding={headCell.disablePadding ? 'none' : 'normal'}
+            align={headCell.numeric ? "right" : "left"}
+            padding={headCell.disablePadding ? "none" : "normal"}
             sortDirection={orderBy === headCell.id ? order : false}
           >
             <TableSortLabel
               active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : 'asc'}
+              direction={orderBy === headCell.id ? order : "asc"}
               onClick={createSortHandler(headCell.id)}
             >
               {headCell.label}
               {orderBy === headCell.id ? (
                 <Box component="span" sx={visuallyHidden}>
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                  {order === "desc" ? "sorted descending" : "sorted ascending"}
                 </Box>
               ) : null}
             </TableSortLabel>
-            <TableRow sx={{ width: '100%', display: 'block' }}>
+            <TableRow sx={{ width: "100%", display: "block" }}>
               <TableCell
                 padding="none"
-                sx={{ border: '0px', width: '100%', display: 'block' }}
+                sx={{ border: "0px", width: "100%", display: "block" }}
                 colSpan={headCell.colSpan}
               >
-                <Box sx={{ width: '100%', display: 'flex' }}>
+                <Box sx={{ width: "100%", display: "flex" }}>
                   {headCell.filters.map((filter: any, index: any) => {
-                    if (filter.type === 'select') {
+                    if (filter.type === "select") {
                       return (
                         <FormControl key={index}>
                           <Select
@@ -301,10 +295,10 @@ function EnhancedTableHead(props: EnhancedTableProps) {
                               disableScrollLock: true,
                               marginThreshold: null,
                             }}
-                            style={{ width: '140px' }}
+                            style={{ width: "140px" }}
                             labelId="table-select-label"
                             id="table-select"
-                            value={answer[filter.id] || ''}
+                            value={answer[filter.id] || ""}
                             displayEmpty
                             IconComponent={ExpandMoreOutlinedIcon}
                             onChange={(event) => {
@@ -330,7 +324,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
                           </Select>
                         </FormControl>
                       );
-                    } else if (filter.type === 'textfield') {
+                    } else if (filter.type === "textfield") {
                       return (
                         <FormControl key={index}>
                           <TextField
@@ -349,7 +343,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
                           />
                         </FormControl>
                       );
-                    } else if (filter.type === 'autocomplete') {
+                    } else if (filter.type === "autocomplete") {
                       return (
                         <FormControl key={index}>
                           <Autocomplete
@@ -375,7 +369,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
                           />
                         </FormControl>
                       );
-                    } else if (filter.type === 'date') {
+                    } else if (filter.type === "date") {
                       return (
                         <FormControl key={index} className="calender-sec">
                           <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -412,14 +406,14 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
           bgcolor: (theme) =>
             alpha(
               theme.palette.primary.main,
-              theme.palette.action.activatedOpacity,
+              theme.palette.action.activatedOpacity
             ),
         }),
       }}
     >
       {numSelected > 0 ? (
         <Typography
-          sx={{ flex: '1 1 100%' }}
+          sx={{ flex: "1 1 100%" }}
           color="inherit"
           variant="subtitle1"
           component="div"
@@ -428,7 +422,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
         </Typography>
       ) : (
         <Typography
-          sx={{ flex: '1 1 100%' }}
+          sx={{ flex: "1 1 100%" }}
           variant="h6"
           id="tableTitle"
           component="div"
@@ -453,8 +447,8 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
   );
 }
 export default function EnhancedTable() {
-  const [order, setOrder] = React.useState<Order>('asc');
-  const [orderBy, setOrderBy] = React.useState<keyof ProceduresRowData>('name');
+  const [order, setOrder] = React.useState<Order>("asc");
+  const [orderBy, setOrderBy] = React.useState<keyof ProceduresRowData>("name");
   const [selected, setSelected] = React.useState<readonly number[]>([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
@@ -462,10 +456,10 @@ export default function EnhancedTable() {
 
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
-    property: keyof ProceduresRowData,
+    property: keyof ProceduresRowData
   ) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
+    const isAsc = orderBy === property && order === "asc";
+    setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
   };
 
@@ -491,7 +485,7 @@ export default function EnhancedTable() {
     } else if (selectedIndex > 0) {
       newSelected = newSelected.concat(
         selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
+        selected.slice(selectedIndex + 1)
       );
     }
     setSelected(newSelected);
@@ -502,7 +496,7 @@ export default function EnhancedTable() {
   };
 
   const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement>,
+    event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
@@ -522,9 +516,9 @@ export default function EnhancedTable() {
     () =>
       stableSort(rows, getComparator(order, orderBy)).slice(
         page * rowsPerPage,
-        page * rowsPerPage + rowsPerPage,
+        page * rowsPerPage + rowsPerPage
       ),
-    [order, orderBy, page, rowsPerPage],
+    [order, orderBy, page, rowsPerPage]
   );
   const [Rows, setSelectedRows] = React.useState(rows);
   const [isDeselectAllChecked, setIsDeselectAllChecked] = React.useState(false);
@@ -539,14 +533,14 @@ export default function EnhancedTable() {
     setSelectedRows,
     setIsDeselectAllChecked,
     setIsselectAllChecked,
-    setTableHeaderVisible,
+    setTableHeaderVisible
   );
   const handledAllchange = handledAllSelected(
     isselectAllChecked,
     Rows,
     setSelectedRows,
     setIsDeselectAllChecked,
-    setIsselectAllChecked,
+    setIsselectAllChecked
   );
   const handleCloseFormPopup = (state: any) => {
     formPopupRef.current.open(state);
@@ -554,9 +548,9 @@ export default function EnhancedTable() {
 
   const handleSubmitFormPopup = () => {
     formPopupRef.current.open(false);
-    successPopupRef.current.open(true, 'Field');
+    successPopupRef.current.open(true, "Field");
     setTimeout(() => {
-      successPopupRef.current.open(false, 'Field');
+      successPopupRef.current.open(false, "Field");
     }, 3000);
   };
 
@@ -587,7 +581,7 @@ export default function EnhancedTable() {
       setSelectedRows,
       setIsDeselectAllChecked,
       setIsselectAllChecked,
-      setTableHeaderVisible,
+      setTableHeaderVisible
     )(event, id);
   };
   const handleMenuCheckboxChange = (e: any, index: any) => {
@@ -636,13 +630,13 @@ export default function EnhancedTable() {
           isTableHeaderVisible={isTableHeaderVisible}
           closeTableHeader={handleCloseTableHeader}
         />
-        <Box className="table-outer" sx={{ width: '100%' }}>
+        <Box className="table-outer" sx={{ width: "100%" }}>
           {/* <Paper sx={{ width: '100%', mb: 2 }}> */}
           <TableContainer>
             <Table
               sx={{ minWidth: 750 }}
               aria-labelledby="tableTitle"
-              size={dense ? 'small' : 'medium'}
+              size={dense ? "small" : "medium"}
             >
               <EnhancedTableHead
                 numSelected={selected.length}
@@ -667,11 +661,11 @@ export default function EnhancedTable() {
                       tabIndex={-1}
                       key={row.id}
                       selected={isItemSelected}
-                      sx={{ cursor: 'pointer' }}
+                      sx={{ cursor: "pointer" }}
                     >
                       {headCells[0].is_show && (
                         <TableCell scope="row">
-                          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                          <Box sx={{ display: "flex", alignItems: "center" }}>
                             <Box sx={{ mt: 0, mr: 1 }}>
                               <Checkbox
                                 color="primary"
@@ -683,10 +677,10 @@ export default function EnhancedTable() {
                               />
                             </Box>
                             <Box
-                              sx={{ display: 'flex', alignItems: 'center' }}
+                              sx={{ display: "flex", alignItems: "center" }}
                               onClick={() =>
                                 navigate(
-                                  `/procedures/details/${row.procedureNumber}`,
+                                  `/procedures/details/${row.procedureNumber}`
                                 )
                               }
                             >

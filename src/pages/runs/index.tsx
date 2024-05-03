@@ -154,7 +154,7 @@ export default function Runs() {
 
   React.useEffect(() => {
     let opt: any = [];
-    if (filterFieldName == "Runs ID") {
+    if (filterFieldName === "Runs ID") {
       runsSliceData?.Runs.map((element: any) => {
         opt.push({
           id: element.runNumber,
@@ -214,7 +214,7 @@ export default function Runs() {
   }, [userSliceData]);
 
   React.useEffect(() => {
-    if (filterFieldName == "Assigned by") {
+    if (filterFieldName === "Assigned by") {
       setLoading(true);
       const getData = setTimeout(() => {
         dispatch(
@@ -237,7 +237,7 @@ export default function Runs() {
       }, 1000);
       return () => clearTimeout(getData);
     }
-    if (filterFieldName == "Procedure name") {
+    if (filterFieldName === "Procedure name") {
       setLoading(true);
       const getData = setTimeout(() => {
         dispatch(
@@ -260,7 +260,7 @@ export default function Runs() {
       }, 1000);
       return () => clearTimeout(getData);
     }
-    if (filterFieldName == "Runs ID") {
+    if (filterFieldName === "Runs ID") {
       setLoading(true);
       dispatch(
         fetchRunsData({
@@ -326,18 +326,18 @@ export default function Runs() {
     setLoader(true);
 
     //requester 65741c069d53d19df8321e6e
-    if (loginUserSliceData?.verifyToken?.role[0]?.name == "Requester") {
+    if (loginUserSliceData?.verifyToken?.role[0]?.name === "Requester") {
       // setQueryString({...queryStrings,["assignedTo"]:loginUserSliceData?.verifyToken?._id,["assignedBy"]:loginUserSliceData?.verifyToken?._id})
       payload["assignedTo"] = loginUserSliceData?.verifyToken?._id;
       payload["assignedBy"] = loginUserSliceData?.verifyToken?._id;
       payload["userId"] = loginUserSliceData?.verifyToken?._id;
     }
     //tester 65741c069d53d19df8321e6c
-    if (loginUserSliceData?.verifyToken?.role[0]?.name == "Tester") {
+    if (loginUserSliceData?.verifyToken?.role[0]?.name === "Tester") {
       payload["userId"] = loginUserSliceData?.verifyToken?._id;
       // setQueryString({...queryStrings,["userId"]:loginUserSliceData?.verifyToken?._id})
     }
-    if (loginUserSliceData?.verifyToken?.role[0]?.name == "Admin") {
+    if (loginUserSliceData?.verifyToken?.role[0]?.name === "Admin") {
       payload["organisationId"] =
         loginUserSliceData?.verifyToken.organisationId;
     }
@@ -415,24 +415,6 @@ export default function Runs() {
   };
   const [visibleRow, setVisibleRow] = React.useState<any>(Data);
   //command by govind
-  const handleOnChange = async (e: any, row: any) => {
-    var runsChange: any = {
-      _id: row._id,
-    };
-    if (e.target.name == "status") {
-      runsChange["status"] = e.target.value;
-    }
-    // setLoader(true)
-    await dispatch(fetchUpdateRunsData(runsChange));
-    await toast("The status of the selected runs has been updated!", {
-      style: {
-        background: "#00bf70",
-        color: "#fff",
-      },
-      closeButton: true,
-    });
-    await reload();
-  };
 
   const handleChange = (event: any, id: any) => {
     handleCheckboxChange(
@@ -465,16 +447,6 @@ export default function Runs() {
   );
 
   const handleRequestSort = () => {};
-
-  const getDepartment = (id: any) => {
-    let data = DepartmentList.find((item) => item.id === id);
-    return data?.name;
-  };
-
-  const getLaboratory = (id: any) => {
-    let data = LaboratoryList.find((item) => item.id === id);
-    return data?.name;
-  };
 
   const handleMenuCheckboxChange = (e: any, index: any) => {
     setHeaders((prevColumns: any) => {

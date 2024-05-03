@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import Dialog from "@mui/material/Dialog";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 const SuccessPopup = React.forwardRef(({ close, type }: any, ref) => {
   const [successPopup, setSuccessPopup] = React.useState(false);
@@ -24,7 +24,7 @@ const SuccessPopup = React.forwardRef(({ close, type }: any, ref) => {
       fullWidth
       maxWidth="xs"
       className="popup-outer"
-      disableScrollLock={ true }
+      disableScrollLock={true}
     >
       <Box className="popup-section" sx={{ background: "#C6FFD9" }}>
         <Box sx={{ textAlign: "center" }}>

@@ -1,8 +1,8 @@
 // assetsSlice.js
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const myPageSlice = createSlice({
-  name: 'runs',
+  name: "runs",
   initialState: {
     data: null,
     loading: false,
@@ -24,31 +24,8 @@ const myPageSlice = createSlice({
   },
 });
 
-const chartTableSlice = createSlice({
-  name: 'tableChart',
-  initialState: {
-    data: null,
-    loading: false,
-    error: null,
-  },
-  reducers: {
-    fetchChartTableStart: (state) => {
-      state.loading = true;
-    },
-    fetchChartTableSuccess: (state, action) => {
-      state.loading = false;
-      state.data = action.payload;
-      state.error = null;
-    },
-    fetchChartTableFailure: (state, action) => {
-      state.loading = false;
-      state.error = action.payload;
-    },
-  },
-});
-
 const CalendarEventSlice = createSlice({
-  name: 'calendar_event',
+  name: "calendar_event",
   initialState: {
     data: null,
     loading: false,

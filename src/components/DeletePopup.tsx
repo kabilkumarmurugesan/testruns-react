@@ -39,7 +39,7 @@ const DeletePopup = React.forwardRef(
               <img src={deletepopup} alt="stop" className="stop-img" />
               <Typography className="sure-you">
                 Are you sure you want to{" "}
-                {module !== undefined && module == "asset"
+                {module !== undefined && module === "asset"
                   ? "In-Active"
                   : "delete"}{" "}
                 the {text}?

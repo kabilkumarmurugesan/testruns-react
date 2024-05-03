@@ -1,7 +1,6 @@
-import { Box, Drawer, Toolbar, Typography } from "@mui/material";
+import { Box, Drawer, Typography } from "@mui/material";
 import React from "react";
 import "../../assets/styles/App.scss";
-import Avatars from "../../assets/images/Avatars.svg";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import { useDispatch, useSelector } from "react-redux";
 import Avatar from "@mui/material/Avatar";

@@ -109,8 +109,7 @@ const AddPeople = ({
   }, [typePopup]);
 
   const handleSave = async () => {
-    const allIds = userList.map((item: any) => item.id);
-    const newArray = runzRow?.map((item: any) => ({
+     const newArray = runzRow?.map((item: any) => ({
       objective: item?.objective,
       shared: typePopup == "share" ? true : false,
       procedureId:
