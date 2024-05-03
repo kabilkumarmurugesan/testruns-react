@@ -22,7 +22,7 @@ import ProcedureForm from "../../pages/procedures/ProcedureForm";
 import { Button } from "@mui/material";
 import PrivateRoute from "../../components/PrivateRoute";
 import AddIcon from "@mui/icons-material/Add";
-import "../../assets/styles/procedure.scss";
+import "../../assets/styles/css/procedure.css";
 import { ProceduresRowData } from "../../modals/Procedures.modal";
 import {
   handleCheckboxChange,
@@ -42,8 +42,8 @@ import {
 } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-// import "../../assets/styles/App.scss";
-import "../../../src/assets/styles/App.scss";
+// import "../../assets/styles/css/App.css";
+import "../../../src/assets/styles/css/App.css";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined";
 import search from "../../assets/images/search.svg";

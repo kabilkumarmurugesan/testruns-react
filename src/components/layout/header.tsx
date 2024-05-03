@@ -14,7 +14,7 @@ import { MoreVertOutlined } from "@mui/icons-material";
 import help from "../../assets/images/help.svg";
 import notification from "../../assets/images/notification.svg";
 import account from "../../assets/images/account.svg";
-import "../../assets/styles/App.scss";
+import "../../assets/styles/css/App.css";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { fetchNotificationMessageData } from "../../api/notificationMessageAPI";

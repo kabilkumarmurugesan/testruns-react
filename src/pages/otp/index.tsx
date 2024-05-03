@@ -26,7 +26,7 @@ import { withCardLayout } from "../../components/auth";
 import { useNavigate } from "react-router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import "../../assets/styles/App.scss";
+import "../../assets/styles/css/App.css";
 import { ToastContainer, toast } from "react-toastify";
 
 const regex=/^(0*[1-9][0-9]*(\.[0-9]*)?|0*\.[0-9]*[1-9][0-9]*)$/

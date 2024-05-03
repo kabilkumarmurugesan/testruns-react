@@ -1,6 +1,6 @@
 /* eslint-disable no-var */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React from "react";
+import React, { useEffect } from "react";
 import PrivateRoute from "../../components/PrivateRoute";
 import TableFilters from "../../components/table/TableFilters";
 import TablePagination from "../../components/table/TablePagination";
@@ -21,16 +21,9 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
-
 import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined";
 import AddIcon from "@mui/icons-material/Add";
-import {
-  DepartmentList,
-  LaboratoryList,
-  RunsHeaders,
-  RunsRows,
-  RunsStatusList,
-} from "../../utils/data";
+import { RunsHeaders, RunsRows, RunsStatusList } from "../../utils/data";
 import TableHeader from "../../components/table/TableHeader";
 import { RunsRowData } from "../../modals/runs.modal";
 import {
@@ -46,11 +39,7 @@ import runStopped from "../../assets/images/run-stopped.svg";
 import runSubmitted from "../../assets/images/run-submitted.svg";
 import runCompleted from "../../assets/images/run-completed.svg";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchRunsData,
-  fetchUpdateRunsData,
-  deleteRunsData,
-} from "../../api/RunsAPI";
+import { fetchRunsData, deleteRunsData } from "../../api/RunsAPI";
 import moment from "moment";
 import DeleteSuccessPopup from "../../components/DeleteSuccessPopup";
 import TablePopup from "../../components/table/TablePopup";
@@ -152,7 +141,7 @@ export default function Runs() {
 
   const credencial = loginUserSliceData?.verifyToken?.role[0]?.runs_management;
 
-  React.useEffect(() => {
+  useEffect(() => {
     let opt: any = [];
     if (filterFieldName === "Runs ID") {
       runsSliceData?.Runs.map((element: any) => {
@@ -175,7 +164,7 @@ export default function Runs() {
     sortOrder: "desc",
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     // setOptions(options)
     let opt: any = [];
     if (filterFieldName === "Procedure name") {
@@ -192,7 +181,7 @@ export default function Runs() {
 
   const Data = Rows.slice(startIndex, endIndex);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setGetUser(getUser);
     let opt: any = [];
     getUser &&
@@ -209,11 +198,11 @@ export default function Runs() {
     setFilterOptions(opt);
   }, [getUser]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setGetUser(userSliceData?.get_all_users?.Identity);
   }, [userSliceData]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (filterFieldName === "Assigned by") {
       setLoading(true);
       const getData = setTimeout(() => {
@@ -307,7 +296,7 @@ export default function Runs() {
     setValuesName(null);
     setInputValue(null);
   };
-  React.useEffect(() => {
+  useEffect(() => {
     getAllAsset();
     setTableHeaderVisible(false);
     setRowId([]);
@@ -359,7 +348,7 @@ export default function Runs() {
       });
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     // if(payloads!==undefined){
     //   setQueryString(payloads)
     // }
@@ -381,7 +370,7 @@ export default function Runs() {
     };
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     dispatch(
       fetchOrganizationById({
         instituteId: loginUserSliceData?.verifyToken.instituteId,
@@ -942,7 +931,8 @@ export default function Runs() {
           runzId={rowId}
           runzRow={runsRow}
           reload={() => {
-            setRowId([]), setRunsRow([]);
+            setRowId([]);
+            setRunsRow([]);
           }}
         />
 
@@ -976,7 +966,7 @@ export default function Runs() {
                     rows={queryStrings.perPage}
                   />
                 </TableBody>
-              ) : !runsData || (runsData?.length === 0 && loader == false) ? (
+              ) : !runsData || (runsData?.length === 0 && !loader) ? (
                 <TableBody>
                   <Box
                     sx={{
@@ -1016,11 +1006,11 @@ export default function Runs() {
                             <Box sx={{ mt: 0, mr: 1 }}>
                               <Checkbox
                                 color="primary"
-                                checked={row.is_checked == true ? true : false}
+                                checked={row.is_checked ? true : false}
                                 onClick={(e: any) => clickHandler(e)}
                                 onChange={(event) => {
-                                  handleCheckboxValues(row._id, row),
-                                    handleChange(event, row._id);
+                                  handleCheckboxValues(row._id, row);
+                                  handleChange(event, row._id);
                                 }}
                               />
                             </Box>
@@ -1057,13 +1047,13 @@ export default function Runs() {
                                   <span
                                     style={{
                                       color:
-                                        row?.status == "Created"
+                                        row?.status === "Created"
                                           ? "#8d8d8d"
-                                          : row?.status == "Started"
+                                          : row?.status === "Started"
                                           ? "#faaa49"
                                           : row?.status == "Stopped"
                                           ? "red"
-                                          : row?.status == "Completed"
+                                          : row?.status === "Completed"
                                           ? "#00bf70"
                                           : "#a01fb1",
                                     }}
@@ -1224,7 +1214,7 @@ export default function Runs() {
                                   ? "#faaa49"
                                   : row.status === "Stopped"
                                   ? "#e2445c"
-                                  : row?.status == "Submitted"
+                                  : row?.status === "Submitted"
                                   ? "#a01fb1"
                                   : "#00bf70",
                               padding: "6px",

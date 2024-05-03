@@ -20,7 +20,7 @@ import proceduresActive from "../../assets/images/procedures-active.svg";
 import projectsActive from "../../assets/images/projects-active.svg";
 import assetsActive from "../../assets/images/assets-active.svg";
 import settingsActive from "../../assets/images/settings-active.svg";
-import "../../assets/styles/App.scss";
+import "../../assets/styles/css/App.css";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 

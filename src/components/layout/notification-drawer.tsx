@@ -1,6 +1,6 @@
 import { Box, Drawer, Typography } from "@mui/material";
 import React from "react";
-import "../../assets/styles/App.scss";
+import "../../assets/styles/css/App.css";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import { useDispatch, useSelector } from "react-redux";
 import Avatar from "@mui/material/Avatar";
@@ -21,11 +21,6 @@ export default function AppNotificationDrawer({
 }: any) {
   const [show, setShow] = React.useState(false);
   const [loader, setLoader] = React.useState(false);
-  const [notificationQueryStrings, setNotificationQueryString] = React.useState(
-    {
-      userId: "",
-    }
-  );
 
   const [notificationMesssage, setNotificationMesssage] = React.useState<any>(
     []
@@ -43,7 +38,6 @@ export default function AppNotificationDrawer({
     dispatch(fetchSingleUserData(temp))
       .then((isSucess: any) => {
         setUserData(isSucess?.get_user);
-        setNotificationQueryString(isSucess?.get_user?._id);
       })
 
       .catch((err: any) => {
@@ -92,7 +86,7 @@ export default function AppNotificationDrawer({
       const daysDifference: number = Math.floor(hoursDifference / 24);
       return `${daysDifference} day${daysDifference > 1 ? "s" : ""} ago`;
     }
-    if (Math.floor(minutesDifference) == 0) {
+    if (Math.floor(minutesDifference) === 0) {
       return `Just now`;
     }
     return `${Math.floor(minutesDifference)}min ago`;
@@ -143,7 +137,8 @@ export default function AppNotificationDrawer({
           boxShadow: "-12px 4px 19px 0px #0000001A",
         }}
         onClose={() => {
-          toggleNotificationDrawer(), setShow(!show);
+          toggleNotificationDrawer();
+          setShow(!show);
         }}
         disableScrollLock={true}
       >
@@ -168,7 +163,8 @@ export default function AppNotificationDrawer({
                 <CloseOutlinedIcon
                   sx={{ cursor: "pointer" }}
                   onClick={() => {
-                    toggleNotificationDrawer(), setShow(!show);
+                    toggleNotificationDrawer();
+                    setShow(!show);
                   }}
                 />
               </span>

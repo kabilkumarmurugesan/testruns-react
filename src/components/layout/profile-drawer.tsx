@@ -18,7 +18,7 @@ import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 import logout from '../../assets/images/profile/logout.svg';
 import camera from '../../assets/images/profile/camera.svg';
 import profile from '../../assets/images/profile/profile.svg';
-import '../../assets/styles/profile.scss';
+import '../../assets/styles/css/profile.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchDepartmentById } from '../../api/departmentAPI';
 import { fetchLabById } from '../../api/labAPI';

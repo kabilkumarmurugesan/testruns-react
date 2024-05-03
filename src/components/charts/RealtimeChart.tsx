@@ -21,8 +21,6 @@ import { InfluxDB } from "@influxdata/influxdb-client";
 import { toast } from "react-toastify";
 import SpinerLoader from "../SpinnerLoader";
 import loadable from "@loadable/component";
-import { from } from "rxjs";
-import { map } from "rxjs/operators";
 import io from "socket.io-client";
 import ApexCharts from "apexcharts";
 
@@ -94,21 +92,6 @@ export default function RealtimeChart({
       axis: "Y1",
       color: colorsList[0],
     },
-    // {
-    //   sensor: null,
-    //   axis: 'Y2',
-    //   color: colorsList[1],
-    // },
-    // {
-    //   sensor: null,
-    //   axis: 'Y3',
-    //   color: colorsList[2],
-    // },
-    // {
-    //   sensor: null,
-    //   axis: 'Y4',
-    //   color: colorsList[3],
-    // },
   ]);
   var RealTimeOptions: any = {
     elements: {
@@ -816,7 +799,6 @@ export default function RealtimeChart({
     });
 
     function getUniqueListBy(arr: any, key: any) {
-      
       return [
         ...new Map(arr.map((item: any) => [item[key].text, item])).values(),
       ];

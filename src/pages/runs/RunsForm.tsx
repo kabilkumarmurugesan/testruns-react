@@ -107,7 +107,7 @@ const RunsForm = React.forwardRef(
     const confirmationPopupRef: any = React.useRef();
     const successPopupRef: any = React.useRef();
     const dueDateInputRef: any = React.useRef(null);
- 
+
     const [runsOpen, setRunsOpen] = React.useState(false);
     const [runCreate, setRunsCreate] = React.useState(false);
     const runzSliceData = useSelector((state: any) => state.runs.data);
@@ -297,7 +297,6 @@ const RunsForm = React.forwardRef(
         ? dayjs(moment(formData?.createdOn).format("MM/DD/YYYY"))
         : dayjs(moment(new Date()).format("MM/DD/YYYY"));
 
-    var dateDue = type == "edit" ? dayjs(formData?.dueDate) : null;
     const formik: any = useFormik({
       initialValues: {
         departmentId: "",
@@ -307,7 +306,7 @@ const RunsForm = React.forwardRef(
         objective: "",
         dueDate: dueDate,
         createdOn:
-          type == "edit"
+          type === "edit"
             ? createdDate
             : dayjs(moment(new Date()).format("MM/DD/YYYY")),
         assignedBy: loginUserSliceData?.verifyToken?._id,
@@ -370,7 +369,7 @@ const RunsForm = React.forwardRef(
       setRunsCreate(false);
       toast(
         `${
-          type == "edit"
+          type === "edit"
             ? "Runs have been updated successfully!"
             : "New runs have been successfully created!"
         } !`,
@@ -412,12 +411,12 @@ const RunsForm = React.forwardRef(
         search: inputValue !== "undefined" && inputValue ? inputValue : "",
       };
       if (
-        loginUserSliceData?.verifyToken?.role[0]?.name == "Tester" ||
-        loginUserSliceData?.verifyToken?.role[0]?.name == "Requester"
+        loginUserSliceData?.verifyToken?.role[0]?.name === "Tester" ||
+        loginUserSliceData?.verifyToken?.role[0]?.name === "Requester"
       ) {
         payload["laboratoryId"] = singleUserData?.laboratoryId;
       }
-      if (loginUserSliceData?.verifyToken?.role[0]?.name == "Admin") {
+      if (loginUserSliceData?.verifyToken?.role[0]?.name === "Admin") {
         payload["organisationId"] = singleUserData?.organisationId;
       }
       const getData = setTimeout(() => {

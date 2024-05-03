@@ -19,7 +19,7 @@ import UserActive from "../../assets/images/multiuser-active.svg";
 import Role from "../../assets/images/role.svg";
 import RoleActive from "../../assets/images/role-active.svg";
 import "../../assets/styles/setting.scss";
-import "../../assets/styles/App.scss";
+import "../../assets/styles/css/App.css";
 import { useSelector } from "react-redux";
 import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutlined";
 import procedures from "../../assets/images/procedures.svg";

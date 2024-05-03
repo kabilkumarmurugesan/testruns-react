@@ -109,21 +109,6 @@ const AddPeople = ({
   }, [typePopup]);
 
   const handleSave = async () => {
-     const newArray = runzRow?.map((item: any) => ({
-      objective: item?.objective,
-      shared: typePopup == "share" ? true : false,
-      procedureId:
-        item?.procedureId._id == undefined
-          ? item?.procedureId[0]?._id
-          : item?.procedureId._id,
-      departmentId: item?.departmentId.map((item: any) => item?._id),
-      laboratoryId: item?.laboratoryId.map((item: any) => item?._id),
-      // assignedTo: item?.assignedTo ,
-      assignedBy: userSliceData?._id,
-      dueDate: item?.dueDate,
-      status: item?.status,
-    }));
-
     if (typePopup !== "share") {
       handleAssign(selectedUser);
 
@@ -196,7 +181,7 @@ const AddPeople = ({
             }}
           >
             <Box>
-              {typePopup == "assign" ? (
+              {typePopup === "assign" ? (
                 <Autocomplete
                   value={assigned == true ? selectedUser : null} // Pass the selected user to the value prop
                   options={allUserData !== undefined ? allUserData : []}
@@ -242,7 +227,7 @@ const AddPeople = ({
                   renderOption={(props, option: any, { selected }) => (
                     <React.Fragment>
                       <li {...props}>
-                        {typePopup == "share" && (
+                        {typePopup === "share" && (
                           <Checkbox
                             style={{ marginRight: 0 }}
                             checked={selected}
@@ -287,7 +272,7 @@ const AddPeople = ({
           >
             {vissible ? (
               <CircularProgress color="warning" size={20} />
-            ) : typePopup == "share" ? (
+            ) : typePopup === "share" ? (
               "Share"
             ) : (
               "Save"

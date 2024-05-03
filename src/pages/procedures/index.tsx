@@ -21,7 +21,7 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 import AddIcon from "@mui/icons-material/Add";
-import "../../assets/styles/procedure.scss";
+import "../../assets/styles/css/procedure.css";
 // import Deleteconfirmationpopup from "../../components/deleteconfirmationpopup";
 import ProcedureForm from "./ProcedureForm";
 import TableFilters from "../../components/table/TableFilters";

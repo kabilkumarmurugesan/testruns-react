@@ -9,7 +9,7 @@ import {
   Menu,
   MenuItem,
 } from "@mui/material";
-import "../../assets/styles/procedure.scss";
+import "../../assets/styles/css/procedure.css";
 import bin from "../../assets/images/bin.svg";
 import share from "../../assets/images/Share.svg";
 import CloseIcon from "@mui/icons-material/Close";

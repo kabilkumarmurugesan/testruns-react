@@ -11,7 +11,7 @@ import InputLabel from '@mui/material/InputLabel';
 import { withCardLayout } from '../../components/auth';
  import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import '../../assets/styles/App.scss';
+import '../../assets/styles/css/App.css';
 import { ToastContainer, toast } from 'react-toastify';
 import { updatePassword } from 'firebase/auth';
 import { auth } from '../../firebase.config';

@@ -13,7 +13,7 @@ import Checkbox from "@mui/material/Checkbox";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { withCardLayout } from "../../components/auth";
-import "../../assets/styles/App.scss";
+import "../../assets/styles/css/App.css";
 import { ToastContainer, toast } from "react-toastify";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase.config";
@@ -36,7 +36,6 @@ const validationSchema = Yup.object().shape({
 });
 
 const Login = () => {
-  let isLoggedIn: any = null;
   const navigate: any = useNavigate();
   if (typeof window !== "undefined") {
     isLoggedIn = localStorage.getItem("isLoggedIn");
@@ -51,7 +50,6 @@ const Login = () => {
     event.preventDefault();
   };
   const dispatch: any = useDispatch();
-  const userSliceData = useSelector((state: any) => state.userLogin.data);
 
   const onSubmit = (values: any) => {
     setLoading(true);
