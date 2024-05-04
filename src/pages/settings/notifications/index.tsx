@@ -1,63 +1,56 @@
-import React from 'react';
-import {
-  Box,
-  Grid,
-  InputAdornment,
-  TextField,
-  Typography,
-} from '@mui/material';
-import { styled } from '@mui/material/styles';
-import Switch from '@mui/material/Switch';
-import Stack from '@mui/material/Stack';
-import search from '../../../assets/images/search.svg';
-import { withSettingsLayout } from '../../../components/settings';
+import React from "react";
+import { Box, Grid, Typography } from "@mui/material";
+import { styled } from "@mui/material/styles";
+import Switch from "@mui/material/Switch";
+import Stack from "@mui/material/Stack";
+import { withSettingsLayout } from "../../../components/settings";
 import {
   fetchUpdateNotification,
   fetchUserNotificationData,
-} from '../../../api/notification.API';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
-import SpinerLoader from '../../../components/SpinnerLoader';
+} from "../../../api/notification.API";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import SpinerLoader from "../../../components/SpinnerLoader";
 
 const AntSwitch = styled(Switch)(({ theme }) => ({
   width: 43,
   height: 20,
   borderRadius: 99,
   padding: 0,
-  display: 'flex',
-  '&:active': {
-    '& .MuiSwitch-thumb': {
+  display: "flex",
+  "&:active": {
+    "& .MuiSwitch-thumb": {
       width: 15,
     },
-    '& .MuiSwitch-switchBase.Mui-checked': {
-      transform: 'translateX(9px)',
+    "& .MuiSwitch-switchBase.Mui-checked": {
+      transform: "translateX(9px)",
     },
   },
-  '& .MuiSwitch-switchBase': {
+  "& .MuiSwitch-switchBase": {
     padding: 2,
-    '&.Mui-checked': {
-      transform: 'translateX(24px)',
-      color: '#fff',
-      '& + .MuiSwitch-track': {
+    "&.Mui-checked": {
+      transform: "translateX(24px)",
+      color: "#fff",
+      "& + .MuiSwitch-track": {
         opacity: 1,
-        backgroundColor: theme.palette.mode === 'dark' ? '#177ddc' : '#FFC60B',
+        backgroundColor: theme.palette.mode === "dark" ? "#177ddc" : "#FFC60B",
       },
     },
   },
-  '& .MuiSwitch-thumb': {
-    boxShadow: '0 2px 4px 0 rgb(0 35 11 / 20%)',
+  "& .MuiSwitch-thumb": {
+    boxShadow: "0 2px 4px 0 rgb(0 35 11 / 20%)",
     width: 16,
     height: 16,
     borderRadius: 99,
-    transition: theme.transitions.create(['width'], {
+    transition: theme.transitions.create(["width"], {
       duration: 200,
     }),
   },
-  '& .MuiSwitch-track': {
+  "& .MuiSwitch-track": {
     borderRadius: 16 / 2,
     opacity: 1,
-    backgroundColor: theme.palette.mode === 'dark' ? '#181818' : '#9f9f9f ',
-    boxSizing: 'border-box',
+    backgroundColor: theme.palette.mode === "dark" ? "#181818" : "#9f9f9f ",
+    boxSizing: "border-box",
   },
 }));
 
@@ -76,7 +69,7 @@ const Notification = () => {
     React.useState<any>(initialValues);
 
   const userSliceData = useSelector(
-    (state: any) => state.userLogin?.data?.verifyToken,
+    (state: any) => state.userLogin?.data?.verifyToken
   );
 
   React.useEffect(() => {
@@ -114,21 +107,21 @@ const Notification = () => {
 
     const updatedData = createProcedureVal.map((item: any) => {
       const newItem = { ...item };
-      if ('__typename' in newItem) {
+      if ("__typename" in newItem) {
         delete newItem.__typename;
       }
       return newItem;
     });
     const updatedData1 = runsCommendVal.map((item: any) => {
       const newItem = { ...item };
-      if ('__typename' in newItem) {
+      if ("__typename" in newItem) {
         delete newItem.__typename;
       }
       return newItem;
     });
     const updatedData2 = runAssigedVal.map((item: any) => {
       const newItem = { ...item };
-      if ('__typename' in newItem) {
+      if ("__typename" in newItem) {
         delete newItem.__typename;
       }
       return newItem;
@@ -149,11 +142,11 @@ const Notification = () => {
       {!isLoader ? (
         <Box
           className="notification-page"
-          style={{ padding: '24px', paddingTop: '15px' }}
+          style={{ padding: "24px", paddingTop: "15px" }}
         >
           <Box
             className="title-main"
-            sx={{ borderBottom: '1px solid #F3F3F3', paddingBottom: '8px' }}
+            sx={{ borderBottom: "1px solid #F3F3F3", paddingBottom: "8px" }}
           >
             <Box>
               <Typography>Notification settings</Typography>
@@ -170,15 +163,15 @@ const Notification = () => {
               notification.
             </Typography>
           </Box>
-          <Box style={{marginTop:'10px'}}>
+          <Box style={{ marginTop: "10px" }}>
             <Grid
               container
               spacing={2}
               sx={{
-                width: '100%',
+                width: "100%",
                 m: 0,
-                borderBottom: '2px solid #F3F3F3',
-                padding:'12px 0px 12px 12px'
+                borderBottom: "2px solid #F3F3F3",
+                padding: "12px 0px 12px 12px",
               }}
             >
               <Grid
@@ -214,13 +207,13 @@ const Notification = () => {
                     spacing={1}
                     alignItems="center"
                     justifyContent="flex-end"
-                    style={{ marginBottom: '0.8rem' }}
+                    style={{ marginBottom: "0.8rem" }}
                   >
                     <Typography
                       style={{
-                        fontWeight: '500',
-                        fontSize: '14px',
-                        color: '#767676',
+                        fontWeight: "500",
+                        fontSize: "14px",
+                        color: "#767676",
                       }}
                     >
                       Notification
@@ -234,13 +227,12 @@ const Notification = () => {
                       }
                       onChange={() =>
                         handleChange(
-                          'createProcedure',
-                          'notification',
-                          !notificationList[0]?.createProcedure[0]
-                            ?.notification,
+                          "createProcedure",
+                          "notification",
+                          !notificationList[0]?.createProcedure[0]?.notification
                         )
                       }
-                      inputProps={{ 'aria-label': 'ant design' }}
+                      inputProps={{ "aria-label": "ant design" }}
                       name="notification"
                     />
                   </Stack>
@@ -252,9 +244,9 @@ const Notification = () => {
                   >
                     <Typography
                       style={{
-                        fontWeight: '500',
-                        fontSize: '14px',
-                        color: '#767676',
+                        fontWeight: "500",
+                        fontSize: "14px",
+                        color: "#767676",
                       }}
                     >
                       Email
@@ -268,12 +260,12 @@ const Notification = () => {
                       }
                       onChange={() =>
                         handleChange(
-                          'createProcedure',
-                          'email',
-                          !notificationList[0]?.createProcedure[0]?.email,
+                          "createProcedure",
+                          "email",
+                          !notificationList[0]?.createProcedure[0]?.email
                         )
                       }
-                      inputProps={{ 'aria-label': 'ant design' }}
+                      inputProps={{ "aria-label": "ant design" }}
                       name="email"
                     />
                   </Stack>
@@ -284,10 +276,10 @@ const Notification = () => {
               container
               spacing={2}
               sx={{
-                width: '100%',
+                width: "100%",
                 m: 0,
-                borderBottom: '2px solid #F3F3F3',
-                padding:'12px 0px 12px 12px'
+                borderBottom: "2px solid #F3F3F3",
+                padding: "12px 0px 12px 12px",
               }}
             >
               <Grid
@@ -323,13 +315,13 @@ const Notification = () => {
                     spacing={1}
                     alignItems="center"
                     justifyContent="flex-end"
-                    style={{ marginBottom: '0.8rem' }}
+                    style={{ marginBottom: "0.8rem" }}
                   >
                     <Typography
                       style={{
-                        fontWeight: '500',
-                        fontSize: '14px',
-                        color: '#767676',
+                        fontWeight: "500",
+                        fontSize: "14px",
+                        color: "#767676",
                       }}
                     >
                       Notification
@@ -343,12 +335,12 @@ const Notification = () => {
                       }
                       onChange={() =>
                         handleChange(
-                          'runAssiged',
-                          'notification',
-                          !notificationList[0]?.runAssiged[0]?.notification,
+                          "runAssiged",
+                          "notification",
+                          !notificationList[0]?.runAssiged[0]?.notification
                         )
                       }
-                      inputProps={{ 'aria-label': 'ant design' }}
+                      inputProps={{ "aria-label": "ant design" }}
                       name="notification"
                     />
                   </Stack>
@@ -360,9 +352,9 @@ const Notification = () => {
                   >
                     <Typography
                       style={{
-                        fontWeight: '500',
-                        fontSize: '14px',
-                        color: '#767676',
+                        fontWeight: "500",
+                        fontSize: "14px",
+                        color: "#767676",
                       }}
                     >
                       Email
@@ -376,12 +368,12 @@ const Notification = () => {
                       }
                       onChange={() =>
                         handleChange(
-                          'runAssiged',
-                          'email',
-                          !notificationList[0]?.runAssiged[0]?.email,
+                          "runAssiged",
+                          "email",
+                          !notificationList[0]?.runAssiged[0]?.email
                         )
                       }
-                      inputProps={{ 'aria-label': 'ant design' }}
+                      inputProps={{ "aria-label": "ant design" }}
                       name="email"
                     />
                   </Stack>
@@ -392,10 +384,10 @@ const Notification = () => {
               container
               spacing={2}
               sx={{
-                width: '100%',
+                width: "100%",
                 m: 0,
-                borderBottom: '2px solid #F3F3F3',
-                padding:'12px 0px 12px 12px'
+                borderBottom: "2px solid #F3F3F3",
+                padding: "12px 0px 12px 12px",
               }}
             >
               <Grid
@@ -431,13 +423,13 @@ const Notification = () => {
                     spacing={1}
                     alignItems="center"
                     justifyContent="flex-end"
-                    style={{ marginBottom: '0.8rem' }}
+                    style={{ marginBottom: "0.8rem" }}
                   >
                     <Typography
                       style={{
-                        fontWeight: '500',
-                        fontSize: '14px',
-                        color: '#767676',
+                        fontWeight: "500",
+                        fontSize: "14px",
+                        color: "#767676",
                       }}
                     >
                       Notification
@@ -451,12 +443,12 @@ const Notification = () => {
                       }
                       onChange={() =>
                         handleChange(
-                          'runsCommend',
-                          'notification',
-                          !notificationList[0]?.runsCommend[0]?.notification,
+                          "runsCommend",
+                          "notification",
+                          !notificationList[0]?.runsCommend[0]?.notification
                         )
                       }
-                      inputProps={{ 'aria-label': 'ant design' }}
+                      inputProps={{ "aria-label": "ant design" }}
                       name="notification"
                     />
                   </Stack>
@@ -468,9 +460,9 @@ const Notification = () => {
                   >
                     <Typography
                       style={{
-                        fontWeight: '500',
-                        fontSize: '14px',
-                        color: '#767676',
+                        fontWeight: "500",
+                        fontSize: "14px",
+                        color: "#767676",
                       }}
                     >
                       Email
@@ -484,12 +476,12 @@ const Notification = () => {
                       }
                       onChange={() =>
                         handleChange(
-                          'runsCommend',
-                          'email',
-                          !notificationList[0]?.runsCommend[0]?.email,
+                          "runsCommend",
+                          "email",
+                          !notificationList[0]?.runsCommend[0]?.email
                         )
                       }
-                      inputProps={{ 'aria-label': 'ant design' }}
+                      inputProps={{ "aria-label": "ant design" }}
                       name="email"
                     />
                   </Stack>

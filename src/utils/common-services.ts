@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { toast } from 'react-toastify';
- 
+import { toast } from "react-toastify";
+
 export const handleCheckboxChange =
   (
     Rows: any[],
@@ -8,7 +8,7 @@ export const handleCheckboxChange =
     setIsDeselectAllChecked: React.Dispatch<React.SetStateAction<boolean>>,
     setIsselectAllChecked: React.Dispatch<React.SetStateAction<boolean>>,
     setTableHeaderVisible: React.Dispatch<React.SetStateAction<boolean>>,
-    setVisibleRow?: React.Dispatch<React.SetStateAction<any[]>>,
+    setVisibleRow?: React.Dispatch<React.SetStateAction<any[]>>
   ) =>
   (event: React.ChangeEvent<HTMLInputElement>, id: string) => {
     const checked = event.target.checked;
@@ -23,8 +23,8 @@ export const handleCheckboxChange =
     setIsDeselectAllChecked(false);
     setIsselectAllChecked(false);
     setTableHeaderVisible(anyCheckboxSelected);
-    if(setVisibleRow){
-    setVisibleRow(updatedRows);
+    if (setVisibleRow) {
+      setVisibleRow(updatedRows);
     }
   };
 
@@ -36,7 +36,7 @@ export const handledAllSelected =
     setIsDeselectAllChecked: React.Dispatch<React.SetStateAction<boolean>>,
     setIsselectAllChecked: React.Dispatch<React.SetStateAction<boolean>>,
     setVisibleRow?: React.Dispatch<React.SetStateAction<any[]>>,
-    setRowId?: React.Dispatch<React.SetStateAction<any[]>>,
+    setRowId?: React.Dispatch<React.SetStateAction<any[]>>
   ) =>
   () => {
     // const allChecked = Rows.every((row: any) => row.is_checked);
@@ -47,10 +47,12 @@ export const handledAllSelected =
     setAssetsData(updatedRows);
     setIsDeselectAllChecked(false);
     setIsselectAllChecked(true);
-    if(setVisibleRow){
-    setVisibleRow(updatedRows);}
-    if(setRowId){
-    setRowId(rowsId.flat());}
+    if (setVisibleRow) {
+      setVisibleRow(updatedRows);
+    }
+    if (setRowId) {
+      setRowId(rowsId.flat());
+    }
     // }
   };
 
@@ -62,7 +64,7 @@ export const handleDeCheckboxChange =
     setIsDeselectAllChecked: React.Dispatch<React.SetStateAction<boolean>>,
     setIsselectAllChecked: React.Dispatch<React.SetStateAction<boolean>>,
     setTableHeaderVisible: React.Dispatch<React.SetStateAction<boolean>>,
-    setRowId?: React.Dispatch<React.SetStateAction<any[]>>,
+    setRowId?: React.Dispatch<React.SetStateAction<any[]>>
     // setVisibleRow: React.Dispatch<React.SetStateAction<any[]>>
   ) =>
   () => {
@@ -74,20 +76,21 @@ export const handleDeCheckboxChange =
     setIsDeselectAllChecked(status);
     setIsselectAllChecked(false);
     setTableHeaderVisible(false);
-    if(setRowId){
-    setRowId([]);}
+    if (setRowId) {
+      setRowId([]);
+    }
     // setVisibleRow(updatedRows)
   };
 
 export const handleLogouFunction = (
-  message: string = `You have been successfully logged out!`,
+  message: string = `You have been successfully logged out!`
 ) => {
-  typeof window !== 'undefined' && window.localStorage.clear();
+  typeof window !== "undefined" && window.localStorage.clear();
   toast(`${message} !`, {
     style: {
-      background: '#00bf70',
-      color: '#fff',
+      background: "#00bf70",
+      color: "#fff",
     },
   });
-  window.location.href = '/login';
- };
+  window.location.href = "/login";
+};

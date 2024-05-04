@@ -25,7 +25,7 @@ import ApexCharts from "apexcharts";
 import ReactApexChart from "react-apexcharts";
 
 const url: any = process.env.REACT_APP_INFLUX_DB_URL;
-const token = process.env.REALTIME_TOKEN;
+const token = process.env.REACT_APP_REALTIME_TOKEN;
 const org: any = process.env.REACT_APP_INFLUX_DB_ORG;
 // const bucket = 'Pasco Codenode';
 const bucket = process.env.REACT_APP_BUCKET_NAME;
@@ -509,10 +509,16 @@ export default function RealtimeChart({
     const newData: any = {};
     // Example: Listen for messages from the server
     socket.on("message", (data: any) => {
+      console.log("setMessages", data);
+      // setMessages(data);
+
       channelTemp.forEach((channal: any, index: number) => {
+        // console.log("datasets");
         data.forEach((dataset: any) => {
           const sets = chart.datasets[index];
+          console.log("dataset", dataset);
           const series = dataset._field || dataset._measurement;
+          console.log("series", series);
           if (!(series in newData)) {
             newData[series] = [];
           }
@@ -522,6 +528,7 @@ export default function RealtimeChart({
             y: parseFloat(yValue),
           });
 
+          console.log("newData", newData);
           if (
             dataset !== undefined &&
             dataset._value !== undefined &&
@@ -542,11 +549,17 @@ export default function RealtimeChart({
       });
       Object.keys(newData).forEach((series) => {
         // Limiting to 10 data points for each series
+        console.log("series", series);
+        console.log("newData", newData);
         var newDataPoints: any = [...newData[series]];
         // setTimeout(()=>{
         const maxLength = 40;
         newDataPoints = newData[series].slice(-maxLength);
-
+        // },1000)
+        // var newDataPoints = newData[series].slice(-maxLength);
+        console.log("newDataPoints", newDataPoints);
+        console.log("chartDatas", chartDatas);
+        console.log("Series:", series);
         setChartDatas((prevChartData: any) => ({
           ...prevChartData,
           [series]: newDataPoints,
@@ -575,8 +588,10 @@ export default function RealtimeChart({
     setRealTimeSeriesList(seriesData);
     setRealTimeData(RealTimeData);
     setRealTimeSeries(seriesList); // Update state with the received data
+    console.log("seriesList--", seriesList);
     // Clean up the socket connection when the component unmounts
     return () => {
+      console.log("hello");
       // socket.emit("leaveRoom", measure);
 
       socket.disconnect();
@@ -680,6 +695,7 @@ export default function RealtimeChart({
     let yaxisList: any = [...yAxisList];
     const chartDatasValue = chartDatas;
     const realTimeSeries = realTimeSeriesList;
+    console.log("realTimeSeries1", realTimeSeries);
     const prevChannel = channels[index].sensor;
     let colorValue = [...selectedcolor];
     var updatedSelectedOptions: any;

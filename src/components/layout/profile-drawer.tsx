@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react';
-import Grid from '@mui/material/Grid';
-import TextField from '@mui/material/TextField';
+import React from "react";
+import Grid from "@mui/material/Grid";
+import TextField from "@mui/material/TextField";
 import {
   Box,
   Drawer,
@@ -12,48 +12,52 @@ import {
   Select,
   MenuItem,
   CircularProgress,
-} from '@mui/material';
-import InputAdornment from '@mui/material/InputAdornment';
-import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
-import logout from '../../assets/images/profile/logout.svg';
-import camera from '../../assets/images/profile/camera.svg';
-import profile from '../../assets/images/profile/profile.svg';
-import '../../assets/styles/css/profile.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchDepartmentById } from '../../api/departmentAPI';
-import { fetchLabById } from '../../api/labAPI';
-import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
-import { fetchOrganizationById } from '../../api/organizationAPI';
-import { fetchLoginUser, fetchSingleUserData, fetchUpdateUserData } from '../../api/userAPI';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { ToastContainer, toast } from 'react-toastify';
-import { fetchSingleRoleData } from '../../api/roleApi';
-import { signOut } from 'firebase/auth';
-import { auth } from '../../firebase.config';
-import AWS from 'aws-sdk';
-import LogoutConfirmationpopup from '../LogoutConfirmatiomPopup';
-import SpinerLoader from '../SpinnerLoader';
-import { handleLogouFunction } from '../../utils/common-services';
+} from "@mui/material";
+import InputAdornment from "@mui/material/InputAdornment";
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
+import logout from "../../assets/images/profile/logout.svg";
+import camera from "../../assets/images/profile/camera.svg";
+import profile from "../../assets/images/profile/profile.svg";
+import "../../assets/styles/css/profile.css";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchDepartmentById } from "../../api/departmentAPI";
+import { fetchLabById } from "../../api/labAPI";
+import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined";
+import { fetchOrganizationById } from "../../api/organizationAPI";
+import {
+  fetchLoginUser,
+  fetchSingleUserData,
+  fetchUpdateUserData,
+} from "../../api/userAPI";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { ToastContainer, toast } from "react-toastify";
+import { fetchSingleRoleData } from "../../api/roleApi";
+import { signOut } from "firebase/auth";
+import { auth } from "../../firebase.config";
+import AWS from "aws-sdk";
+import LogoutConfirmationpopup from "../LogoutConfirmatiomPopup";
+import SpinerLoader from "../SpinnerLoader";
+import { handleLogouFunction } from "../../utils/common-services";
 
 const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 const validationSchema = Yup.object().shape({
   firstName: Yup.string()
-    .required('First name is required')
-    .max(20, 'Must be 20 characters'),
+    .required("First name is required")
+    .max(20, "Must be 20 characters"),
   lastName: Yup.string()
-    .required('Last name is required')
-    .max(20, 'Must be 20 characters'),
+    .required("Last name is required")
+    .max(20, "Must be 20 characters"),
   email: Yup.string()
-    .required('Email is required')
-    .email('Invalid email')
-    .matches(emailRegex, 'In-correct email'),
-  phoneNumber: Yup.string().matches(/^\d{10}$/, 'Phone number have 10 digits'),
-  organisationId: Yup.string().required('Organistation is required'),
+    .required("Email is required")
+    .email("Invalid email")
+    .matches(emailRegex, "In-correct email"),
+  phoneNumber: Yup.string().matches(/^\d{10}$/, "Phone number have 10 digits"),
+  organisationId: Yup.string().required("Organistation is required"),
   departmentId: Yup.array()
-    .min(1, 'Please select at least one Department')
-    .required('Department is required'),
-  role: Yup.object().required('Role is required'),
+    .min(1, "Please select at least one Department")
+    .required("Department is required"),
+  role: Yup.object().required("Role is required"),
 });
 
 export default function AppProfileDrawer({
@@ -76,21 +80,21 @@ export default function AppProfileDrawer({
   const confirmationPopupRef: any = React.useRef(null);
   const dispatch: any = useDispatch();
   const departmentSliceData = useSelector(
-    (state: any) => state.department.data?.get_all_departments,
+    (state: any) => state.department.data?.get_all_departments
   );
   const labSliceData = useSelector(
-    (state: any) => state.lab.data?.get_all_labs,
+    (state: any) => state.lab.data?.get_all_labs
   );
   const organizationSliceData = useSelector(
-    (state: any) => state.organization.data?.get_all_organisations,
+    (state: any) => state.organization.data?.get_all_organisations
   );
   const userSliceData = useSelector((state: any) => state.user.data?.get_user);
   const roleSliceData = useSelector(
-    (state: any) => state.role.data?.find_roles,
+    (state: any) => state.role.data?.find_roles
   );
 
   const loginUserSliceData = useSelector(
-    (state: any) => state.userLogin?.data?.verifyToken,
+    (state: any) => state.userLogin?.data?.verifyToken
   );
   React.useEffect(() => {
     setDepartmentData(
@@ -98,32 +102,32 @@ export default function AppProfileDrawer({
         label: item.name,
         value: item.name,
         id: item._id,
-      })),
+      }))
     );
     setLabData(
       labSliceData?.map((item: any) => ({
         label: item.name,
         value: item._id,
         id: item._id,
-      })),
+      }))
     );
-    var org=  organizationSliceData?.filter(
+    var org = organizationSliceData?.filter(
       (organization: any) =>
-        organization._id === loginUserSliceData?.organisationId,
-    )
+        organization._id === loginUserSliceData?.organisationId
+    );
     setOrganizationData(
       org?.map((item: any) => ({
         label: item.name,
         value: item.name,
         id: item._id,
-      })),
+      }))
     );
     setRoleData(
       roleSliceData?.map((item: any) => ({
         label: item.name,
         value: item.name,
         id: item._id,
-      })),
+      }))
     );
   }, [departmentSliceData, labSliceData, organizationSliceData, roleSliceData]);
 
@@ -145,15 +149,15 @@ export default function AppProfileDrawer({
       dispatch(fetchSingleRoleData(payload2));
       dispatch(fetchSingleUserData(payload));
       dispatch(
-        fetchOrganizationById({ instituteId: loginUserSliceData?.instituteId }),
+        fetchOrganizationById({ instituteId: loginUserSliceData?.instituteId })
       );
       dispatch(
         fetchDepartmentById({
           organisationId: loginUserSliceData?.organisationId,
-        }),
+        })
       );
       dispatch(
-        fetchLabById({ departmentId: loginUserSliceData?.departmentId }),
+        fetchLabById({ departmentId: loginUserSliceData?.departmentId })
       );
       // Other logic specific to the profile drawer
       setEdit(true);
@@ -181,43 +185,50 @@ export default function AppProfileDrawer({
         }) => {
           if (isSucess?.get_user) {
             formik.setFieldValue(
-              'firstName',
-              isSucess?.get_user?.firstName || '',
-            );
-            formik.setFieldValue('lastName', isSucess?.get_user?.lastName || '');
-            formik.setFieldValue('email', isSucess?.get_user?.email || '');
-            formik.setFieldValue(
-              'phoneNumber',
-              isSucess?.get_user?.phoneNumber || '',
+              "firstName",
+              isSucess?.get_user?.firstName || ""
             );
             formik.setFieldValue(
-              'organisationId',
-              isSucess?.get_user?.organisationId || '',
+              "lastName",
+              isSucess?.get_user?.lastName || ""
+            );
+            formik.setFieldValue("email", isSucess?.get_user?.email || "");
+            formik.setFieldValue(
+              "phoneNumber",
+              isSucess?.get_user?.phoneNumber || ""
             );
             formik.setFieldValue(
-              'departmentId',
-              isSucess?.get_user?.departmentId?.map(
-                (item: any) =>
-                  departmentData?.find((obj: any) => obj.id === item),
-              ) || [],
+              "organisationId",
+              isSucess?.get_user?.organisationId || ""
             );
             formik.setFieldValue(
-              'laboratoryId',
-              isSucess?.get_user?.laboratoryId?.map(
-                (item: any) => labData?.find((obj: any) => obj.id === item),
-              ) || [],
+              "departmentId",
+              isSucess?.get_user?.departmentId?.map((item: any) =>
+                departmentData?.find((obj: any) => obj.id === item)
+              ) || []
             );
-            formik.setFieldValue('role', roleData?.find((obj: any) => obj.id === isSucess?.get_user?.role ) || [],);
             formik.setFieldValue(
-              'institution',
-              isSucess?.get_user?.instituteId || '',
+              "laboratoryId",
+              isSucess?.get_user?.laboratoryId?.map((item: any) =>
+                labData?.find((obj: any) => obj.id === item)
+              ) || []
+            );
+            formik.setFieldValue(
+              "role",
+              roleData?.find(
+                (obj: any) => obj.id === isSucess?.get_user?.role
+              ) || []
+            );
+            formik.setFieldValue(
+              "institution",
+              isSucess?.get_user?.instituteId || ""
             );
             setUploadedFile(isSucess?.get_user?.imageUrl);
             setTimeout(() => {
               setSideBarLoader(false);
             }, 1500);
           }
-        },
+        }
       )
       .catch((err: any) => {
         console.error(err);
@@ -248,7 +259,7 @@ export default function AppProfileDrawer({
       formik.values.departmentId?.map((item: any) => deptArray.push(item?.id));
       const labArray: any = [];
       formik.values.laboratoryId?.map((item: any) => labArray.push(item?.id));
-            
+
       const userValues: any = {
         // uid:"",
         firstName: values.firstName,
@@ -270,15 +281,15 @@ export default function AppProfileDrawer({
         toggleProfileDrawer();
         setEdit(true);
         setBtnLoading(false);
-        const token = window.sessionStorage.getItem('accessToken');
+        const token = window.sessionStorage.getItem("accessToken");
         const payload = {
           idToken: token,
         };
-        dispatch(fetchLoginUser(payload))
-        toast('Your profile details have been successfully updated !', {
+        dispatch(fetchLoginUser(payload));
+        toast("Your profile details have been successfully updated !", {
           style: {
-            background: '#00bf70',
-            color: '#fff',
+            background: "#00bf70",
+            color: "#fff",
           },
         });
       });
@@ -286,12 +297,12 @@ export default function AppProfileDrawer({
   };
   const formik = useFormik({
     initialValues: {
-      firstName: '',
-      lastName: '',
-      email: '',
-      phoneNumber: '',
-      organisationId: '',
-      institution: '',
+      firstName: "",
+      lastName: "",
+      email: "",
+      phoneNumber: "",
+      organisationId: "",
+      institution: "",
       departmentId: [],
       laboratoryId: [],
       role: [],
@@ -308,8 +319,8 @@ export default function AppProfileDrawer({
       .catch((error) => {
         toast(`Somethind went worng!`, {
           style: {
-            background: '#00bf70',
-            color: '#fff',
+            background: "#00bf70",
+            color: "#fff",
           },
         });
         console.error(error);
@@ -319,16 +330,16 @@ export default function AppProfileDrawer({
     const selectedFile = fileUploadField.current.files[0];
 
     const s3 = new AWS.S3({
-      region: 'us-east-1',
+      region: "us-east-1",
       accessKeyId: process.env.REACT_APP_ACCESSKEYID,
       secretAccessKey: process.env.REACT_APP_SECRETACCESSKEYID,
     });
     const keyPath = `profile/${Date.now()}`;
     const params = {
-      Bucket: 'test-run-v2',
+      Bucket: "test-run-v2",
       Key: keyPath,
       Body: selectedFile,
-      ACL: 'public-read',
+      ACL: "public-read",
     };
     setLoader(true);
     const result = s3.upload(params).promise();
@@ -336,17 +347,17 @@ export default function AppProfileDrawer({
       setUploadedFile(res.Location);
       toast(`Profile image has been uploaded successfully!`, {
         style: {
-          background: '#00bf70',
-          color: '#fff',
+          background: "#00bf70",
+          color: "#fff",
         },
       });
     });
     await result.catch(() => {
-      console.error('Failed to upload');
+      console.error("Failed to upload");
       toast(`Failed to upload !`, {
         style: {
-          background: '#e2445c',
-          color: '#fff',
+          background: "#e2445c",
+          color: "#fff",
         },
       });
     });
@@ -372,9 +383,9 @@ export default function AppProfileDrawer({
           flexShrink: 0,
           [`& .MuiDrawer-paper`]: {
             width: 600,
-            boxSizing: 'border-box',
+            boxSizing: "border-box",
           },
-          boxShadow: '-12px 4px 19px 0px #0000001A',
+          boxShadow: "-12px 4px 19px 0px #0000001A",
         }}
         onClose={() => {
           toggleProfileDrawer();
@@ -384,18 +395,18 @@ export default function AppProfileDrawer({
         }}
         disableScrollLock={true}
       >
-        <Box sx={{ overflow: 'auto' }}>
+        <Box sx={{ overflow: "auto" }}>
           <Box className="profile-page" sx={{ py: 2 }}>
             <Box className="profile-section1">
               <Box
                 sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
                 }}
               >
                 <CloseOutlinedIcon
-                  sx={{ cursor: 'pointer' }}
+                  sx={{ cursor: "pointer" }}
                   onClick={() => {
                     toggleProfileDrawer();
                     setEdit(true);
@@ -404,9 +415,9 @@ export default function AppProfileDrawer({
                 />
                 <Box
                   sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    cursor: 'pointer',
+                    display: "flex",
+                    alignItems: "center",
+                    cursor: "pointer",
                   }}
                   onClick={() => {
                     confirmationPopupRef.current.open(true);
@@ -420,26 +431,26 @@ export default function AppProfileDrawer({
                 {!loader ? (
                   <img
                     src={
-                      uploadedFile === null || uploadedFile === ''
+                      uploadedFile === null || uploadedFile === ""
                         ? profile
                         : uploadedFile
                     }
                     alt="profile"
                     className="profile-user"
                     style={{
-                      width: '200px',
-                      height: '200px',
-                      objectFit: 'cover',
-                      padding: uploadedFile === null ? '0px' : '16px',
+                      width: "200px",
+                      height: "200px",
+                      objectFit: "cover",
+                      padding: uploadedFile === null ? "0px" : "16px",
                     }}
                   />
                 ) : (
                   <CircularProgress
                     color="inherit"
                     style={{
-                      width: '200px',
-                      height: '200px',
-                      padding: '79px',
+                      width: "200px",
+                      height: "200px",
+                      padding: "79px",
                     }}
                     className="profile-user"
                   />
@@ -451,7 +462,7 @@ export default function AppProfileDrawer({
                   onClick={triggerFileUploadField}
                 />
                 <input
-                  style={{ display: 'none' }}
+                  style={{ display: "none" }}
                   type="file"
                   disabled={edit}
                   ref={fileUploadField}
@@ -461,7 +472,7 @@ export default function AppProfileDrawer({
               </Box>
             </Box>
             {sideBarLoader ? (
-              <SpinerLoader isLoader={sideBarLoader} type={'small'} />
+              <SpinerLoader isLoader={sideBarLoader} type={"small"} />
             ) : (
               <>
                 <Box className="edit-profile-btn">
@@ -478,18 +489,18 @@ export default function AppProfileDrawer({
                         lg={6}
                         sx={{
                           paddingRight: {
-                            xs: '0rem !important',
-                            sm: '1rem !important',
+                            xs: "0rem !important",
+                            sm: "1rem !important",
                           },
                         }}
                       >
-                        <Box style={{ position: 'relative' }}>
+                        <Box style={{ position: "relative" }}>
                           <label>
                             First name
-                            <span style={{ color: '#E2445C' }}>*</span>
+                            <span style={{ color: "#E2445C" }}>*</span>
                           </label>
                           <TextField
-                            className={edit ? 'bg-gray-input' : ''}
+                            className={edit ? "bg-gray-input" : ""}
                             margin="none"
                             fullWidth
                             id="firstName"
@@ -530,17 +541,17 @@ export default function AppProfileDrawer({
                         lg={6}
                         sx={{
                           paddingLeft: {
-                            xs: '0rem !important',
-                            sm: '1rem !important',
+                            xs: "0rem !important",
+                            sm: "1rem !important",
                           },
                         }}
                       >
-                        <Box style={{ position: 'relative' }}>
+                        <Box style={{ position: "relative" }}>
                           <label>
-                            Last name<span style={{ color: '#E2445C' }}>*</span>
+                            Last name<span style={{ color: "#E2445C" }}>*</span>
                           </label>
                           <TextField
-                            className={edit ? 'bg-gray-input' : ''}
+                            className={edit ? "bg-gray-input" : ""}
                             margin="normal"
                             fullWidth
                             id="lastName"
@@ -584,17 +595,17 @@ export default function AppProfileDrawer({
                         lg={6}
                         sx={{
                           paddingRight: {
-                            xs: '0rem !important',
-                            sm: '1rem !important',
+                            xs: "0rem !important",
+                            sm: "1rem !important",
                           },
                         }}
                       >
-                        <Box style={{ position: 'relative' }}>
+                        <Box style={{ position: "relative" }}>
                           <label>
-                            Email<span style={{ color: '#E2445C' }}>*</span>
+                            Email<span style={{ color: "#E2445C" }}>*</span>
                           </label>
                           <TextField
-                            className={'bg-gray-input'}
+                            className={"bg-gray-input"}
                             disabled={true}
                             inputProps={{ maxLength: 50 }}
                             margin="normal"
@@ -628,23 +639,23 @@ export default function AppProfileDrawer({
                         lg={6}
                         sx={{
                           paddingLeft: {
-                            xs: '0rem !important',
-                            sm: '1rem !important',
+                            xs: "0rem !important",
+                            sm: "1rem !important",
                           },
                         }}
                       >
-                        <Box style={{ position: 'relative' }}>
+                        <Box style={{ position: "relative" }}>
                           <label>Mobile</label>
                           <TextField
                             onInput={(e: any) => {
                               e.target.value = Math.max(
                                 0,
-                                parseInt(e.target.value),
+                                parseInt(e.target.value)
                               )
                                 .toString()
                                 .slice(0, 10);
                             }}
-                            className={edit ? 'bg-gray-input' : ''}
+                            className={edit ? "bg-gray-input" : ""}
                             inputProps={{ maxLength: 10 }}
                             margin="none"
                             fullWidth
@@ -660,8 +671,8 @@ export default function AppProfileDrawer({
                             disabled={
                               edit
                                 ? true
-                                : credencial?.profile_management?.editContact ===
-                                  true
+                                : credencial?.profile_management
+                                    ?.editContact === true
                                 ? false
                                 : true
                             }
@@ -669,7 +680,7 @@ export default function AppProfileDrawer({
                             InputProps={{
                               startAdornment: (
                                 <InputAdornment sx={{ mx: 2 }} position="start">
-                                  +91{' '}
+                                  +91{" "}
                                 </InputAdornment>
                               ),
                             }}
@@ -689,22 +700,22 @@ export default function AppProfileDrawer({
                       className="profile-inner multi-selection"
                     >
                       <Grid item xs={12} sm={12} md={12} lg={12}>
-                        <Box style={{ position: 'relative' }}>
+                        <Box style={{ position: "relative" }}>
                           <label>Organisation</label>
                           <Select
                             MenuProps={{
                               disableScrollLock: true,
                               marginThreshold: null,
                             }}
-                            className={edit ? 'bg-gray-input' : ''}
+                            className={edit ? "bg-gray-input" : ""}
                             style={{
-                              color: 'black',
-                              backgroundColor: edit ? '#f3f3f3' : 'white',
+                              color: "black",
+                              backgroundColor: edit ? "#f3f3f3" : "white",
                             }}
                             displayEmpty
                             IconComponent={ExpandMoreOutlinedIcon}
                             renderValue={
-                              formik.values.organisationId !== ''
+                              formik.values.organisationId !== ""
                                 ? undefined
                                 : () => (
                                     <Placeholder>
@@ -758,12 +769,12 @@ export default function AppProfileDrawer({
                       className="profile-inner multi-selection"
                     >
                       <Grid item xs={12} sm={12} md={12} lg={12}>
-                        <Box style={{ position: 'relative' }}>
+                        <Box style={{ position: "relative" }}>
                           <label>Department</label>
                           <Autocomplete
                             multiple
                             id="department"
-                            className={edit ? 'bg-gray-input' : ''}
+                            className={edit ? "bg-gray-input" : ""}
                             disableCloseOnSelect
                             value={formik.values.departmentId}
                             options={
@@ -781,8 +792,8 @@ export default function AppProfileDrawer({
                                 {...params}
                                 placeholder={
                                   formik.values.departmentId?.length == 0
-                                    ? 'Department/s'
-                                    : ''
+                                    ? "Department/s"
+                                    : ""
                                 }
                               />
                             )}
@@ -791,8 +802,7 @@ export default function AppProfileDrawer({
                             disabled={
                               edit
                                 ? true
-                                : credencial?.profile_management
-                                    ?.editDepartment  
+                                : credencial?.profile_management?.editDepartment
                                 ? false
                                 : true
                             }
@@ -801,7 +811,7 @@ export default function AppProfileDrawer({
                               props,
                               option: any,
 
-                              { selected },
+                              { selected }
                             ) => (
                               <React.Fragment>
                                 <li {...props}>
@@ -838,22 +848,23 @@ export default function AppProfileDrawer({
                         lg={6}
                         sx={{
                           paddingRight: {
-                            xs: '0rem !important',
-                            sm: '1rem !important',
+                            xs: "0rem !important",
+                            sm: "1rem !important",
                           },
                         }}
                       >
-                        <Box style={{ position: 'relative' }}>
+                        <Box style={{ position: "relative" }}>
                           <label>Role</label>
                           <Autocomplete
                             id="Role"
                             disableClearable={true}
-                            className={edit ? 'bg-gray-input' : ' roleautocomplete'}
+                            className={
+                              edit ? "bg-gray-input" : " roleautocomplete"
+                            }
                             disableCloseOnSelect
                             value={formik.values.role}
                             options={
-                              roleData !== undefined &&
-                              roleData?.length !== 0
+                              roleData !== undefined && roleData?.length !== 0
                                 ? roleData
                                 : []
                             }
@@ -865,9 +876,7 @@ export default function AppProfileDrawer({
                               <TextField
                                 {...params}
                                 placeholder={
-                                  formik.values.role?.length === 0
-                                    ? 'Role'
-                                    : ''
+                                  formik.values.role?.length === 0 ? "Role" : ""
                                 }
                               />
                             )}
@@ -876,7 +885,7 @@ export default function AppProfileDrawer({
                             disabled={
                               edit
                                 ? true
-                                : credencial?.profile_management?.editRole 
+                                : credencial?.profile_management?.editRole
                                 ? false
                                 : true
                             }
@@ -885,13 +894,10 @@ export default function AppProfileDrawer({
                               props,
                               option: any,
 
-                              { selected },
+                              { selected }
                             ) => (
                               <React.Fragment>
-                                <li {...props}>
-                                  
-                                  {option.value}
-                                </li>
+                                <li {...props}>{option.value}</li>
                               </React.Fragment>
                             )}
                             onChange={(_, selectedOptions: any) => {
@@ -900,7 +906,6 @@ export default function AppProfileDrawer({
                                 role: selectedOptions,
                               });
                             }}
-                            
                           />
                           {/* <select
                             MenuProps={{
@@ -980,19 +985,19 @@ export default function AppProfileDrawer({
                         lg={6}
                         sx={{
                           paddingLeft: {
-                            xs: '0rem !important',
-                            sm: '1rem !important',
+                            xs: "0rem !important",
+                            sm: "1rem !important",
                           },
                         }}
                       >
-                        <Box style={{ position: 'relative' }}>
+                        <Box style={{ position: "relative" }}>
                           <label>Requestor ID/Tester ID</label>
                           <TextField
                             margin="normal"
                             fullWidth
                             id="Organisation"
                             inputProps={{ maxLength: 20 }}
-                            className={'bg-gray-input'}
+                            className={"bg-gray-input"}
                             disabled={true}
                             name="Organisation"
                             autoComplete="off"
@@ -1005,7 +1010,7 @@ export default function AppProfileDrawer({
                   </Box>
                   <Box
                     className="edit-details-profile"
-                    sx={{ padding: '15px 32px' }}
+                    sx={{ padding: "15px 32px" }}
                   >
                     <Button
                       variant="contained"
@@ -1029,7 +1034,7 @@ export default function AppProfileDrawer({
                       <Button
                         variant="contained"
                         className="add-btn"
-                        style={{ width: '95px' }}
+                        style={{ width: "95px" }}
                       >
                         <CircularProgress color="warning" size={20} />
                       </Button>

@@ -108,7 +108,7 @@ const CustomFields = () => {
     confirmationPopupRef.current.open(state);
   };
 
-  const handleRequestSort = () => { };
+  const handleRequestSort = () => {};
 
   const handleChange = (event: any, id: any) => {
     handleCheckboxChange(
@@ -117,7 +117,6 @@ const CustomFields = () => {
       setIsDeselectAllChecked,
       setIsselectAllChecked,
       setTableHeaderVisible
-
     )(event, id);
   };
 
@@ -128,7 +127,6 @@ const CustomFields = () => {
     setIsDeselectAllChecked,
     setIsselectAllChecked,
     setTableHeaderVisible
-    
   );
   const handledAllchange = handledAllSelected(
     isselectAllChecked,
@@ -232,9 +230,8 @@ const CustomFields = () => {
             <TableHeader
               numSelected={0}
               onRequestSort={handleRequestSort}
-              onSelectAllClick={function (
-                // event: React.ChangeEvent<HTMLInputElement>
-              ): void {
+              onSelectAllClick={function (): // event: React.ChangeEvent<HTMLInputElement>
+              void {
                 throw new Error("Function not implemented.");
               }}
               order={"asc"}
@@ -287,10 +284,10 @@ const CustomFields = () => {
                     {headers[4].is_show && (
                       <TableCell>
                         <Select
-                        MenuProps={{                   
-                          disableScrollLock: true,                   
-                          marginThreshold: null
-                        }}
+                          MenuProps={{
+                            disableScrollLock: true,
+                            marginThreshold: null,
+                          }}
                           className={
                             row.status === "1"
                               ? "active-select td-select"

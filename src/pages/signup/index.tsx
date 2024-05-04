@@ -1,48 +1,51 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import InputAdornment from '@mui/material/InputAdornment';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import InputLabel from '@mui/material/InputLabel';
-import { withCardLayout } from '../../components/auth';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import '../../assets/styles/css/App.css';
-import { ToastContainer, toast } from 'react-toastify';
-import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
-import { auth } from '../../firebase.config';
-import { postUserData } from '../../api/userAPI';
-import { useDispatch } from 'react-redux';
-import moment from 'moment';
-import { useNavigate } from 'react-router';
+import * as React from "react";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import InputLabel from "@mui/material/InputLabel";
+import { withCardLayout } from "../../components/auth";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import "../../assets/styles/css/App.css";
+import { ToastContainer, toast } from "react-toastify";
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+} from "firebase/auth";
+import { auth } from "../../firebase.config";
+import { postUserData } from "../../api/userAPI";
+import { useDispatch } from "react-redux";
+import moment from "moment";
+import { useNavigate } from "react-router";
 
 const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 
 const validationSchema = Yup.object().shape({
-  firstName: Yup.string().required('First name is required'),
-  lastName: Yup.string().required('Last name is required'),
+  firstName: Yup.string().required("First name is required"),
+  lastName: Yup.string().required("Last name is required"),
   email: Yup.string()
-    .required('Email is required')
-    .email('Invalid email')
-    .matches(emailRegex, 'In-correct email'),
+    .required("Email is required")
+    .email("Invalid email")
+    .matches(emailRegex, "In-correct email"),
   password: Yup.string()
-    .required('Password is required')
+    .required("Password is required")
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-      'Weak password',
+      "Weak password"
     ),
   confirm_password: Yup.string()
-    .required('Confirm password is required')
-    .oneOf([Yup.ref('password'), ''], 'Password mismatch'),
+    .required("Confirm password is required")
+    .oneOf([Yup.ref("password"), ""], "Password mismatch"),
   termsAndConditions: Yup.bool().oneOf(
     [true],
-    'You need to accept the terms and conditions',
+    "You need to accept the terms and conditions"
   ),
   // agree: Yup.boolean()
   //   .required('You must accept the Terms of Service to proceed')
@@ -50,8 +53,7 @@ const validationSchema = Yup.object().shape({
 });
 
 const SignUp = () => {
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   interface FormValidation {
     password: boolean;
     confirmpassword: boolean;
@@ -64,7 +66,7 @@ const SignUp = () => {
 
   const handleClickShowPassword = (
     key: keyof FormValidation,
-    newValue: boolean,
+    newValue: boolean
   ) => {
     const updatedValidation = { ...initalStatus };
     updatedValidation[key] = newValue;
@@ -72,7 +74,7 @@ const SignUp = () => {
   };
 
   const handleMouseDownPassword = (
-    event: React.MouseEvent<HTMLButtonElement>,
+    event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault();
   };
@@ -86,7 +88,7 @@ const SignUp = () => {
       values.email.toLowerCase(),
       values.password,
       values.confirm_password,
-      values.termsAndConditions,
+      values.termsAndConditions
     );
 
     if (isMatch) {
@@ -95,94 +97,97 @@ const SignUp = () => {
           createUserWithEmailAndPassword(
             auth,
             values.email.toLowerCase(),
-            values.password,
+            values.password
           )
-          .then((res: any) => {
-            const user = res; // Get the user object
-            sendEmailVerification(auth.currentUser)
-              .then(() => {
-                let payload = {
-                  firstName: values.firstName,
-                  lastName: values.lastName,
-                  fullName: `${values.firstName} ${values.lastName}`,
-                  email: values.email.toLowerCase(),
-                  uid: user.uid,
-                  // organisationId: process.env.ORGANIZATION_ID,
-                  // role: process.env.ROLE_ID,
-                  // phoneNumber:'9876543210',
-                  // departmentId: [process.env.DEPARTMENT_ID],
-                  // laboratoryId: [process.env.LABORATORY_ID],
-                  // instituteId: process.env.INSTITUTION_ID,
-                  createdOn: moment(new Date()).format('MM/DD/YYYY'),
-                  // createdBy: 'Self',
-                };
-                window.sessionStorage.setItem(
-                  'accessToken',
-                  res.user?.accessToken,
-                );
-    
-                dispatch(postUserData(payload))
-                  .then((res: any) => {
-                    toast(`Welcome to Testruns! You've signed up successfully! Please verify your email.`, {
-                      style: {
-                        background: '#00bf70',
-                        color: '#fff',
-                      },
+            .then((res: any) => {
+              const user = res; // Get the user object
+              sendEmailVerification(auth.currentUser)
+                .then(() => {
+                  let payload = {
+                    firstName: values.firstName,
+                    lastName: values.lastName,
+                    fullName: `${values.firstName} ${values.lastName}`,
+                    email: values.email.toLowerCase(),
+                    uid: user.uid,
+                    // organisationId: process.env.ORGANIZATION_ID,
+                    // role: process.env.ROLE_ID,
+                    // phoneNumber:'9876543210',
+                    // departmentId: [process.env.DEPARTMENT_ID],
+                    // laboratoryId: [process.env.LABORATORY_ID],
+                    // instituteId: process.env.INSTITUTION_ID,
+                    createdOn: moment(new Date()).format("MM/DD/YYYY"),
+                    // createdBy: 'Self',
+                  };
+                  window.sessionStorage.setItem(
+                    "accessToken",
+                    res.user?.accessToken
+                  );
+
+                  dispatch(postUserData(payload))
+                    .then((res: any) => {
+                      toast(
+                        `Welcome to Testruns! You've signed up successfully! Please verify your email.`,
+                        {
+                          style: {
+                            background: "#00bf70",
+                            color: "#fff",
+                          },
+                        }
+                      );
+                      // toast(res.create_user.message, {
+                      //   style: {
+                      //     background: '#00bf70',
+                      //     color: '#fff',
+                      //   },
+                      // });
+                      setTimeout(() => {
+                        navigate("/login");
+                      }, 1000);
+                    })
+                    .catch((error: any) => {
+                      console.error(error);
+                      toast(`Something went wrong!`, {
+                        style: {
+                          background: "#d92828",
+                          color: "#fff",
+                        },
+                      });
                     });
-                    // toast(res.create_user.message, {
-                    //   style: {
-                    //     background: '#00bf70',
-                    //     color: '#fff',
-                    //   },
-                    // });
-                    setTimeout(() => {
-                      navigate('/login');
-                    }, 1000);
-                  })
-                  .catch((error: any) => {
-                    console.error(error);
-                    toast(`Something went wrong!`, {
-                      style: {
-                        background: '#d92828',
-                        color: '#fff',
-                      },
-                    });
+                })
+                .catch((error) => {
+                  console.error(error);
+                  toast(`Error sending verification email!`, {
+                    style: {
+                      background: "#d92828",
+                      color: "#fff",
+                    },
                   });
-              })
-              .catch((error) => {
-                console.error(error);
-                toast(`Error sending verification email!`, {
-                  style: {
-                    background: '#d92828',
-                    color: '#fff',
-                  },
                 });
-              });
-          })
+            })
             .catch((error) => {
-              console.error("emailerror",error);
+              console.error("emailerror", error);
               toast(`Email already Exists !`, {
                 style: {
-                  background: '#d92828',
-                  color: '#fff',
+                  background: "#d92828",
+                  color: "#fff",
                 },
               });
             });
       } catch (error) {
-        console.error("Email",error);
+        console.error("Email", error);
         toast(`Email already Exists !`, {
           style: {
-            background: '#d92828',
-            color: '#fff',
+            background: "#d92828",
+            color: "#fff",
           },
         });
       }
     } else {
-      formik.setFieldError('firstName', 'Invalid First name');
-      formik.setFieldError('lastName', 'Invalid Last name');
-      formik.setFieldError('email', 'Invalid email');
-      formik.setFieldError('password', 'Invalid password');
-      formik.setFieldError('confirm_password', 'Invalid confirm password');
+      formik.setFieldError("firstName", "Invalid First name");
+      formik.setFieldError("lastName", "Invalid Last name");
+      formik.setFieldError("email", "Invalid email");
+      formik.setFieldError("password", "Invalid password");
+      formik.setFieldError("confirm_password", "Invalid confirm password");
     }
   };
 
@@ -192,14 +197,14 @@ const SignUp = () => {
     email: any,
     password: any,
     confirm_password: any,
-    termsAndConditions: boolean,
+    termsAndConditions: boolean
   ) => {
     if (
-      firstName !== '' &&
-      lastName !== '' &&
-      email !== '' &&
-      password !== '' &&
-      confirm_password !== '' &&
+      firstName !== "" &&
+      lastName !== "" &&
+      email !== "" &&
+      password !== "" &&
+      confirm_password !== "" &&
       termsAndConditions === true
     ) {
       return true;
@@ -210,11 +215,11 @@ const SignUp = () => {
 
   const formik = useFormik({
     initialValues: {
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
-      confirm_password: '',
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      confirm_password: "",
       termsAndConditions: false,
     },
     validationSchema: validationSchema,
@@ -236,7 +241,7 @@ const SignUp = () => {
       </Typography>
       <form onSubmit={formik.handleSubmit} autoComplete="off">
         <Box sx={{ mt: 4 }} className="auth-inner">
-          <Box style={{ position: 'relative' }}>
+          <Box style={{ position: "relative" }}>
             <InputLabel>First name</InputLabel>
             <TextField
               margin="normal"
@@ -259,7 +264,7 @@ const SignUp = () => {
               </Typography>
             )}
           </Box>
-          <Box style={{ position: 'relative' }}>
+          <Box style={{ position: "relative" }}>
             <InputLabel>Last name</InputLabel>
             <TextField
               margin="normal"
@@ -280,7 +285,7 @@ const SignUp = () => {
               </Typography>
             )}
           </Box>
-          <Box style={{ position: 'relative' }}>
+          <Box style={{ position: "relative" }}>
             <InputLabel>E-mail</InputLabel>
             <TextField
               autoComplete="off"
@@ -302,11 +307,11 @@ const SignUp = () => {
               </Typography>
             )}
           </Box>
-          <Box style={{ position: 'relative' }}>
+          <Box style={{ position: "relative" }}>
             <InputLabel>Password</InputLabel>
             <TextField
               autoComplete="off"
-              type={initalStatus.password ? 'text' : 'password'}
+              type={initalStatus.password ? "text" : "password"}
               fullWidth
               inputProps={{ maxLength: 24 }}
               InputProps={{
@@ -316,8 +321,8 @@ const SignUp = () => {
                       aria-label="toggle password visibility"
                       onClick={(e) =>
                         handleClickShowPassword(
-                          'password',
-                          !initalStatus.password,
+                          "password",
+                          !initalStatus.password
                         )
                       }
                       onMouseDown={handleMouseDownPassword}
@@ -351,10 +356,10 @@ const SignUp = () => {
               <Typography className="valid-field">Strong strength</Typography>
             )}
           </Box>
-          <Box style={{ position: 'relative' }}>
+          <Box style={{ position: "relative" }}>
             <InputLabel>Confirm password</InputLabel>
             <TextField
-              type={initalStatus.confirmpassword ? 'text' : 'password'}
+              type={initalStatus.confirmpassword ? "text" : "password"}
               fullWidth
               name="confirm_password"
               onPaste={(event) => {
@@ -366,7 +371,7 @@ const SignUp = () => {
               onBlur={formik.handleBlur}
               value={formik.values.confirm_password}
               variant="outlined"
-              style={{ userSelect: 'none' }}
+              style={{ userSelect: "none" }}
               error={
                 formik.touched.confirm_password &&
                 Boolean(formik.errors.confirm_password)
@@ -386,16 +391,16 @@ const SignUp = () => {
                 </Typography>
               )}
           </Box>
-          <Box sx={{ paddingLeft: '8px' }}>
+          <Box sx={{ paddingLeft: "8px" }}>
             <FormControlLabel
               control={
                 <Checkbox
                   value="remember"
                   color="primary"
                   sx={{
-                    color: '#9F9F9F',
-                    '&.Mui-checked': {
-                      color: '#FFC60B',
+                    color: "#9F9F9F",
+                    "&.Mui-checked": {
+                      color: "#FFC60B",
                     },
                   }}
                 />
@@ -406,24 +411,24 @@ const SignUp = () => {
           </Box>
           <Box
             sx={{
-              display: 'flex',
-              alignItems: 'flex-start',
+              display: "flex",
+              alignItems: "flex-start",
               mt: -2,
-              paddingLeft: '8px',
+              paddingLeft: "8px",
             }}
           >
             <FormControlLabel
               control={
                 <Checkbox
-                  inputProps={{ autoComplete: 'off' }} // Add autoComplete="off" for the Checkbox
+                  inputProps={{ autoComplete: "off" }} // Add autoComplete="off" for the Checkbox
                   checked={formik.values.termsAndConditions}
                   onChange={formik.handleChange}
                   name="termsAndConditions"
                   color="primary"
                   sx={{
-                    color: '#9F9F9F',
-                    '&.Mui-checked': {
-                      color: '#FFC60B',
+                    color: "#9F9F9F",
+                    "&.Mui-checked": {
+                      color: "#FFC60B",
                     },
                   }}
                 />
@@ -433,8 +438,8 @@ const SignUp = () => {
             />
             <Typography className="read-text">
               I have read and understood and agree with terms of service and
-              Privacy policy of Test Runs.{' '}
-              <span style={{ cursor: 'pointer' }}>[Read more]</span>
+              Privacy policy of Test Runs.{" "}
+              <span style={{ cursor: "pointer" }}>[Read more]</span>
             </Typography>
           </Box>
           {formik.touched.termsAndConditions &&
@@ -459,10 +464,10 @@ const SignUp = () => {
       </form>
       <Box>
         <Typography className="read-text">
-          Already have an account?{' '}
+          Already have an account?{" "}
           <span
-            style={{ color: '#FF8400', cursor: 'pointer' }}
-            onClick={() => navigate('/login')}
+            style={{ color: "#FF8400", cursor: "pointer" }}
+            onClick={() => navigate("/login")}
           >
             Click here to log in.
           </span>

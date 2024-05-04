@@ -1,40 +1,38 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react/display-name */
-import React from 'react';
-import Dialog from '@mui/material/Dialog';
+import React from "react";
+import Dialog from "@mui/material/Dialog";
 import {
   Autocomplete,
   Box,
   Button,
   Checkbox,
-  FormControl,
   Grid,
   InputAdornment,
   MenuItem,
   Select,
   TextField,
   Typography,
-} from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { CheckBoxOutlineBlank } from '@mui/icons-material';
-import { fetchUpdateUserData, postUserData } from '../../../api/userAPI';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchDepartmentById } from '../../../api/departmentAPI';
-import { fetchSingleRoleData } from '../../../api/roleApi';
-import { fetchLabById } from '../../../api/labAPI';
-import SuccessPopup from '../../../components/SuccessPopup';
-import Confirmationpopup from '../../../components/ConfirmationPopup';
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import { auth } from '../../../firebase.config';
-import { toast } from 'react-toastify';
-import { fetchinstitutionData } from '../../../api/institutionAPI';
-import moment from 'moment';
-import { fetchOrganizationById } from '../../../api/organizationAPI';
-import SpinerLoader from '../../../components/SpinnerLoader';
+} from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { fetchUpdateUserData, postUserData } from "../../../api/userAPI";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchDepartmentById } from "../../../api/departmentAPI";
+import { fetchSingleRoleData } from "../../../api/roleApi";
+import { fetchLabById } from "../../../api/labAPI";
+import SuccessPopup from "../../../components/SuccessPopup";
+import Confirmationpopup from "../../../components/ConfirmationPopup";
+import { updateProfile } from "firebase/auth";
+import { auth } from "../../../firebase.config";
+import { toast } from "react-toastify";
+import { fetchinstitutionData } from "../../../api/institutionAPI";
+import moment from "moment";
+import { fetchOrganizationById } from "../../../api/organizationAPI";
+import SpinerLoader from "../../../components/SpinnerLoader";
 
 const phoneRegExp =
   /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
@@ -42,29 +40,29 @@ const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string()
-    .required('First name is required')
-    .max(30, 'Must be 20 characters'),
+    .required("First name is required")
+    .max(30, "Must be 20 characters"),
   lastName: Yup.string()
-    .required('Last name is required')
-    .max(20, 'Must be 20 characters'),
+    .required("Last name is required")
+    .max(20, "Must be 20 characters"),
   email: Yup.string()
-    .required('Email is required')
-    .email('Invalid email')
-    .matches(emailRegex, 'In-correct email'),
+    .required("Email is required")
+    .email("Invalid email")
+    .matches(emailRegex, "In-correct email"),
   phoneNumber: Yup.string().notRequired(),
   // .matches(phoneRegExp, 'Phone number is not valid')
   // .min(10, "Enter valid number")
   // .max(10, "too long").required("Mobile number is required"),
-  organisationId: Yup.string().required('Organistation is required'),
-  instituteId: Yup.string().required('Institution is required'),
+  organisationId: Yup.string().required("Organistation is required"),
+  instituteId: Yup.string().required("Institution is required"),
   departmentId: Yup.array()
-    .min(1, 'Please select at least one Department')
-    .required('Department is required'),
+    .min(1, "Please select at least one Department")
+    .required("Department is required"),
   laboratoryId: Yup.array()
-    .min(1, 'Please select at least one Laboratory')
-    .required('Laboratory is required'),
+    .min(1, "Please select at least one Laboratory")
+    .required("Laboratory is required"),
   // user_id: Yup.string().required(),
-  role: Yup.string().required('Role is required'),
+  role: Yup.string().required("Role is required"),
   // status: Yup.string().required("Status is required"),
 });
 
@@ -101,26 +99,26 @@ const UserForm = React.forwardRef(
       return <div>{children}</div>;
     };
     const loginUserSliceData = useSelector(
-      (state: any) => state.userLogin?.data?.verifyToken,
+      (state: any) => state.userLogin?.data?.verifyToken
     );
     const departmentSliceData = useSelector(
-      (state: any) => state.department.data?.get_all_departments,
+      (state: any) => state.department.data?.get_all_departments
     );
     const labSliceData = useSelector(
-      (state: any) => state.lab.data?.get_all_labs,
+      (state: any) => state.lab.data?.get_all_labs
     );
     const roleSliceData = useSelector(
-      (state: any) => state.role.data?.find_roles,
+      (state: any) => state.role.data?.find_roles
     );
     const organizationSliceData = useSelector(
-      (state: any) => state.organization.data?.get_all_organisations,
+      (state: any) => state.organization.data?.get_all_organisations
     );
     const institutionSliceData = useSelector(
-      (state: any) => state.institution.data?.get_all_institute,
+      (state: any) => state.institution.data?.get_all_institute
     );
     React.useImperativeHandle(ref, () => ({
       open(state: any, type: any, row: any) {
-        formik.setFieldValue('instituteId', loginUserSliceData?.instituteId);
+        formik.setFieldValue("instituteId", loginUserSliceData?.instituteId);
         setType(type);
 
         if (row?._id) {
@@ -128,39 +126,38 @@ const UserForm = React.forwardRef(
             setSideBarLoader(false);
             setUserData(row);
 
-            formik.setFieldValue('firstName', row?.firstName || '');
-            formik.setFieldValue('lastName', row?.lastName || '');
-            formik.setFieldValue('email', row?.email || '');
-            formik.setFieldValue('phoneNumber', row?.phoneNumber || '');
-            formik.setFieldValue('organisationId', row?.organisationId || '');
-            formik.setFieldValue('instituteId', row?.instituteId || '');
+            formik.setFieldValue("firstName", row?.firstName || "");
+            formik.setFieldValue("lastName", row?.lastName || "");
+            formik.setFieldValue("email", row?.email || "");
+            formik.setFieldValue("phoneNumber", row?.phoneNumber || "");
+            formik.setFieldValue("organisationId", row?.organisationId || "");
+            formik.setFieldValue("instituteId", row?.instituteId || "");
             formik.setFieldValue(
-              'departmentId',
-              row?.departmentId?.map(
-                (item: any) =>
-                  departmentData?.find((obj: any) => obj.id == item),
-              ) || [],
+              "departmentId",
+              row?.departmentId?.map((item: any) =>
+                departmentData?.find((obj: any) => obj.id == item)
+              ) || []
             );
             setDepartments(
-              row?.departmentId?.map(
-                (item: any) => departmentData?.find((obj: any) => obj?.id == item),
-              ),
+              row?.departmentId?.map((item: any) =>
+                departmentData?.find((obj: any) => obj?.id == item)
+              )
             );
             // formik.setFieldValue('departmentId', departmentSliceData);
             formik.setFieldValue(
-              'laboratoryId',
-              row?.laboratoryId?.map(
-                (item: any) => labData?.find((obj: any) => obj.id == item),
-              ) || [],
+              "laboratoryId",
+              row?.laboratoryId?.map((item: any) =>
+                labData?.find((obj: any) => obj.id == item)
+              ) || []
             );
             setLaboratory(
-              row?.laboratoryId?.map(
-                (item: any) => labData?.find((obj: any) => obj?.id == item),
-              ),
+              row?.laboratoryId?.map((item: any) =>
+                labData?.find((obj: any) => obj?.id == item)
+              )
             );
-            formik.setFieldValue('user_id', row?.user_id || '');
-            formik.setFieldValue('role', row?.role || '');
-            formik.setFieldValue('status', row?.status || '');
+            formik.setFieldValue("user_id", row?.user_id || "");
+            formik.setFieldValue("role", row?.role || "");
+            formik.setFieldValue("status", row?.status || "");
             // setRowValue(row?.get_uesr)
             setFormPopup(state);
           }
@@ -170,36 +167,36 @@ const UserForm = React.forwardRef(
           dispatch(
             fetchOrganizationById({
               instituteId: loginUserSliceData?.instituteId,
-            }),
+            })
           );
         }
       },
     }));
 
     React.useEffect(() => {
-      if (type == 'edit') {
+      if (type == "edit") {
         dispatch(fetchOrganizationById({ instituteId: userData?.instituteId }));
-        formik.setFieldValue('firstName', userData?.firstName || '');
-        formik.setFieldValue('lastName', userData?.lastName || '');
-        formik.setFieldValue('email', userData?.email || '');
-        formik.setFieldValue('phoneNumber', userData?.phoneNumber || '');
-        formik.setFieldValue('organisationId', userData?.organisationId || '');
-        formik.setFieldValue('instituteId', userData?.instituteId || '');
+        formik.setFieldValue("firstName", userData?.firstName || "");
+        formik.setFieldValue("lastName", userData?.lastName || "");
+        formik.setFieldValue("email", userData?.email || "");
+        formik.setFieldValue("phoneNumber", userData?.phoneNumber || "");
+        formik.setFieldValue("organisationId", userData?.organisationId || "");
+        formik.setFieldValue("instituteId", userData?.instituteId || "");
         formik.setFieldValue(
-          'departmentId',
-          userData?.departmentId?.map(
-            (item: any) => departmentData?.find((obj: any) => obj.id == item),
-          ) || [],
+          "departmentId",
+          userData?.departmentId?.map((item: any) =>
+            departmentData?.find((obj: any) => obj.id == item)
+          ) || []
         );
         formik.setFieldValue(
-          'laboratoryId',
-          userData?.laboratoryId?.map(
-            (item: any) => labData?.find((obj: any) => obj.id == item),
-          ) || [],
+          "laboratoryId",
+          userData?.laboratoryId?.map((item: any) =>
+            labData?.find((obj: any) => obj.id == item)
+          ) || []
         );
-        formik.setFieldValue('user_id', userData?.user_id || '');
-        formik.setFieldValue('role', userData?.role || '');
-        formik.setFieldValue('status', userData?.status || '');
+        formik.setFieldValue("user_id", userData?.user_id || "");
+        formik.setFieldValue("role", userData?.role || "");
+        formik.setFieldValue("status", userData?.status || "");
         setTimeout(() => {
           setSideBarLoader(false);
         }, 2000);
@@ -210,7 +207,7 @@ const UserForm = React.forwardRef(
       return true;
     };
 
-      React.useEffect(() => {
+    React.useEffect(() => {
       if (labSliceData) {
         const transformedLabs = labSliceData?.map((obj: any) => ({
           label: obj.name,
@@ -218,9 +215,8 @@ const UserForm = React.forwardRef(
           id: obj._id,
         }));
 
-        const matchedData = laboratory?.filter(
-          (lab: any) =>
-            transformedLabs?.some((transLab: any) => transLab?.id === lab?.id),
+        const matchedData = laboratory?.filter((lab: any) =>
+          transformedLabs?.some((transLab: any) => transLab?.id === lab?.id)
         );
 
         if (labEdit) {
@@ -252,24 +248,31 @@ const UserForm = React.forwardRef(
           departmentId: deptArray,
           laboratoryId: labArray,
           role: values.role,
-          createdOn: moment(new Date()).format('MM/DD/YYYY'),
-          createdBy: 'Admin',
+          createdOn: moment(new Date()).format("MM/DD/YYYY"),
+          createdBy: "Admin",
         };
 
-        if (type == 'edit') {
-          userValues['_id'] = userData?._id;
+        if (type == "edit") {
+          userValues["_id"] = userData?._id;
           await dispatch(fetchUpdateUserData(userValues));
           const auths: any = auth;
           await updateProfile(auths?.currentUser, {
             displayName: values.firstName,
           })
             .then((res) => {
-              toast(`${type == 'edit' ? 'User details have been updated successfully' : 'User has been created successfully. Welcome aboard!'}  !`, {
-                style: {
-                  background: '#00bf70',
-                  color: '#fff',
-                },
-              });
+              toast(
+                `${
+                  type == "edit"
+                    ? "User details have been updated successfully"
+                    : "User has been created successfully. Welcome aboard!"
+                }  !`,
+                {
+                  style: {
+                    background: "#00bf70",
+                    color: "#fff",
+                  },
+                }
+              );
             })
             .catch((error) => {
               console.error(error);
@@ -278,16 +281,19 @@ const UserForm = React.forwardRef(
         } else {
           await dispatch(postUserData(userValues))
             .then((res: any) => {
-              toast(res?.create_user!==undefined?res?.create_user?.message:"user already exits", {
-                style: {
-                  background:
-                  res?.create_user==undefined
-                      ? 'red'
-                      : '#00bf70',
-                  color: '#fff',
-                  textTransform: 'capitalize',
-                },
-              });
+              toast(
+                res?.create_user !== undefined
+                  ? res?.create_user?.message
+                  : "user already exits",
+                {
+                  style: {
+                    background:
+                      res?.create_user == undefined ? "red" : "#00bf70",
+                    color: "#fff",
+                    textTransform: "capitalize",
+                  },
+                }
+              );
               submitFormPopup();
             })
             .catch((err: any) => {
@@ -295,16 +301,16 @@ const UserForm = React.forwardRef(
             });
         }
       } else {
-        formik.setFieldError('first_name', 'Invalid first name');
+        formik.setFieldError("first_name", "Invalid first name");
       }
     };
 
     const clearForm = () => {
       formik.resetForm();
-      setLaboratory([])
-      setDepartments([])
-      formik.setFieldValue('departmentId', []);
-      formik.setFieldValue('laboratoryId', []);
+      setLaboratory([]);
+      setDepartments([]);
+      formik.setFieldValue("departmentId", []);
+      formik.setFieldValue("laboratoryId", []);
     };
     const submitFormPopup = () => {
       setFormPopup(false);
@@ -325,17 +331,17 @@ const UserForm = React.forwardRef(
 
     const formik: any = useFormik({
       initialValues: {
-        firstName: rowVal?.firstName ? rowVal?.firstName : '',
-        lastName: rowVal?.lastName ? rowVal?.lastName : '',
-        email: rowVal?.email ? rowVal?.email : '',
-        phoneNumber: rowVal?.phoneNumber ? rowVal?.phoneNumber : '',
-        organisationId: rowVal?.organisationId ? rowVal?.organisationId : '',
-        instituteId: rowVal?.instituteId ? rowVal?.instituteId : '',
+        firstName: rowVal?.firstName ? rowVal?.firstName : "",
+        lastName: rowVal?.lastName ? rowVal?.lastName : "",
+        email: rowVal?.email ? rowVal?.email : "",
+        phoneNumber: rowVal?.phoneNumber ? rowVal?.phoneNumber : "",
+        organisationId: rowVal?.organisationId ? rowVal?.organisationId : "",
+        instituteId: rowVal?.instituteId ? rowVal?.instituteId : "",
         departmentId: rowVal?.departmentId ? rowVal?.departmentId : [],
         laboratoryId: rowVal?.laboratoryId ? rowVal?.laboratoryId : [],
-        user_id: 'USER_12345678',
-        role: rowVal?.role ? rowVal?.role : '',
-        status: rowVal?.status ? rowVal?.status : '',
+        user_id: "USER_12345678",
+        role: rowVal?.role ? rowVal?.role : "",
+        status: rowVal?.status ? rowVal?.status : "",
       },
       validationSchema: validationSchema,
       onSubmit: onSubmit,
@@ -343,10 +349,10 @@ const UserForm = React.forwardRef(
 
     React.useEffect(() => {
       let payload: any = {};
-      if (formik.values.organisationId !== '') {
-        payload['organisationId'] = formik.values.organisationId;
+      if (formik.values.organisationId !== "") {
+        payload["organisationId"] = formik.values.organisationId;
       } else {
-        payload['organisationId'] = loginUserSliceData.organisationId;
+        payload["organisationId"] = loginUserSliceData.organisationId;
       }
       dispatch(fetchDepartmentById(payload));
     }, [formik.values.organisationId]);
@@ -366,7 +372,7 @@ const UserForm = React.forwardRef(
         roleSliceData?.map((item: any) => ({
           label: item.name,
           value: item._id,
-        })),
+        }))
       );
     }, [
       departmentSliceData,
@@ -379,7 +385,7 @@ const UserForm = React.forwardRef(
       const mappedDepartments = (userData?.departmentId || []).map(
         (id: string) => {
           var department = departmentSliceData?.find(
-            (obj: any) => obj._id == id,
+            (obj: any) => obj._id == id
           );
           // var dept1=department?.filter((department) => department !== null && department!==undefined)
           if (department !== undefined) {
@@ -400,19 +406,19 @@ const UserForm = React.forwardRef(
           }
 
           // Handle the case where the department with the specified ID is not found
-        },
+        }
       );
 
-      if (type == 'edit') {
+      if (type == "edit") {
         formik.setFieldValue(
-          'departmentId',
+          "departmentId",
           mappedDepartments[0] !== undefined && mappedDepartments[0] !== null
             ? mappedDepartments
-            : [],
+            : []
         );
       }
       setDepartmentData(
-        type == 'edit'
+        type == "edit"
           ? mappedDepartments?.length !== 0 &&
             mappedDepartments[0] !== undefined
             ? mappedDepartments
@@ -425,7 +431,7 @@ const UserForm = React.forwardRef(
               label: item.name,
               value: item.name,
               id: item._id,
-            })),
+            }))
       );
     }, [departmentSliceData]);
 
@@ -454,12 +460,12 @@ const UserForm = React.forwardRef(
         .filter((lab: any) => lab !== null);
 
       formik.setFieldValue(
-        'laboratoryId',
+        "laboratoryId",
         mappedDLabs !== undefined &&
           mappedDLabs[0] !== undefined &&
           mappedDLabs[0] !== null
           ? mappedDLabs
-          : [],
+          : []
       );
 
       setLabData(
@@ -467,7 +473,7 @@ const UserForm = React.forwardRef(
           label: item.name,
           value: item.name,
           id: item._id,
-        })),
+        }))
       );
     }, [labSliceData]);
 
@@ -480,17 +486,17 @@ const UserForm = React.forwardRef(
         instituteId: loginUserSliceData?.instituteId,
       };
       dispatch(fetchSingleRoleData(payload2));
-      formik.setFieldValue('instituteId', loginUserSliceData?.instituteId);
+      formik.setFieldValue("instituteId", loginUserSliceData?.instituteId);
       var organization = organizationSliceData?.filter(
         (organization: any) =>
-          organization._id === loginUserSliceData?.organisationId,
+          organization._id === loginUserSliceData?.organisationId
       );
       setOrganizationData(
         organization?.map((item: any) => ({
           label: item.name,
           value: item.name,
           id: item._id,
-        })),
+        }))
       );
     }, [loginUserSliceData, organizationSliceData]);
 
@@ -523,7 +529,7 @@ const UserForm = React.forwardRef(
                 />
               </Box>
               {sideBarLoader ? (
-                <SpinerLoader isLoader={sideBarLoader} type={'small'} />
+                <SpinerLoader isLoader={sideBarLoader} type={"small"} />
               ) : (
                 <>
                   <Box>
@@ -534,12 +540,12 @@ const UserForm = React.forwardRef(
                         sm={6}
                         md={6}
                         lg={6}
-                        sx={{ paddingRight: { sm: '1rem !important' } }}
+                        sx={{ paddingRight: { sm: "1rem !important" } }}
                       >
-                        <Box style={{ position: 'relative' }}>
-                          <label style={{ display: 'block' }}>
+                        <Box style={{ position: "relative" }}>
+                          <label style={{ display: "block" }}>
                             First name
-                            <span style={{ color: '#E2445C' }}>*</span>
+                            <span style={{ color: "#E2445C" }}>*</span>
                           </label>
                           <TextField
                             margin="none"
@@ -573,16 +579,16 @@ const UserForm = React.forwardRef(
                         md={6}
                         lg={6}
                         sx={{
-                          paddingLeft: { sm: '1rem !important' },
+                          paddingLeft: { sm: "1rem !important" },
                           paddingTop: {
-                            xs: '0rem !important',
-                            sm: '1rem !important',
+                            xs: "0rem !important",
+                            sm: "1rem !important",
                           },
                         }}
                       >
-                        <Box style={{ position: 'relative' }}>
-                          <label style={{ display: 'block' }}>
-                            Last name<span style={{ color: '#E2445C' }}>*</span>
+                        <Box style={{ position: "relative" }}>
+                          <label style={{ display: "block" }}>
+                            Last name<span style={{ color: "#E2445C" }}>*</span>
                           </label>
                           <TextField
                             margin="normal"
@@ -617,11 +623,11 @@ const UserForm = React.forwardRef(
                         sm={6}
                         md={6}
                         lg={6}
-                        sx={{ paddingRight: { sm: '1rem !important' } }}
+                        sx={{ paddingRight: { sm: "1rem !important" } }}
                       >
-                        <Box style={{ position: 'relative' }}>
-                          <label style={{ display: 'block' }}>
-                            Email ID<span style={{ color: '#E2445C' }}>*</span>
+                        <Box style={{ position: "relative" }}>
+                          <label style={{ display: "block" }}>
+                            Email ID<span style={{ color: "#E2445C" }}>*</span>
                           </label>
 
                           <TextField
@@ -636,8 +642,8 @@ const UserForm = React.forwardRef(
                             onBlur={formik.handleBlur}
                             value={formik.values.email}
                             size="small"
-                            className={type == 'edit' ? 'bg-gray-input' : ''}
-                            disabled={type == 'edit' ? true : false}
+                            className={type == "edit" ? "bg-gray-input" : ""}
+                            disabled={type == "edit" ? true : false}
                             error={
                               formik.touched.email &&
                               Boolean(formik.errors.email)
@@ -657,15 +663,15 @@ const UserForm = React.forwardRef(
                         md={6}
                         lg={6}
                         sx={{
-                          paddingLeft: { sm: '1rem !important' },
+                          paddingLeft: { sm: "1rem !important" },
                           paddingTop: {
-                            xs: '0rem !important',
-                            sm: '1rem !important',
+                            xs: "0rem !important",
+                            sm: "1rem !important",
                           },
                         }}
                       >
-                        <Box style={{ position: 'relative' }}>
-                          <label style={{ display: 'block' }}>
+                        <Box style={{ position: "relative" }}>
+                          <label style={{ display: "block" }}>
                             Mobile number
                           </label>
                           <TextField
@@ -678,7 +684,7 @@ const UserForm = React.forwardRef(
                             onInput={(e: any) => {
                               e.target.value = Math.max(
                                 0,
-                                parseInt(e.target.value),
+                                parseInt(e.target.value)
                               )
                                 .toString()
                                 .slice(0, 10);
@@ -696,7 +702,7 @@ const UserForm = React.forwardRef(
                             InputProps={{
                               startAdornment: (
                                 <InputAdornment sx={{ mx: 2 }} position="start">
-                                  +91{' '}
+                                  +91{" "}
                                 </InputAdornment>
                               ),
                             }}
@@ -718,18 +724,18 @@ const UserForm = React.forwardRef(
                         md={6}
                         lg={6}
                         sx={{
-                          paddingLeft: { sm: '1rem !important' },
+                          paddingLeft: { sm: "1rem !important" },
                           paddingTop: {
-                            xs: '1rem !important',
-                            sm: '1rem !important',
+                            xs: "1rem !important",
+                            sm: "1rem !important",
                           },
-                          paddingRight: { sm: '1rem !important' },
+                          paddingRight: { sm: "1rem !important" },
                         }}
                       >
-                        <Box style={{ position: 'relative' }}>
-                          <label style={{ display: 'block' }}>
+                        <Box style={{ position: "relative" }}>
+                          <label style={{ display: "block" }}>
                             Select role
-                            <span style={{ color: '#E2445C' }}>*</span>
+                            <span style={{ color: "#E2445C" }}>*</span>
                           </label>
                           <Select
                             MenuProps={{
@@ -740,7 +746,7 @@ const UserForm = React.forwardRef(
                             displayEmpty
                             IconComponent={ExpandMoreOutlinedIcon}
                             renderValue={
-                              formik.values.role !== ''
+                              formik.values.role !== ""
                                 ? undefined
                                 : () => <Placeholder>Select Role</Placeholder>
                             }
@@ -780,17 +786,17 @@ const UserForm = React.forwardRef(
                         md={6}
                         lg={6}
                         sx={{
-                          paddingLeft: { sm: '1rem !important' },
+                          paddingLeft: { sm: "1rem !important" },
                           paddingTop: {
-                            xs: '0rem !important',
-                            sm: '1rem !important',
+                            xs: "0rem !important",
+                            sm: "1rem !important",
                           },
                         }}
                       >
-                        <Box style={{ position: 'relative' }}>
-                          <label style={{ display: 'block' }}>
+                        <Box style={{ position: "relative" }}>
+                          <label style={{ display: "block" }}>
                             Institution
-                            <span style={{ color: '#E2445C' }}>*</span>
+                            <span style={{ color: "#E2445C" }}>*</span>
                           </label>
 
                           <Select
@@ -803,7 +809,7 @@ const UserForm = React.forwardRef(
                             disabled={true}
                             IconComponent={ExpandMoreOutlinedIcon}
                             renderValue={
-                              formik.values.instituteId !== ''
+                              formik.values.instituteId !== ""
                                 ? undefined
                                 : () => (
                                     <Placeholder>
@@ -819,12 +825,12 @@ const UserForm = React.forwardRef(
                             placeholder="Institution"
                             onChange={formik.handleChange}
                             onBlur={() => {
-                              formik.handleBlu();
-                                dispatch(
-                                  fetchOrganizationById({
-                                    instituteId: formik.values.instituteId,
-                                  }),
-                                );
+                              formik.handleBlur();
+                              dispatch(
+                                fetchOrganizationById({
+                                  instituteId: formik.values.instituteId,
+                                })
+                              );
                             }}
                             value={formik.values.instituteId}
                             size="small"
@@ -860,12 +866,12 @@ const UserForm = React.forwardRef(
                         sm={6}
                         md={6}
                         lg={6}
-                        sx={{ paddingRight: { sm: '1rem !important' } }}
+                        sx={{ paddingRight: { sm: "1rem !important" } }}
                       >
-                        <Box style={{ position: 'relative' }}>
-                          <label style={{ display: 'block' }}>
+                        <Box style={{ position: "relative" }}>
+                          <label style={{ display: "block" }}>
                             Organisation
-                            <span style={{ color: '#E2445C' }}>*</span>
+                            <span style={{ color: "#E2445C" }}>*</span>
                           </label>
 
                           <Select
@@ -879,9 +885,9 @@ const UserForm = React.forwardRef(
                             // disabled={
                             //   formik.values.instituteId !== '' ? false : true
                             // }
-                            disabled={type === 'edit'}
+                            disabled={type === "edit"}
                             renderValue={
-                              formik.values.organisationId !== ''
+                              formik.values.organisationId !== ""
                                 ? undefined
                                 : () => (
                                     <Placeholder>
@@ -898,12 +904,11 @@ const UserForm = React.forwardRef(
                             onChange={formik.handleChange}
                             onBlur={() => {
                               formik.handleBlur();
-                                dispatch(
-                                  fetchDepartmentById({
-                                    organisationId:
-                                      formik.values.organisationId,
-                                  }),
-                                );
+                              dispatch(
+                                fetchDepartmentById({
+                                  organisationId: formik.values.organisationId,
+                                })
+                              );
                             }}
                             value={formik.values.organisationId}
                             size="small"
@@ -927,7 +932,7 @@ const UserForm = React.forwardRef(
                             )}
                         </Box>
                       </Grid>
-                      {formik.values.role !== '65741c069d53d19df8321e6c' && (
+                      {formik.values.role !== "65741c069d53d19df8321e6c" && (
                         <Grid
                           item
                           xs={12}
@@ -935,17 +940,17 @@ const UserForm = React.forwardRef(
                           md={6}
                           lg={6}
                           sx={{
-                            paddingLeft: { sm: '1rem !important' },
+                            paddingLeft: { sm: "1rem !important" },
                             paddingTop: {
-                              xs: '0rem !important',
-                              sm: '1rem !important',
+                              xs: "0rem !important",
+                              sm: "1rem !important",
                             },
                           }}
                         >
-                          <Box style={{ position: 'relative' }}>
-                            <label style={{ display: 'block' }}>
+                          <Box style={{ position: "relative" }}>
+                            <label style={{ display: "block" }}>
                               Department/s
-                              <span style={{ color: '#E2445C' }}>*</span>
+                              <span style={{ color: "#E2445C" }}>*</span>
                             </label>
                             <Autocomplete
                               multiple
@@ -953,7 +958,7 @@ const UserForm = React.forwardRef(
                               disableCloseOnSelect
                               value={departments}
                               disabled={
-                                formik.values.organisationId !== ''
+                                formik.values.organisationId !== ""
                                   ? false
                                   : true
                               }
@@ -971,8 +976,8 @@ const UserForm = React.forwardRef(
                                   {...params}
                                   placeholder={
                                     departments?.length == 0
-                                      ? 'Department/s'
-                                      : ''
+                                      ? "Department/s"
+                                      : ""
                                   }
                                 />
                               )}
@@ -982,7 +987,7 @@ const UserForm = React.forwardRef(
                                 props,
                                 option: any,
 
-                                { selected },
+                                { selected }
                               ) => (
                                 <React.Fragment>
                                   <li {...props}>
@@ -1009,14 +1014,14 @@ const UserForm = React.forwardRef(
                                 });
                                 const dept: any = [];
                                 selectedOptions?.map((item: any) =>
-                                dept.push(item?.id),
-                              );
-                              dispatch(fetchLabById({ departmentId: dept }));
+                                  dept.push(item?.id)
+                                );
+                                dispatch(fetchLabById({ departmentId: dept }));
                               }}
                               onBlur={() => {
                                 var dept: any = [];
                                 departments?.map((item: any) =>
-                                  dept.push(item?.id),
+                                  dept.push(item?.id)
                                 );
                                 let payload: any = {
                                   departmentId: dept,
@@ -1039,7 +1044,7 @@ const UserForm = React.forwardRef(
                       spacing={2}
                       className="asset-popup prod-input-auto prod-multi"
                     >
-                      {formik.values.role !== '65741c069d53d19df8321e6c' && (
+                      {formik.values.role !== "65741c069d53d19df8321e6c" && (
                         <Grid
                           item
                           xs={12}
@@ -1047,18 +1052,18 @@ const UserForm = React.forwardRef(
                           md={6}
                           lg={6}
                           sx={{
-                            paddingLeft: { sm: '1rem !important' },
+                            paddingLeft: { sm: "1rem !important" },
                             paddingTop: {
-                              xs: '1rem !important',
-                              sm: '1rem !important',
+                              xs: "1rem !important",
+                              sm: "1rem !important",
                             },
-                            paddingRight: { sm: '1rem !important' },
+                            paddingRight: { sm: "1rem !important" },
                           }}
                         >
-                          <Box style={{ position: 'relative' }}>
-                            <label style={{ display: 'block' }}>
+                          <Box style={{ position: "relative" }}>
+                            <label style={{ display: "block" }}>
                               Laboratory/ies
-                              <span style={{ color: '#E2445C' }}>*</span>
+                              <span style={{ color: "#E2445C" }}>*</span>
                             </label>
 
                             <Autocomplete
@@ -1067,9 +1072,7 @@ const UserForm = React.forwardRef(
                               value={laboratory}
                               options={labData !== undefined ? labData : []}
                               disabled={
-                                departments?.length !== 0
-                                  ? false
-                                  : true
+                                departments?.length !== 0 ? false : true
                               }
                               getOptionLabel={(option: any) => option?.label}
                               isOptionEqualToValue={(option: any, value: any) =>
@@ -1081,8 +1084,8 @@ const UserForm = React.forwardRef(
                                   {...params}
                                   placeholder={
                                     laboratory?.length == 0
-                                      ? 'Laboratory/ies'
-                                      : ''
+                                      ? "Laboratory/ies"
+                                      : ""
                                   }
                                 />
                               )}
@@ -1091,7 +1094,7 @@ const UserForm = React.forwardRef(
                               renderOption={(
                                 props,
                                 option: any,
-                                { selected },
+                                { selected }
                               ) => (
                                 <React.Fragment>
                                   <li {...props}>
@@ -1210,8 +1213,8 @@ const UserForm = React.forwardRef(
                   </Box>
                   <Box
                     sx={{
-                      display: { xs: 'block', sm: 'flex' },
-                      justifyContent: 'flex-end',
+                      display: { xs: "block", sm: "flex" },
+                      justifyContent: "flex-end",
                       mt: 3,
                     }}
                   >
@@ -1228,7 +1231,7 @@ const UserForm = React.forwardRef(
                       type="submit"
                       variant="contained"
                       disabled={
-                        type == 'edit'
+                        type == "edit"
                           ? !formik.dirty
                           : Object.keys(formik.errors).length == 0
                           ? false
@@ -1237,7 +1240,7 @@ const UserForm = React.forwardRef(
                       // onClick={submitFormPopup}
                       className="add-btn"
                     >
-                      {type === 'edit' ? 'Update' : 'Create'}
+                      {type === "edit" ? "Update" : "Create"}
                     </Button>
                   </Box>
                 </>
@@ -1254,7 +1257,7 @@ const UserForm = React.forwardRef(
         />
       </div>
     );
-  },
+  }
 );
 
 export default UserForm;

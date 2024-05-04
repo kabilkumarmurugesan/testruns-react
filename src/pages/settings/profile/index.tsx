@@ -19,24 +19,16 @@ import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import search from "../../../assets/images/search.svg";
 import camera from "../../../assets/images/profile/camera.svg";
 import profile from "../../../assets/images/profile/profile.svg";
-import organisation from "../../../assets/images/profile/organisation.svg";
-import document from "../../../assets/images/profile/document.svg";
-import profile2 from "../../../assets/images/profile/profile2.svg";
 import { VisibilityOff, Visibility } from "@mui/icons-material";
 import { withSettingsLayout } from "../../../components/settings";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchDepartmentById,
-  fetchDepartmentData,
-} from "../../../api/departmentAPI";
-import { fetchLabById, fetchLabData } from "../../../api/labAPI";
- 
+import { fetchDepartmentById } from "../../../api/departmentAPI";
+import { fetchLabById } from "../../../api/labAPI";
 import { toast } from "react-toastify";
 import { fetchSingleRoleData } from "../../../api/roleApi";
 import {
@@ -44,7 +36,7 @@ import {
   fetchSingleUserData,
   fetchUpdateUserData,
 } from "../../../api/userAPI";
- import {
+import {
   EmailAuthProvider,
   reauthenticateWithCredential,
   updatePassword,
@@ -106,7 +98,6 @@ const validationSchemaProfile = Yup.object().shape({
 });
 
 const Profile = () => {
-
   const navigate = useNavigate();
 
   const [expanded, setExpanded] = React.useState<string | false>("panel1");
@@ -624,7 +615,7 @@ const Profile = () => {
                 {!loader ? (
                   <img
                     src={
-                      uploadedFile == null || uploadedFile == ""
+                      uploadedFile === null || uploadedFile === ""
                         ? profile
                         : uploadedFile
                     }
@@ -996,13 +987,13 @@ const Profile = () => {
                               }
                               getOptionLabel={(option: any) => option?.label}
                               isOptionEqualToValue={(option: any, value: any) =>
-                                value?.id == option?.id
+                                value?.id === option?.id
                               }
                               renderInput={(params) => (
                                 <TextField
                                   {...params}
                                   placeholder={
-                                    departments?.length == 0
+                                    departments?.length === 0
                                       ? "Department/s"
                                       : ""
                                   }
@@ -1115,7 +1106,7 @@ const Profile = () => {
                                 <TextField
                                   {...params}
                                   placeholder={
-                                    laboratory?.length == 0
+                                    laboratory?.length === 0
                                       ? "Laboratory/ies"
                                       : ""
                                   }

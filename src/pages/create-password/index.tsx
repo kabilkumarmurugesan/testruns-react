@@ -1,41 +1,39 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import InputAdornment from '@mui/material/InputAdornment';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import InputLabel from '@mui/material/InputLabel';
-import { withCardLayout } from '../../components/auth';
- import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import '../../assets/styles/css/App.css';
-import { ToastContainer, toast } from 'react-toastify';
-import { updatePassword } from 'firebase/auth';
-import { auth } from '../../firebase.config';
-import { useNavigate } from 'react-router';
+import * as React from "react";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import InputLabel from "@mui/material/InputLabel";
+import { withCardLayout } from "../../components/auth";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import "../../assets/styles/css/App.css";
+import { ToastContainer, toast } from "react-toastify";
+import { updatePassword } from "firebase/auth";
+import { auth } from "../../firebase.config";
+import { useNavigate } from "react-router";
 
 const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 
 const validationSchema = Yup.object().shape({
   // email: Yup.string().required("Email is required").email("Invalid email").matches(emailRegex, "In-correct email"),
   password: Yup.string()
-    .required('Password is required')
+    .required("Password is required")
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-      'Weak password',
+      "Weak password"
     ),
   confirm_password: Yup.string()
-    .required('Confirm password is required')
-    .oneOf([Yup.ref('password'), ''], 'Password mismatch'),
+    .required("Confirm password is required")
+    .oneOf([Yup.ref("password"), ""], "Password mismatch"),
 });
 
 const ResetPassword = () => {
-  const navigate = useNavigate()
-  // const [showPassword, setShowPassword] = React.useState(false);
-  // const [showPassword2, setShowPassword2] = React.useState(false);
+  const navigate = useNavigate();
   interface FormValidation {
     newpassword: boolean;
     confirmpassword: boolean;
@@ -48,7 +46,7 @@ const ResetPassword = () => {
 
   const handleClickShowPassword = (
     key: keyof FormValidation,
-    newValue: boolean,
+    newValue: boolean
   ) => {
     const updatedValidation = { ...initalStatus };
     updatedValidation[key] = newValue;
@@ -56,7 +54,7 @@ const ResetPassword = () => {
   };
 
   const handleMouseDownPassword = (
-    event: React.MouseEvent<HTMLButtonElement>,
+    event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault();
   };
@@ -65,7 +63,7 @@ const ResetPassword = () => {
     const isMatch = checkCredentials(
       // values.email,
       values.password,
-      values.confirm_password,
+      values.confirm_password
     );
     const user = auth.currentUser;
     if (isMatch) {
@@ -74,12 +72,12 @@ const ResetPassword = () => {
           // Update successful.
           toast(`Password created successful !`, {
             style: {
-              background: '#00bf70',
-              color: '#fff',
+              background: "#00bf70",
+              color: "#fff",
             },
           });
           setTimeout(() => {
-            navigate('/mypage');
+            navigate("/mypage");
           }, 2000);
         })
         .catch((error) => {
@@ -99,14 +97,14 @@ const ResetPassword = () => {
       // alert("Reset successful!");
       // navigate('/login')
     } else {
-      formik.setFieldError('email', 'Invalid email');
-      formik.setFieldError('password', 'Invalid password');
-      formik.setFieldError('confirm_password', 'Invalid confirm password');
+      formik.setFieldError("email", "Invalid email");
+      formik.setFieldError("password", "Invalid password");
+      formik.setFieldError("confirm_password", "Invalid confirm password");
     }
   };
 
   const checkCredentials = (password: any, confirm_password: any) => {
-    if (password !== '' && confirm_password !== '') {
+    if (password !== "" && confirm_password !== "") {
       return true;
     } else {
       return false;
@@ -116,8 +114,8 @@ const ResetPassword = () => {
   const formik = useFormik({
     initialValues: {
       // email: "",
-      password: '',
-      confirm_password: '',
+      password: "",
+      confirm_password: "",
     },
     validationSchema: validationSchema,
     onSubmit: onSubmit,
@@ -137,10 +135,10 @@ const ResetPassword = () => {
       </Typography>
       <form onSubmit={formik.handleSubmit}>
         <Box sx={{ mt: 4 }} className="auth-inner">
-          <Box style={{ position: 'relative' }}>
+          <Box style={{ position: "relative" }}>
             <InputLabel>New password</InputLabel>
             <TextField
-              type={initalStatus.newpassword ? 'text' : 'password'}
+              type={initalStatus.newpassword ? "text" : "password"}
               fullWidth
               InputProps={{
                 endAdornment: (
@@ -149,8 +147,8 @@ const ResetPassword = () => {
                       aria-label="toggle password visibility"
                       onClick={(e) =>
                         handleClickShowPassword(
-                          'newpassword',
-                          !initalStatus.newpassword,
+                          "newpassword",
+                          !initalStatus.newpassword
                         )
                       }
                       onMouseDown={handleMouseDownPassword}
@@ -185,10 +183,10 @@ const ResetPassword = () => {
               <Typography className="valid-field">Strong password</Typography>
             )}
           </Box>
-          <Box style={{ position: 'relative' }}>
+          <Box style={{ position: "relative" }}>
             <InputLabel>Confirm password</InputLabel>
             <TextField
-              type={initalStatus.confirmpassword ? 'text' : 'password'}
+              type={initalStatus.confirmpassword ? "text" : "password"}
               fullWidth
               InputProps={{
                 endAdornment: (
@@ -197,8 +195,8 @@ const ResetPassword = () => {
                       aria-label="toggle password visibility"
                       onClick={(e) =>
                         handleClickShowPassword(
-                          'confirmpassword',
-                          !initalStatus.confirmpassword,
+                          "confirmpassword",
+                          !initalStatus.confirmpassword
                         )
                       }
                       onMouseDown={handleMouseDownPassword}
@@ -220,7 +218,7 @@ const ResetPassword = () => {
                 event.preventDefault();
               }}
               onChange={formik.handleChange}
-              style={{ userSelect: 'none' }}
+              style={{ userSelect: "none" }}
               onBlur={formik.handleBlur}
               value={formik.values.confirm_password}
               variant="outlined"
@@ -258,10 +256,10 @@ const ResetPassword = () => {
       </form>
       <Box sx={{ mt: 5 }}>
         <Typography className="read-text">
-          Back to{' '}
+          Back to{" "}
           <span
-            style={{ color: '#FF8400', cursor: 'pointer' }}
-            onClick={() => navigate('/login')}
+            style={{ color: "#FF8400", cursor: "pointer" }}
+            onClick={() => navigate("/login")}
           >
             log in!
           </span>

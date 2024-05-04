@@ -1,17 +1,30 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import React from "react";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableSortLabel from "@mui/material/TableSortLabel";
 import "../../assets/styles/css/App.css";
+import { ProceduresRowData } from "../../modals/Procedures.modal";
 
 export default function TableHeader(props: any) {
   const {
+    onSelectAllClick,
+    order,
+    orderBy,
+    numSelected,
+    rowCount,
     onRequestSort,
     columns,
     // filters,
     handleTableSorting,
   } = props;
+
+  const createSortHandler =
+    (property: keyof ProceduresRowData) =>
+    (event: React.MouseEvent<unknown>) => {
+      onRequestSort(event, property);
+    };
 
   return (
     <TableHead>

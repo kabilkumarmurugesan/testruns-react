@@ -1,14 +1,14 @@
 import React from "react";
 import Dialog from "@mui/material/Dialog";
-import { Box,  Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
-const DeleteSuccessPopup =  React.forwardRef(({ close }: any, ref) => {
-    const [openPopup, setOpenPopup] = React.useState(false);
-    React.useImperativeHandle(ref, () => ({
-        open(state: any) {
-          setOpenPopup(state);
-        },
-      }));
+const DeleteSuccessPopup = React.forwardRef(({ close }: any, ref) => {
+  const [openPopup, setOpenPopup] = React.useState(false);
+  React.useImperativeHandle(ref, () => ({
+    open(state: any) {
+      setOpenPopup(state);
+    },
+  }));
   return (
     <Dialog
       style={{ zIndex: 2000 }}
@@ -20,12 +20,14 @@ const DeleteSuccessPopup =  React.forwardRef(({ close }: any, ref) => {
       fullWidth
       maxWidth="xs"
       className="popup-outer"
-      disableScrollLock={ true }
+      disableScrollLock={true}
     >
-      <Box className="popup-section" sx={{background:'#FFB9B9'}}>         
-          <Box sx={{textAlign:'center'}}>
-            <Typography className="cancel-unsave">Deleted Successfully.</Typography>           
-          </Box>
+      <Box className="popup-section" sx={{ background: "#FFB9B9" }}>
+        <Box sx={{ textAlign: "center" }}>
+          <Typography className="cancel-unsave">
+            Deleted Successfully.
+          </Typography>
+        </Box>
       </Box>
     </Dialog>
   );
