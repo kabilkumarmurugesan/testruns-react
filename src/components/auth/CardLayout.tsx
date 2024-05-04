@@ -262,7 +262,7 @@ export const CardLayout = ({ children }: any, props: any) => {
               <Typography className="test-runz">Test Runs</Typography>
             </Box>
             {(children.props.uri === "/login" ||
-              children.props.uri === "/") && (
+              children.props.uri == "/") && (
               <Box className="login-center">
                 <Typography className="sign-via">Sign In via</Typography>
                 <Box className="sign-via-btn">

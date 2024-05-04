@@ -1,5 +1,4 @@
-/* eslint-disable no-var run */
-import React from "react";
+import React, { useEffect } from "react";
 import PrivateRoute from "../../../components/PrivateRoute";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
@@ -60,7 +59,7 @@ interface TabPanelProps {
 }
 
 function CustomTabPanel(props: TabPanelProps) {
-  const navigate: any = useNavigate();
+
   const { children, value, index, ...other } = props;
 
   return (
@@ -90,7 +89,7 @@ function a11yProps(index: number) {
 export default function RunsDetails() {
   const dispatch: any = useDispatch();
   const location: any = useLocation();
-
+  const navigate: any = useNavigate();
   const [runzValue, setRunzValue] = React.useState<any>(location.state?.props);
   const [disableStart, setDisableStart] = React.useState<any>(
     runzValue?.status !== "Started"
@@ -123,10 +122,8 @@ export default function RunsDetails() {
   const [usedAsset, setUsedAsset] = React.useState<any>(null);
   const uses = htmlToJSON?.child.map((ele: any) => ele);
   const formRef: any = React.useRef(null);
-  const inputRefs = React.useRef<any>({});
   const runsPopupRef: any = React.useRef(null);
   const successPopupRef: any = React.useRef(null);
-  const prevStateRef = React.useRef(htmlToJSON);
   const [charts, setCharts] = React.useState<any>([]);
   const [startDate, setStartDate] = React.useState<any>(null);
   const [endDate, setEndDate] = React.useState<any>(null);
@@ -149,14 +146,14 @@ export default function RunsDetails() {
   runzId.push(runzValue?._id);
   var runzRow: any = [];
   runzRow.push(runzValue);
-  React.useEffect(() => {
+  useEffect(() => {
     if (typeof window !== "undefined") {
       const procedureId = { _id: window.location.pathname.split("/")[3] };
       dispatch(fetchSingleRunsData(procedureId));
     }
   }, [value, disableStop, disableStart]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     runzValue && setDisableChart(runzValue?.status === "Created");
     if (typeof window !== "undefined") {
       const runz = {
@@ -240,7 +237,7 @@ export default function RunsDetails() {
       });
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (runzValue) {
       setRunzValue(runzValue);
       setuserProcedure(userProcedure);
@@ -261,7 +258,7 @@ export default function RunsDetails() {
     }
   }, [runzValue, userProcedure, userRunzID, value]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     let text: any = "";
     if (userRunzResult !== null && userRunzResult !== "") {
       //   setResult(result)
@@ -291,7 +288,7 @@ export default function RunsDetails() {
       setUserRunzResult(text + "</ul>");
     }
   }, [userProcedure]);
-  React.useEffect(() => {
+  useEffect(() => {
     // Set a timer for 1 second (1000 milliseconds)
     const timerId = setTimeout(() => {
       if (procedureSliceData?.get_run) {
@@ -307,7 +304,7 @@ export default function RunsDetails() {
     return () => clearTimeout(timerId);
   }, [procedureSliceData, disableStart, disableStop, value]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const filtered =
       userRunzID?.userProcedure &&
       Object.entries(JSON.parse(userRunzID?.userProcedure)).filter(
@@ -326,7 +323,7 @@ export default function RunsDetails() {
     // getSateicDate()
   }, [userRunzID?.userProcedure, state, value]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     handleHtmlInput();
   }, [state?.content, userRunzID?.userProcedure, value]);
 
@@ -343,11 +340,11 @@ export default function RunsDetails() {
     getSateicDate();
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     dispatch(fetchTableChartData("655b261e7e26fb0012425184"));
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const data: any = [];
     const tableList: any = [];
     if (tableChartSlice) {
@@ -1000,11 +997,11 @@ export default function RunsDetails() {
     getSateicDate();
     // setHtmlInput((prev: any) => ({ ...prev, title: procedureSliceData?.get_run?.procedureId?.name}));
   };
-
+  var videoUrl = ''
   const uploadVideo = async (e: any) => {
     const file = e.target.files[0];
     if (file) {
-      const videoUrl = URL.createObjectURL(file);
+       videoUrl = URL.createObjectURL(file);
       if (videoUrl) {
         const editor = editorRef.current.editor;
         editorRef.current?.insertContent(
@@ -1755,7 +1752,7 @@ export default function RunsDetails() {
                       init={{
                         height: 500,
                         menubar: true,
-                         plugins: [
+                        plugins: [
                           "advlist",
                           "autolink",
                           "lists",

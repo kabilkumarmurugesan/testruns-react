@@ -19,7 +19,6 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase.config";
 import { useDispatch } from "react-redux";
 import { fetchLoginUser, fetchSingleUserData } from "../../api/userAPI";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { FormControlLabel } from "@mui/material";
 
@@ -37,9 +36,7 @@ const validationSchema = Yup.object().shape({
 
 const Login = () => {
   const navigate: any = useNavigate();
-  if (typeof window !== "undefined") {
-    isLoggedIn = localStorage.getItem("isLoggedIn");
-  }
+
   const [isSubmitted, setIsSubmitted] = React.useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);

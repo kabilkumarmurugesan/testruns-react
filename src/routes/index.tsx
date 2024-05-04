@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import PrivateRoute from "../components/PrivateRoute";
 import Login from "../pages/login";
 import OTP from "../pages/otp";
 import ForgotPassword from "../pages/forgot-password";
@@ -25,7 +24,21 @@ function AppRoute() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/mypage" element={<MyPage />} />
-          <Route path="runs" element={<Runs />} />
+          <Route path="/runs" element={<Runs />} />
+          <Route path="/otp" element={<OTP />} />
+          <Route path="/create-password" element={<ResetPassword />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/procedures" element={<Procedures />} />
+          <Route path="/runs/details/:id" element={<RunsDetails />} />
+          <Route path="/projects" element={<Projects />} />
+          <Route path="/assets" element={<Assets />} />
+          <Route path="/details/:id" element={<AssetDetails />} />
+          <Route path="/details/:id" element={<ProcedureDetails />} />
+          <Route path="/notifications" element={<NotificationPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/users" element={<UsersPage />} />
+          <Route path="/roles" element={<RolesPage />} />
+          <Route path="/billings" element={<Billings />} />
         </Routes>
       </Router>
     </>

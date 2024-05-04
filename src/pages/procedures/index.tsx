@@ -942,7 +942,7 @@ export default function Procedures() {
                                     onClick={(e: any) => clickHandler(e)}
                                     onChange={(event) => {
                                       // Procedure.push(row._id)
-                                      handleCheckboxValues(row._id),
+                                      handleCheckboxValues(row._id);
                                         handleChange(event, row._id);
                                     }}
                                   />

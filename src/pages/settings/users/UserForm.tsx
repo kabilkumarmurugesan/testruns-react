@@ -819,7 +819,7 @@ const UserForm = React.forwardRef(
                             placeholder="Institution"
                             onChange={formik.handleChange}
                             onBlur={() => {
-                              formik.handleBlur,
+                              formik.handleBlu();
                                 dispatch(
                                   fetchOrganizationById({
                                     instituteId: formik.values.instituteId,
@@ -897,7 +897,7 @@ const UserForm = React.forwardRef(
                             placeholder="Organization"
                             onChange={formik.handleChange}
                             onBlur={() => {
-                              formik.handleBlur,
+                              formik.handleBlur();
                                 dispatch(
                                   fetchDepartmentById({
                                     organisationId:

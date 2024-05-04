@@ -20,17 +20,15 @@ import { fetchAssetsName } from "../../api/assetsAPI";
 import { InfluxDB } from "@influxdata/influxdb-client";
 import { toast } from "react-toastify";
 import SpinerLoader from "../SpinnerLoader";
-import loadable from "@loadable/component";
 import io from "socket.io-client";
 import ApexCharts from "apexcharts";
+import ReactApexChart from "react-apexcharts";
 
-const ReactApexChart = loadable(() => import("react-apexcharts"));
-
-const url: any = process.env.INFLUX_DB_URL;
+const url: any = process.env.REACT_APP_INFLUX_DB_URL;
 const token = process.env.REALTIME_TOKEN;
-const org: any = process.env.INFLUX_DB_ORG;
+const org: any = process.env.REACT_APP_INFLUX_DB_ORG;
 // const bucket = 'Pasco Codenode';
-const bucket = process.env.BUCKET_NAME;
+const bucket = process.env.REACT_APP_BUCKET_NAME;
 
 const queryApi = new InfluxDB({ url, token }).getQueryApi(org);
 
@@ -799,9 +797,11 @@ export default function RealtimeChart({
     });
 
     function getUniqueListBy(arr: any, key: any) {
-      return [
-        ...new Map(arr.map((item: any) => [item[key].text, item])).values(),
-      ];
+      let NAry: any = new Map(
+        arr.map((item: any) => [item[key].text, item])
+      ).values();
+
+      return [...NAry];
     }
 
     const arr1: any = getUniqueListBy(newYAxis, "title");

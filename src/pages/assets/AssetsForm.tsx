@@ -23,7 +23,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined";
 import CloseIcon from "@mui/icons-material/Close";
-import "../../assets/styles/asset-popup.scss";
+import "../../assets/styles/css/asset-popup.css";
 import { Organization } from "../../modals";
 import { OrganizationList } from "../../utils/data";
 import { useFormik } from "formik";
@@ -34,7 +34,7 @@ import { fetchLabById } from "../../api/labAPI";
 import SuccessPopup from "../../components/SuccessPopup";
 import Confirmationpopup from "../../components/ConfirmationPopup";
 import moment from "moment";
-import preview from "../../assets/images/profile/preview.svg";
+import preview from "../../assets/images/profile/preview.png";
 import { toast } from "react-toastify";
 import AWS from "aws-sdk";
 
@@ -347,8 +347,8 @@ const Addnewpopup = React.forwardRef(
       const s3 = new AWS.S3({
         // params: { Bucket: S3_BUCKET, folderName: "profile" },
         region: "us-east-1",
-        accessKeyId: process.env.ACCESSKEYID,
-        secretAccessKey: process.env.SECRETACCESSKEYID,
+        accessKeyId: process.env.REACT_APP_ACCESSKEYID,
+        secretAccessKey: process.env.REACT_APP_SECRETACCESSKEYID,
       });
       const keyPath = `profile/${Date.now()}`;
       const params = {

@@ -888,7 +888,7 @@ export default function Assets() {
                                     }
                                     onClick={(e: any) => clickHandler(e)}
                                     onChange={(event) => {
-                                      handleCheckboxValues(row._id),
+                                      handleCheckboxValues(row._id);
                                         handleChange(event, row._id);
                                     }}
                                   />

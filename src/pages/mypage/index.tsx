@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PrivateRoute from "../../components/PrivateRoute";
 import { Box, Divider, Grid, Chip, Typography } from "@mui/material";
 import Table from "@mui/material/Table";
@@ -53,7 +53,6 @@ export default function MyPage() {
   const [runzData, setRunzData] = useState<any>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [currentMonth, setCurrentMonth] = useState();
-  const [currentYear, setCurrentYear] = useState();
   const [loader, setLoader] = React.useState(false);
   const [loader1, setLoader1] = React.useState(false);
 
@@ -67,7 +66,7 @@ export default function MyPage() {
     (state: any) => state.calendar_event.data
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     let pay = {
       month: `${new Date().getMonth() + 1}`,
       year: `${new Date().getFullYear()}`,
@@ -102,7 +101,7 @@ export default function MyPage() {
     dispatch(fetchNotificationMessageData(payload));
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     getAllAsset();
   }, [queryStrings]);
 
@@ -151,7 +150,7 @@ export default function MyPage() {
       });
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     setLoader1(true);
     const calendarMarkSet = new Set();
     const calendar = calendar_eventData?.runs_calender_data.map((item: any) => {
@@ -204,7 +203,7 @@ export default function MyPage() {
     return `${Math.floor(minutesDifference)}min ago`;
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (
       moment(selectedDate).format("MM/DD/YYYY") ===
       moment(new Date()).format("MM/DD/YYYY")
@@ -545,7 +544,6 @@ export default function MyPage() {
                   const month: any = activeStartDate?.getMonth();
                   const year: any = activeStartDate?.getFullYear();
                   setCurrentMonth(month + 1);
-                  setCurrentYear(year);
 
                   const calPayload = {
                     month: `${month + 1}`,

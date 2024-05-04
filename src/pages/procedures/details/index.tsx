@@ -340,11 +340,11 @@ export default function ProcedureDetails() {
   const checkCredentials = (values: any) => {
     return true;
   };
-
+  var videoUrl = ""
   const uploadVideo = async (e: any) => {
     const file = e.target.files[0];
     if (file) {
-      const videoUrl: any = URL.createObjectURL(file);
+       videoUrl = URL.createObjectURL(file);
       if (videoUrl) {
         const editor = editorRef.current.editor;
 
@@ -371,8 +371,8 @@ export default function ProcedureDetails() {
   const s3 = new AWS.S3({
     // params: { Bucket: S3_BUCKET, folderName: "profile" },
     region: "us-east-1",
-    accessKeyId: process.env.ACCESSKEYID,
-    secretAccessKey: process.env.SECRETACCESSKEYID,
+    accessKeyId: process.env.REACT_APP_ACCESSKEYID,
+    secretAccessKey: process.env.REACT_APP_SECRETACCESSKEYID,
   });
 
   return (
@@ -632,7 +632,7 @@ export default function ProcedureDetails() {
                               "image/jpg, image/jpeg, image/png"
                             );
                             input.onchange = function () {
-                              var file: any = this.files[0];
+                              const file: File | undefined = (input as HTMLInputElement)?.files?.[0];
                               var reader = new FileReader();
                               reader.onload = function () {
                                 const keyPath = `profile/${Date.now()}`;
@@ -655,21 +655,23 @@ export default function ProcedureDetails() {
                                     } else {
                                       const id =
                                         "blobid" + new Date().getTime();
-                                      const blobCache =
-                                        window?.tinymce?.activeEditor
-                                          .editorUpload.blobCache;
+                                        const blobCache = (window as any)?.tinymce?.activeEditor.editorUpload.blobCache;
                                       const blobInfo = blobCache.create(
                                         id,
                                         file,
                                         data.Location
                                       );
                                       blobCache.add(blobInfo);
+                                      if (file) {
                                       cb(data.Location, { alt: file.name });
+                                      }
                                     }
                                   }
                                 );
                               };
+                              if (file) {
                               reader.readAsDataURL(file);
+                              }
                             };
 
                             input.click();

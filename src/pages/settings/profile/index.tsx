@@ -535,8 +535,8 @@ const Profile = () => {
     const s3 = new AWS.S3({
       // params: { Bucket: S3_BUCKET, folderName: "profile" },
       region: "us-east-1",
-      accessKeyId: process.env.ACCESSKEYID,
-      secretAccessKey: process.env.SECRETACCESSKEYID,
+      accessKeyId: process.env.REACT_APP_ACCESSKEYID,
+      secretAccessKey: process.env.REACT_APP_SECRETACCESSKEYID,
     });
     const keyPath = `profile/${Date.now()}`;
     const params = {

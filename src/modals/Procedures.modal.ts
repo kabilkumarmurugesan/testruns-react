@@ -2,23 +2,22 @@ import { Filters } from '.';
 
 export interface ProceduresRowData {
   is_checked: boolean;
-  assetId: any;
   _id: string;
-  isDeleted: boolean;
+  isDeleted?: boolean;
   name: string;
   procedureNumber: string;
   procedureDetials: string;
   departmentId: [string];
   laboratoryId: [string];
-  organisationId: string | any;
+  organisationId?: string | any;
   assestId: string;
   userId: string;
   extraData: string;
   isActive: boolean;
   createdAt: string;
-  createdBy: string;
-  createdByName: string;
-  createdOn: string;
+  createdBy?: string;
+  createdByName?: string;
+  createdOn?: string;
   updatedAt: string;
   deletedAt: string;
 }

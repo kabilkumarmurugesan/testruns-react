@@ -320,8 +320,8 @@ export default function AppProfileDrawer({
 
     const s3 = new AWS.S3({
       region: 'us-east-1',
-      accessKeyId: process.env.ACCESSKEYID,
-      secretAccessKey: process.env.SECRETACCESSKEYID,
+      accessKeyId: process.env.REACT_APP_ACCESSKEYID,
+      secretAccessKey: process.env.REACT_APP_SECRETACCESSKEYID,
     });
     const keyPath = `profile/${Date.now()}`;
     const params = {
@@ -420,7 +420,7 @@ export default function AppProfileDrawer({
                 {!loader ? (
                   <img
                     src={
-                      uploadedFile == null || uploadedFile == ''
+                      uploadedFile === null || uploadedFile === ''
                         ? profile
                         : uploadedFile
                     }
@@ -430,7 +430,7 @@ export default function AppProfileDrawer({
                       width: '200px',
                       height: '200px',
                       objectFit: 'cover',
-                      padding: uploadedFile == null ? '0px' : '16px',
+                      padding: uploadedFile === null ? '0px' : '16px',
                     }}
                   />
                 ) : (
@@ -660,7 +660,7 @@ export default function AppProfileDrawer({
                             disabled={
                               edit
                                 ? true
-                                : credencial?.profile_management?.editContact ==
+                                : credencial?.profile_management?.editContact ===
                                   true
                                 ? false
                                 : true
@@ -730,7 +730,7 @@ export default function AppProfileDrawer({
                               edit
                                 ? true
                                 : credencial?.profile_management
-                                    ?.editOrganisation == true
+                                    ?.editOrganisation
                                 ? false
                                 : true
                             }
@@ -792,7 +792,7 @@ export default function AppProfileDrawer({
                               edit
                                 ? true
                                 : credencial?.profile_management
-                                    ?.editDepartment == true
+                                    ?.editDepartment  
                                 ? false
                                 : true
                             }
@@ -865,7 +865,7 @@ export default function AppProfileDrawer({
                               <TextField
                                 {...params}
                                 placeholder={
-                                  formik.values.role?.length == 0
+                                  formik.values.role?.length === 0
                                     ? 'Role'
                                     : ''
                                 }
@@ -876,8 +876,7 @@ export default function AppProfileDrawer({
                             disabled={
                               edit
                                 ? true
-                                : credencial?.profile_management?.editRole ==
-                                  true
+                                : credencial?.profile_management?.editRole 
                                 ? false
                                 : true
                             }

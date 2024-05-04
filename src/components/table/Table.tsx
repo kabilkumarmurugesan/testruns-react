@@ -52,30 +52,30 @@ import { useNavigate } from "react-router";
 
 function createData(
   is_checked: boolean,
-  id: string,
+  _id: string ,
   name: string,
   procedureNumber: string,
   procedureDetials: string,
-  departmentId: string,
-  laboratoryID: string,
+  departmentId: any,
+  laboratoryId: [string],
   assestId: string,
-  userID: string,
+  userId: string,
   extraData: string,
-  isActive: number,
+  isActive: any,
   createdAt: string,
   updatedAt: string,
   deletedAt: string
 ): ProceduresRowData {
   return {
     is_checked,
-    id,
+    _id,
     name,
     procedureNumber,
     procedureDetials,
     departmentId,
-    laboratoryID,
+    laboratoryId,
     assestId,
-    userID,
+    userId,
     extraData,
     isActive,
     createdAt,
@@ -91,12 +91,12 @@ const rows: any = [
     "MD5 Algorithm",
     "ID1001",
     "",
-    "DEPT-1001",
-    "LAB-1001",
+    ["DEPT-1001"],
+    ["LAB-1001"],
     "",
     "",
     "",
-    1,
+    true,
     "Username",
     "02/10/2023",
     ""
@@ -107,12 +107,12 @@ const rows: any = [
     "MD5 Algorithm",
     "ID1002",
     "",
-    "DEPT-1002",
-    "LAB-1001",
+    ["DEPT-1002"],
+    ["LAB-1001"],
     "",
     "",
     "",
-    1,
+    true,
     "Username",
     "02/10/2023",
     ""
@@ -123,12 +123,12 @@ const rows: any = [
     "SHA256 Algorithm",
     "ID1002",
     "",
-    "DEPT-1003",
-    "LAB-1002",
+    ["DEPT-1003"],
+    ["LAB-1002"],
     "",
     "",
     "",
-    1,
+    true,
     "Username",
     "02/10/2023",
     ""
@@ -139,12 +139,12 @@ const rows: any = [
     "Crypto Algorithm",
     "ID1003",
     "",
-    "DEPT-1003",
-    "LAB-1004",
+    ["DEPT-1003"],
+    ["LAB-1004"],
     "",
     "",
     "",
-    2,
+    true,
     "Username",
     "02/10/2023",
     ""
@@ -155,12 +155,12 @@ const rows: any = [
     "Data Mining",
     "ID1003",
     "",
-    "DEPT-1002",
-    "LAB-1003",
+    ["DEPT-1002"],
+    ["LAB-1003"],
     "",
     "",
     "",
-    2,
+    true,
     "Username",
     "02/10/2023",
     ""
@@ -251,7 +251,6 @@ function EnhancedTableHead(props: EnhancedTableProps) {
       onRequestSort(event, property);
     };
 
-  const navigate = useNavigate();
   const [answer, setAnswer] = React.useState<any>({});
 
   const Placeholder = ({ children }: any) => {
@@ -394,6 +393,7 @@ interface EnhancedTableToolbarProps {
   numSelected: number;
 }
 
+const navigate = useNavigate();
 function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
   const { numSelected } = props;
 

@@ -733,7 +733,7 @@ const Users = () => {
                                 checked={row.is_checked == true ? true : false}
                                 onClick={(e: any) => clickHandler(e)}
                                 onChange={(event) => {
-                                  handleCheckboxValues(row._id),
+                                  handleCheckboxValues(row._id);
                                     handleChange(event, row._id);
                                 }}
                               />
