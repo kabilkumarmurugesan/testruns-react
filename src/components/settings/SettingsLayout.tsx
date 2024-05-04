@@ -1,5 +1,4 @@
 import React from "react";
-import PrivateRoute from "../../components/PrivateRoute";
 import {
   Box,
   List,
@@ -107,7 +106,7 @@ export const SettingsLayout = ({ children }: any, props: any) => {
   };
 
   return (
-    <PrivateRoute>
+    <>
       <Box sx={{ background: "#fff", padding: "0px" }}>
         <Box sx={{ display: "flex" }}>
           <Box
@@ -181,6 +180,6 @@ export const SettingsLayout = ({ children }: any, props: any) => {
           </Box>
         </Box>
       </Box>
-    </PrivateRoute>
+    </>
   );
 };

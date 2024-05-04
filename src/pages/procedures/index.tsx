@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from "react";
-import PrivateRoute from "../../components/PrivateRoute";
 import {
   Box,
   Button,
@@ -513,7 +512,7 @@ export default function Procedures() {
   const filteredData = headers.filter((item: any) => item.is_show !== false);
 
   return (
-    <PrivateRoute>
+    <>
       <Box className="main-padding">
         <Box className="title-main">
           <Typography>Procedures</Typography>
@@ -943,7 +942,7 @@ export default function Procedures() {
                                     onChange={(event) => {
                                       // Procedure.push(row._id)
                                       handleCheckboxValues(row._id);
-                                        handleChange(event, row._id);
+                                      handleChange(event, row._id);
                                     }}
                                   />
                                 </Box>
@@ -1118,6 +1117,6 @@ export default function Procedures() {
         <DeleteSuccessPopup ref={deleteSuccessPopupRef} />
         <TablePopup ref={tablePopupRef} />
       </Box>
-    </PrivateRoute>
+    </>
   );
 }

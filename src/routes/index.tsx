@@ -16,6 +16,8 @@ import ProfilePage from "../pages/settings/profile";
 import UsersPage from "../pages/settings/users";
 import RolesPage from "../pages/settings/roles";
 import Billings from "../pages/billings";
+import ProtectedRoute from "./ProtectedRoute";
+import PrivateRoute from "../components/PrivateRoute";
 
 function AppRoute() {
   return (
@@ -23,22 +25,31 @@ function AppRoute() {
       <Router>
         <Routes>
           <Route path="/" element={<Login />} />
-          <Route path="/mypage" element={<MyPage />} />
-          <Route path="/runs" element={<Runs />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/otp" element={<OTP />} />
           <Route path="/create-password" element={<ResetPassword />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/procedures" element={<Procedures />} />
-          <Route path="/runs/details/:id" element={<RunsDetails />} />
-          <Route path="/projects" element={<Projects />} />
-          <Route path="/assets" element={<Assets />} />
-          <Route path="/details/:id" element={<AssetDetails />} />
-          <Route path="/details/:id" element={<ProcedureDetails />} />
-          <Route path="/notifications" element={<NotificationPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/users" element={<UsersPage />} />
-          <Route path="/roles" element={<RolesPage />} />
-          <Route path="/billings" element={<Billings />} />
+          <Route path="/" element={<PrivateRoute />}>
+            <Route path="/mypage" element={<MyPage />} />
+            <Route path="/runs" element={<Runs />} />
+            <Route path="/procedures" element={<Procedures />} />
+            <Route path="/runs/details/:id" element={<RunsDetails />} />
+            <Route path="/projects" element={<Projects />} />
+            <Route path="/assets" element={<Assets />} />
+            <Route path="/assets/details/:id" element={<AssetDetails />} />
+            <Route
+              path="/procedures/details/:id"
+              element={<ProcedureDetails />}
+            />
+            <Route
+              path="/settings/notifications"
+              element={<NotificationPage />}
+            />
+            <Route path="/settings/profile" element={<ProfilePage />} />
+            <Route path="/settings/users" element={<UsersPage />} />
+            <Route path="/settings/roles" element={<RolesPage />} />
+            <Route path="/billings" element={<Billings />} />
+          </Route>
         </Routes>
       </Router>
     </>

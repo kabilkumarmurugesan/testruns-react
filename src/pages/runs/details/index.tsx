@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import PrivateRoute from "../../../components/PrivateRoute";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import {
@@ -1114,7 +1113,7 @@ export default function RunsDetails() {
     setUsedAsset(data);
   };
   return (
-    <PrivateRoute>
+    <>
       {isLoader ? (
         <SpinerLoader isLoader={isLoader} />
       ) : (
@@ -1904,6 +1903,6 @@ export default function RunsDetails() {
           )}
         </>
       )}
-    </PrivateRoute>
+    </>
   );
 }

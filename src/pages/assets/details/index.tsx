@@ -1,6 +1,5 @@
 import React from "react";
-import PrivateRoute from '../../../components/PrivateRoute'
-import Successpopup from "../../../components/SuccessPopup"
+ import Successpopup from "../../../components/SuccessPopup"
 import { Box, Button, FormControl, Grid, MenuItem, Select, TextField, Typography } from "@mui/material";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -348,7 +347,7 @@ export default function AssetDetails() {
   // table end 
 
   return (
-    <PrivateRoute>
+    <>
       <Box className="main-padding">
         <Successpopup open={openSuccess} close={() => setSuccessOpen(false)} />
         <Box className="title-main" sx={{ borderBottom: '3px solid #F3F3F3', paddingBottom: '1rem' }}>
@@ -656,6 +655,6 @@ export default function AssetDetails() {
           </CustomTabPanel>
         </Box>
       </Box>
-    </PrivateRoute>
+    </>
   );
 }

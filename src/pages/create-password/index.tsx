@@ -86,16 +86,6 @@ const ResetPassword = () => {
           // An error ocurred
           // ...
         });
-      // toast(`Password Reset successful !`, {
-      //   style: {
-      //     background: '#00bf70', color: '#fff'
-      //   }
-      // });
-      // setTimeout(()=>{
-      //   navigate('/login')
-      // },2000)
-      // alert("Reset successful!");
-      // navigate('/login')
     } else {
       formik.setFieldError("email", "Invalid email");
       formik.setFieldError("password", "Invalid password");

@@ -1,7 +1,6 @@
 /* eslint-disable no-var */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect } from "react";
-import PrivateRoute from "../../components/PrivateRoute";
 import TableFilters from "../../components/table/TableFilters";
 import TablePagination from "../../components/table/TablePagination";
 import {
@@ -592,7 +591,7 @@ export default function Runs() {
   const filteredData = headers.filter((item: any) => item.is_show !== false);
 
   return (
-    <PrivateRoute>
+    <>
       <Box className="main-padding runz-page">
         <Box className="title-main">
           <Typography>Runs</Typography>
@@ -1273,6 +1272,6 @@ export default function Runs() {
         <DeleteSuccessPopup ref={deleteSuccessPopupRef} />
         <TablePopup ref={tablePopupRef} />
       </Box>
-    </PrivateRoute>
+    </>
   );
 }

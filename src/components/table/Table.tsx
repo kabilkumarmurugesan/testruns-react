@@ -20,7 +20,6 @@ import SuccessPopup from "../../components/SuccessPopup";
 import Confirmationpopup from "../../components/ConfirmationPopup";
 import ProcedureForm from "../../pages/procedures/ProcedureForm";
 import { Button } from "@mui/material";
-import PrivateRoute from "../../components/PrivateRoute";
 import AddIcon from "@mui/icons-material/Add";
 import "../../assets/styles/css/procedure.css";
 import { ProceduresRowData } from "../../modals/Procedures.modal";
@@ -52,7 +51,7 @@ import { useNavigate } from "react-router";
 
 function createData(
   is_checked: boolean,
-  _id: string ,
+  _id: string,
   name: string,
   procedureNumber: string,
   procedureDetials: string,
@@ -607,7 +606,7 @@ export default function EnhancedTable() {
     setCurrentPage(page);
   };
   return (
-    <PrivateRoute>
+    <>
       <Box className="main-padding">
         <Box className="title-main">
           <Typography>Procedures</Typography>
@@ -744,6 +743,6 @@ export default function EnhancedTable() {
         />
         <SuccessPopup ref={successPopupRef} />
       </Box>
-    </PrivateRoute>
+    </>
   );
 }

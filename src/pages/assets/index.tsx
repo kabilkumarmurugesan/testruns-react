@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import * as React from "react";
-import PrivateRoute from "../../components/PrivateRoute";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -495,7 +494,7 @@ export default function Assets() {
   const filteredData = headers.filter((item: any) => item.is_show !== false);
 
   return (
-    <PrivateRoute>
+    <>
       <Box className="main-padding">
         <Box className="title-main">
           <Typography>Assets</Typography>
@@ -889,7 +888,7 @@ export default function Assets() {
                                     onClick={(e: any) => clickHandler(e)}
                                     onChange={(event) => {
                                       handleCheckboxValues(row._id);
-                                        handleChange(event, row._id);
+                                      handleChange(event, row._id);
                                     }}
                                   />
                                 </Box>
@@ -1151,6 +1150,6 @@ export default function Assets() {
           <TablePopup ref={tablePopupRef} />
         </Box>
       </Box>
-    </PrivateRoute>
+    </>
   );
 }

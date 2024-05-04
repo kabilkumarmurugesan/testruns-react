@@ -34,7 +34,7 @@ import { fetchLabById } from "../../api/labAPI";
 import SuccessPopup from "../../components/SuccessPopup";
 import Confirmationpopup from "../../components/ConfirmationPopup";
 import moment from "moment";
-import preview from "../../assets/images/profile/preview.jpg";
+import preview from "../../assets/images/profile/preview.svg";
 import { toast } from "react-toastify";
 import AWS from "aws-sdk";
 

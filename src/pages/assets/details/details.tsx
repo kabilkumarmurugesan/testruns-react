@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import PrivateRoute from "../../../components/PrivateRoute";
-import Successpopup from "../../../components/SuccessPopup";
+ import Successpopup from "../../../components/SuccessPopup";
 import {
   Box,
   Button,
@@ -442,7 +441,7 @@ export default function AssetDetails() {
   };
 
   return (
-    <PrivateRoute>
+    <>
       <Box className="main-padding">
         <Successpopup open={openSuccess} close={() => setSuccessOpen(false)} />
         <Box
@@ -1111,6 +1110,6 @@ export default function AssetDetails() {
           <SuccessPopup ref={successPopupRef} type={"edit"} />
         </Box>
       </Box>
-    </PrivateRoute>
+    </>
   );
 }

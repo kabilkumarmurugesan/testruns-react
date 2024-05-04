@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import PrivateRoute from "../../components/PrivateRoute";
 import { Box, Divider, Grid, Chip, Typography } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -249,7 +248,7 @@ export default function MyPage() {
   const filteredData = arr.filter((item: any) => item.is_show !== false);
 
   return (
-    <PrivateRoute>
+    <>
       <Box className="main-padding mypage-page">
         <Box className="table-outer" sx={{ width: "100%" }}>
           <TableContainer className="tableHeight2">
@@ -646,6 +645,6 @@ export default function MyPage() {
         </Grid>
       </Box>
       <TablePopup ref={tablePopupRef} />
-    </PrivateRoute>
+    </>
   );
 }

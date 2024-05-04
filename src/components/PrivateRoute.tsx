@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { darkTheme, lightTheme } from "../utils/theme";
 import { Box, CssBaseline, ThemeProvider } from "@mui/material";
 import AppHeader from "./layout/header";
@@ -7,21 +7,18 @@ import AppProfileDrawer from "./layout/profile-drawer";
 import AppNotificationDrawer from "./layout/notification-drawer";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router";
+import { Outlet, Navigate, useLocation } from "react-router-dom";
 
 const PrivateRoute = ({ children }: any) => {
   const navigate = useNavigate();
+  const location = useLocation();
+
   const [width, setWidth] = useState(95);
   const [classn, setClassn] = useState<any>("closemenu");
   const [editProfile, setEditProfile] = useState(false);
   const [notificationList, setNotificationList] = useState(false);
   const [theme, setTheme] = useState(lightTheme);
-  if (typeof window !== "undefined") {
-    const storedData = localStorage.getItem("isLoggedIn");
-    if (!storedData) {
-      navigate("/login");
-      return null;
-    }
-  }
+  const storedData = localStorage.getItem("isLoggedIn");
 
   const toggleDrawer = () => {
     setWidth(width === 290 ? 95 : 290);
@@ -74,7 +71,11 @@ const PrivateRoute = ({ children }: any) => {
           }}
           className={`${width === 290 ? "wide-class" : "narrow-class"}`}
         >
-          {children}
+          {storedData ? (
+            <Outlet />
+          ) : (
+            <Navigate to="/" replace state={{ from: location }} />
+          )}
         </Box>
       </Box>
     </ThemeProvider>
