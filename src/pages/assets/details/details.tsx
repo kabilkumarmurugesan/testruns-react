@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Successpopup from "../../../components/SuccessPopup";
 import {
   Box,
@@ -89,10 +89,17 @@ const validationSchema = Yup.object().shape({
 });
 export default function AssetDetails() {
   const navigate = useNavigate();
+  const [selectedDatePurchase, setSelectedDatePurchase] = useState<any>(
+    dayjs()
+  );
+  const [selectedDateGuaranty, setSelectedDateGuaranty] = useState<any>(
+    dayjs()
+  );
   const [value, setValue] = React.useState(0);
   const Placeholder = ({ children }: any) => {
     return <div>{children}</div>;
   };
+
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
@@ -110,6 +117,7 @@ export default function AssetDetails() {
   };
   const [labEdit, setLabEdit] = React.useState(false);
   const successPopupRef: any = React.useRef(null);
+  const [editAcces, seteditAcces] = React.useState(true);
   const [openSuccess, setSuccessOpen] = React.useState(false);
   const [departmentData, setDepartmentData] = React.useState([]);
   const [labData, setLabData] = React.useState([]);
@@ -135,6 +143,7 @@ export default function AssetDetails() {
   );
 
   const dispatch: any = useDispatch();
+  const loginUserSliceData = useSelector((state: any) => state.userLogin.data);
 
   React.useEffect(() => {
     if (purchasedDateInputRef.current) {
@@ -146,6 +155,11 @@ export default function AssetDetails() {
   }, [purchasedDateInputRef.current, expiryDateInputRef.current]);
 
   React.useEffect(() => {
+    seteditAcces(
+      loginUserSliceData?.verifyToken?.role[0]?.asset_management?.edit
+    );
+    setSelectedDateGuaranty(dayjs(expireDate));
+    setSelectedDatePurchase(dayjs(purchaseDate));
     let payload = {
       assetId: [assetId],
     };
@@ -166,23 +180,7 @@ export default function AssetDetails() {
         console.error(err);
       });
   }, []);
-  // const departments: any =
-  // // []
-  // assetValue.departmentId?.map((item: any) => ({
-  //   label: item?.name,
-  //   value: item?.name,
-  //   id: item?._id,
-  // }));
-  // const laboratory: any =
-  // // []
-  // assetValue.laboratoryId?.map((item: any) => ({
-  //   label: item?.name,
-  //   value: item?.name,
-  //   id: item?._id,
-  // }));
-  // const AssetSliceData = useSelector(
-  //   (state: any) => state.assets.data?.get_asset,
-  // );
+
   const checkCredentials = (values: any) => {
     return true;
   };
@@ -240,6 +238,12 @@ export default function AssetDetails() {
   // }
 
   // };
+  const handleDateChangePurchase = (date: any) => {
+    setSelectedDatePurchase(date);
+  };
+  const handleDateChangeGuaranty = (date: any) => {
+    setSelectedDateGuaranty(date);
+  };
   const onSubmit = (values: any) => {
     // debugger
     const isMatch = checkCredentials(values.name);
@@ -252,11 +256,11 @@ export default function AssetDetails() {
         _id: assetValue._id,
         name: values.name,
         organisationId: values?.organisationId,
-        perchasedDate: values?.perchasedDate,
+        perchasedDate: moment(selectedDatePurchase?.$d).format("MM/DD/YYYY"),
         // lastUsedDate: values.lastUsedDate,
         assetImageUrl: values.assetImageUrl,
         availability: values.availability,
-        expiryDate: values?.expiryDate,
+        expiryDate: moment(selectedDateGuaranty?.$d).format("MM/DD/YYYY"),
         departmentId: deptArray,
         laboratoryId: labArray,
         status: values.status,
@@ -614,10 +618,8 @@ export default function AssetDetails() {
                               disableFuture
                               inputRef={purchasedDateInputRef}
                               format="MM/DD/YYYY"
-                              onChange={(selectedDate: any) =>
-                                handleDateChanges(selectedDate, "perchasedDate")
-                              }
-                              value={formik.values.perchasedDate}
+                              value={selectedDatePurchase} // Pass selectedDate as value
+                              onChange={handleDateChangePurchase}
                             />
                           </LocalizationProvider>
                           {formik.touched.perchasedDate &&
@@ -652,10 +654,9 @@ export default function AssetDetails() {
                               inputRef={expiryDateInputRef}
                               disablePast
                               format="MM/DD/YYYY"
-                              onChange={(selectedDate: any) =>
-                                handleDateChanges(selectedDate, "expiryDate")
-                              }
-                              value={formik.values.expiryDate}
+                              onChange={handleDateChangeGuaranty}
+                              // Pass handleDateChange as onChange
+                              value={selectedDateGuaranty} // Pass selectedDate as value
                             />
                           </LocalizationProvider>
                           {formik.touched.expiryDate &&

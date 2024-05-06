@@ -107,7 +107,7 @@ const RunsForm = React.forwardRef(
     const confirmationPopupRef: any = React.useRef();
     const successPopupRef: any = React.useRef();
     const dueDateInputRef: any = React.useRef(null);
-
+    const [selectedDate, setSelectedDate] = useState<any>(null);
     const [runsOpen, setRunsOpen] = React.useState(false);
     const [runCreate, setRunsCreate] = React.useState(false);
     const runzSliceData = useSelector((state: any) => state.runs.data);
@@ -143,6 +143,7 @@ const RunsForm = React.forwardRef(
         type === "edit" ? dayjs(runzSliceData?.get_run?.dueDate) : null
       );
       if (type === "edit") {
+        setSelectedDate(dayjs(runzSliceData?.get_run?.dueDate));
         setDueDate(dayjs(runzSliceData?.get_run?.dueDate, "MM/DD/YYYY"));
       }
     }, [runzSliceData]);
@@ -249,7 +250,7 @@ const RunsForm = React.forwardRef(
           laboratoryId: labArray,
           assignedTo: values.assignedTo,
           assignedBy: values.assignedBy,
-          dueDate: moment(values.dueDate).format("MM/DD/YYYY"),
+          dueDate: moment(selectedDate.$d).format("MM/DD/YYYY"),
           createdOn: moment(values.createdOn.$d).format("MM/DD/YYYY"),
           procedureName: procedureName,
           assignedToName: assignedToName,
@@ -304,7 +305,7 @@ const RunsForm = React.forwardRef(
         organisationId: singleUserData?.organisationId,
         procedureId: "",
         objective: "",
-        dueDate: dueDate,
+        dueDate: null,
         createdOn:
           type === "edit"
             ? createdDate
@@ -455,7 +456,9 @@ const RunsForm = React.forwardRef(
     };
 
     const opt = procedureSliceData?.Procedures;
-
+    const handleDateChange = (date: any) => {
+      setSelectedDate(date);
+    };
     return (
       <div>
         <Dialog
@@ -781,10 +784,8 @@ const RunsForm = React.forwardRef(
                         <DatePicker
                           disablePast
                           format="MM/DD/YYYY"
-                          onChange={(selectedDate) =>
-                            handleDateChanges(selectedDate, "dueDate")
-                          }
-                          value={dueDate}
+                          value={selectedDate} // Pass selectedDate as value
+                          onChange={handleDateChange}
                           inputRef={dueDateInputRef}
                         />
                       </LocalizationProvider>

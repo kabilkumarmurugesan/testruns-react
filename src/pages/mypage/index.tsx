@@ -43,12 +43,15 @@ export default function MyPage() {
   const [selectedDate, setSelectedDate] = useState(
     moment(new Date()).format("MM/DD/YYYY")
   );
+
   const [value, onChange] = useState<any>(
     moment(new Date()).format("MM/DD/YYYY")
   );
   const [CalendarContent, setCalendarContent] = useState([]);
   const [calendarEventData, setCalendarEventData] = useState([]);
-  const [CalendarMark, setCalendarMark] = useState<any>([]);
+  const [CalendarMark, setCalendarMark] = useState<any>([
+    moment(new Date()).format("MM/DD/YYYY"),
+  ]);
   const [runzData, setRunzData] = useState<any>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [currentMonth, setCurrentMonth] = useState();
@@ -278,7 +281,7 @@ export default function MyPage() {
                     rows={queryStrings.perPage}
                   />
                 </TableBody>
-              ) : !runzData || (runzData?.length === 0 && loader === false) ? (
+              ) : !runzData || (runzData?.length === 0 && !loader) ? (
                 <TableBody>
                   <Box
                     sx={{

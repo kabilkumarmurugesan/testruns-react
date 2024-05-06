@@ -93,7 +93,7 @@ const SignUp = () => {
 
     if (isMatch) {
       try {
-        values.email.toLowerCase(),
+        values.email.toLowerCase();
           createUserWithEmailAndPassword(
             auth,
             values.email.toLowerCase(),

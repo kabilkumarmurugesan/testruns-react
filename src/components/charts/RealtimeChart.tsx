@@ -10,7 +10,7 @@ import {
   Select,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined";
@@ -22,7 +22,7 @@ import { toast } from "react-toastify";
 import SpinerLoader from "../SpinnerLoader";
 import io from "socket.io-client";
 import ApexCharts from "apexcharts";
-import ReactApexChart from "react-apexcharts";
+// import ReactApexChart from "react-apexcharts";
 
 const url: any = process.env.REACT_APP_INFLUX_DB_URL;
 const token = process.env.REACT_APP_REALTIME_TOKEN;
@@ -31,7 +31,7 @@ const org: any = process.env.REACT_APP_INFLUX_DB_ORG;
 const bucket = process.env.REACT_APP_BUCKET_NAME;
 
 const queryApi = new InfluxDB({ url, token }).getQueryApi(org);
-
+const ReactApexChart = React.lazy(() => import("react-apexcharts"));
 export default function RealtimeChart({
   handleDateChartRetrieve,
   savedConnectData,
@@ -352,7 +352,7 @@ export default function RealtimeChart({
 
     socket.emit("sendMessageToRoom", {
       room: measure,
-      message: channelTemp.toString(),
+      message: channelTemp?.toString(),
     });
     const newData: any = {};
     // Example: Listen for messages from the server
@@ -392,7 +392,6 @@ export default function RealtimeChart({
       });
       Object.keys(newData).forEach((series) => {
         // Limiting to 10 data points for each series
-
         var newDataPoints: any = [...newData[series]];
         // setTimeout(()=>{
         const maxLength = 40;
@@ -609,7 +608,6 @@ export default function RealtimeChart({
     setChannelTemp(temp);
   };
   const handleYAxisChange = (event: any, keyIndex: any) => {
-    // debugger
     const channels = [...channelList];
     channels[keyIndex].axis = event.target.value;
     let newYAxis: any = [];
@@ -765,20 +763,6 @@ export default function RealtimeChart({
     }
   };
 
-  // useEffect(() => {
-  //   if (channelTemp.length !== 0) {
-  //     interval = setInterval(() => {
-  //       getRealTimeChartDate();
-  //       // const newData = getRealTimeChartDate();
-  //       // setRealTimeSeries(newData);
-  //       // ApexCharts.exec('mychart', 'updateSeries', [{
-  //       //   data:getRealTimeChartDate()
-  //       //   }], true);
-  //     }, 1000);
-  //   }
-  //   return () => clearInterval(interval);
-  // }, [channelTemp]);
-
   useEffect(() => {
     return () => {
       let temp = {
@@ -887,15 +871,17 @@ export default function RealtimeChart({
                 )}
               </>
             ) : (
-              <ReactApexChart
-                options={RealTimeOptions}
-                series={Object.keys(chartDatas).map((series) => ({
-                  name: series,
-                  data: chartDatas[series],
-                }))}
-                type="line"
-                height={540}
-              />
+              <Suspense fallback={<div>Loading...</div>}>
+                <ReactApexChart
+                  options={RealTimeOptions}
+                  series={Object.keys(chartDatas).map((series) => ({
+                    name: series,
+                    data: chartDatas[series],
+                  }))}
+                  type="line"
+                  height={540}
+                />
+              </Suspense>
             )}
           </Box>
         </Grid>

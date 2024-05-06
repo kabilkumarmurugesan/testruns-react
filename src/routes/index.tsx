@@ -17,6 +17,7 @@ import UsersPage from "../pages/settings/users";
 import RolesPage from "../pages/settings/roles";
 import Billings from "../pages/billings";
 import PrivateRoute from "../components/PrivateRoute";
+import EnhancedSignUpPage from "../pages/signup";
 
 function AppRoute() {
   return (
@@ -25,6 +26,7 @@ function AppRoute() {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<EnhancedSignUpPage />} />
           <Route path="/otp" element={<OTP />} />
           <Route path="/create-password" element={<ResetPassword />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />

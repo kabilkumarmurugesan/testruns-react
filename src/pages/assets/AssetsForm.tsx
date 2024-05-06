@@ -616,7 +616,11 @@ const Addnewpopup = React.forwardRef(
                               onChange={(selectedDate: any) =>
                                 handleDateChanges(selectedDate, "perchasedDate")
                               }
-                              value={formik.values.perchasedDate}
+                              value={
+                                type === "edit"
+                                  ? formik.values.perchasedDate
+                                  : null
+                              }
                               inputRef={purchasedDateInputRef}
                             />
                           </LocalizationProvider>
@@ -662,7 +666,9 @@ const Addnewpopup = React.forwardRef(
                               onChange={(selectedDate: any) =>
                                 handleDateChanges(selectedDate, "expiryDate")
                               }
-                              value={formik.values.expiryDate}
+                              value={
+                                type === "edit" ? formik.values.expiryDate : null
+                              }
                               inputRef={expiryDateInputRef}
                             />
                           </LocalizationProvider>
