@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Autocomplete,
   Box,
@@ -91,7 +91,7 @@ export default function ProcedureDetails() {
     onSubmit: onSubmit,
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     // Set a timer for 1 second (1000 milliseconds)
     const timerId = setTimeout(() => {
       setIsLoader(false);
@@ -306,7 +306,7 @@ export default function ProcedureDetails() {
     });
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (typeof window !== "undefined") {
       const procedureId = { _id: window.location.pathname.split("/")[3] };
       dispatch(fetchSingleProcedureData(procedureId));
@@ -320,13 +320,13 @@ export default function ProcedureDetails() {
     await setIsLoader(false);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     const payload: any = {};
     payload["organisationId"] = loginUserSliceData?.verifyToken.organisationId;
     dispatch(fetchAssetsName(payload));
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setAssetsData(
       assetsSliceData?.map((item: any) => ({
         label: item.name,

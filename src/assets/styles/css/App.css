@@ -1042,9 +1042,9 @@ fieldset.MuiOutlinedInput-notchedOutline {
   letter-spacing: -0.24px;
   text-transform: capitalize;
 }
-.MuiDialog-root .MuiBackdrop-root.MuiModal-backdrop {
+/* .MuiDialog-root .MuiBackdrop-root.MuiModal-backdrop {
   background-color: #000;
-}
+} */
 p.added-success,
 p.cancel-unsave {
   font-size: 20px;

@@ -17,8 +17,6 @@ import { updatePassword } from "firebase/auth";
 import { auth } from "../../firebase.config";
 import { useNavigate } from "react-router";
 
-const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-
 const validationSchema = Yup.object().shape({
   // email: Yup.string().required("Email is required").email("Invalid email").matches(emailRegex, "In-correct email"),
   password: Yup.string()

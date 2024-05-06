@@ -1,27 +1,13 @@
 import * as React from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
-import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined";
-import google from "../../assets/images/common/google.svg";
-import microsoft from "../../assets/images/common/micro.svg";
-import linkedin from "../../assets/images/common/linkedin.svg";
-import authbg from "../../assets/images/auth-bg.svg";
-import { Card, Link } from "@mui/material";
 import { withCardLayout } from "../../components/auth";
 import { useNavigate } from "react-router";
 import { useFormik } from "formik";
@@ -29,14 +15,16 @@ import * as Yup from "yup";
 import "../../assets/styles/css/App.css";
 import { ToastContainer, toast } from "react-toastify";
 
-const regex=/^(0*[1-9][0-9]*(\.[0-9]*)?|0*\.[0-9]*[1-9][0-9]*)$/
+const regex = /^(0*[1-9][0-9]*(\.[0-9]*)?|0*\.[0-9]*[1-9][0-9]*)$/;
 const validationSchema = Yup.object().shape({
-  otp: Yup.string().required("OTP is required") .min(4, 'Invalid OTP!')
-  .max(8, 'Invalid OTP!').matches(regex, "Invalid OTP!"),
+  otp: Yup.string()
+    .required("OTP is required")
+    .min(4, "Invalid OTP!")
+    .max(8, "Invalid OTP!")
+    .matches(regex, "Invalid OTP!"),
 });
 
 const OTP = () => {
-
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = React.useState(false);
@@ -55,14 +43,10 @@ const OTP = () => {
     if (isMatch) {
       toast(`OTP submitted successful !`, {
         style: {
-          background: '#00bf70', color: '#fff'
-        }
+          background: "#00bf70",
+          color: "#fff",
+        },
       });
-      // setTimeout(()=>{
-      //   navigate('/reset-password')
-      // },2000)
-      // alert("OTP successful!");
-      // navigate('/reset-password')
     } else {
       formik.setFieldError("otp", "Invalid OTP");
     }
@@ -82,14 +66,14 @@ const OTP = () => {
 
   return (
     <>
-     <ToastContainer
-    position="top-right"
-    autoClose={2000}
-    closeOnClick={true}
-    pauseOnHover={true}
-    draggable={false}
-    hideProgressBar={true}
-  />
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        closeOnClick={true}
+        pauseOnHover={true}
+        draggable={false}
+        hideProgressBar={true}
+      />
       <Typography variant="h5" className="title-text">
         Enter OTP
       </Typography>

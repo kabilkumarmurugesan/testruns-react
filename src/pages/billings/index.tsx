@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 // const socket = io("http://localhost:5000");
 
 export default function Billings() {
-  const { data, loading, error }: any = useSelector((state) => state);
+  const { loading, error }: any = useSelector((state) => state);
 
   if (loading) {
     return <div>Loading...</div>;

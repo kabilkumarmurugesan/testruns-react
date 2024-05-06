@@ -1,9 +1,8 @@
-import React, { useState } from "react";
- import Successpopup from "../../../components/SuccessPopup";
+import React from "react";
+import Successpopup from "../../../components/SuccessPopup";
 import {
   Box,
   Button,
-  FormControl,
   Grid,
   Autocomplete,
   Checkbox,
@@ -28,12 +27,11 @@ import {
   fetchUpdateAssetsData,
 } from "../../../api/assetsAPI";
 import { useDispatch, useSelector } from "react-redux";
-import { Formik, useFormik } from "formik";
+import { useFormik } from "formik";
 import * as Yup from "yup";
 import { fetchLabById } from "../../../api/labAPI";
 import SuccessPopup from "../../../components/SuccessPopup";
 import { toast } from "react-toastify";
-import { Height } from "@mui/icons-material";
 import AWS from "aws-sdk";
 import { useLocation, useNavigate } from "react-router";
 
@@ -90,7 +88,7 @@ const validationSchema = Yup.object().shape({
   // lastUsedDate: Yup.string().required(),
 });
 export default function AssetDetails() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [value, setValue] = React.useState(0);
   const Placeholder = ({ children }: any) => {
     return <div>{children}</div>;
@@ -112,8 +110,6 @@ export default function AssetDetails() {
   };
   const [labEdit, setLabEdit] = React.useState(false);
   const successPopupRef: any = React.useRef(null);
-  const [formPopup, setFormPopup] = React.useState(false);
-  const [editAcces, seteditAcces] = React.useState(true);
   const [openSuccess, setSuccessOpen] = React.useState(false);
   const [departmentData, setDepartmentData] = React.useState([]);
   const [labData, setLabData] = React.useState([]);
@@ -123,13 +119,6 @@ export default function AssetDetails() {
   const assetId = assetValue?._id;
   const [procedureId, setProcedureId] = React.useState([]);
   const [loader, setLoader] = React.useState(false);
-  const [organization, setOrganization] = React.useState([
-    {
-      label: "",
-      value: "",
-      id: assetValue?.organisationId,
-    },
-  ]);
   const [departments, setDepartments] = React.useState(
     assetValue?.departmentId?.map((item: any) => ({
       label: item?.name,
@@ -146,7 +135,6 @@ export default function AssetDetails() {
   );
 
   const dispatch: any = useDispatch();
-  const loginUserSliceData = useSelector((state: any) => state.userLogin.data);
 
   React.useEffect(() => {
     if (purchasedDateInputRef.current) {
@@ -158,9 +146,6 @@ export default function AssetDetails() {
   }, [purchasedDateInputRef.current, expiryDateInputRef.current]);
 
   React.useEffect(() => {
-    seteditAcces(
-      loginUserSliceData?.verifyToken?.role[0]?.asset_management?.edit
-    );
     let payload = {
       assetId: [assetId],
     };
@@ -263,7 +248,6 @@ export default function AssetDetails() {
       departments.map((item: any) => deptArray.push(item?.id));
       var labArray: any = [];
       laboratory.map((item: any) => labArray.push(item?.id));
-      var org = organization;
       var assetValues = {
         _id: assetValue._id,
         name: values.name,
@@ -294,7 +278,6 @@ export default function AssetDetails() {
     }
   };
   const submitFormPopup = () => {
-    setFormPopup(false);
     // successPopupRef.current.open(true, 'Asset');
     toast(`Assets have been updated successfully!`, {
       style: {
@@ -492,7 +475,7 @@ export default function AssetDetails() {
                     <Box sx={{ textAlign: "center" }}>
                       {!loader ? (
                         <img
-                          src={uploadedFile == null ? test : uploadedFile}
+                          src={uploadedFile === null ? test : uploadedFile}
                           alt="test"
                           className="dynamic-img"
                           style={{ height: "250px", objectFit: "contain" }}
@@ -691,7 +674,6 @@ export default function AssetDetails() {
                             Organisation
                             <span style={{ color: "#E2445C" }}>*</span>
                           </label>
-                          {/* <FormControl sx={{ width: '100%' }}> */}
                           <Select
                             MenuProps={{
                               disableScrollLock: true,
@@ -737,7 +719,6 @@ export default function AssetDetails() {
                                 {formik.errors.organisationId}
                               </Typography>
                             )}
-                          {/* </FormControl> */}
                         </Box>
                       </Grid>
                     </Grid>
@@ -752,7 +733,6 @@ export default function AssetDetails() {
                             Department/s
                             <span style={{ color: "#E2445C" }}>*</span>
                           </label>
-                          {/* <FormControl sx={{ width: '100%' }}> */}
                           <Autocomplete
                             multiple
                             id="departmentId"
@@ -763,13 +743,15 @@ export default function AssetDetails() {
                             }
                             getOptionLabel={(option: any) => option.label}
                             isOptionEqualToValue={(option: any, value: any) =>
-                              value.id == option.id
+                              value.id === option.id
                             }
                             renderInput={(params) => (
                               <TextField
                                 {...params}
                                 placeholder={
-                                  departments?.length == 0 ? "Department/s" : ""
+                                  departments?.length === 0
+                                    ? "Department/s"
+                                    : ""
                                 }
                               />
                             )}
@@ -827,52 +809,6 @@ export default function AssetDetails() {
                                 {formik.errors.departmentId}
                               </Typography>
                             )}
-                          {/* <Autocomplete
-                              multiple
-                              id="departmentId"
-                              options={
-                                departmentData !== undefined ? departmentData : []
-                              }
-                              // value={departments}
-                              disableCloseOnSelect
-                              getOptionLabel={(option: any) => option.label}
-                              renderOption={(props, option, { selected }) => (
-                                 
-                                <li {...props}>
-                                  <Checkbox
-                                    style={{ marginRight: 0 }}
-                                    checked={selected}
-                                  />
-                                  {option.label}
-                                </li>
-                              )}
-                              renderInput={(params) => <TextField {...params} />}
-                              fullWidth
-                              placeholder="Department"
-                              size="medium"
-
-                              onChange={(e, f) => {
-                                f.forEach((element) =>
-                                  departments.push(element.id),
-                                );
-                                formik.setFieldValue('departmentId', departments);
-                              }}
-                            />*/}
-                          {/* {formik.touched.departmentId &&
-                              formik.errors.departmentId && (
-                                <Typography
-                                  style={{
-                                    color: '#E2445C',
-                                    position: 'relative',
-                                    top: '-109px',
-                                    right: '-535px',
-                                    fontSize: '14px ',
-                                  }}
-                                >
-                                  {formik.errors.departmentId}
-                                </Typography>
-                              )} */}
-                          {/* </FormControl> */}
                         </Box>
                       </Grid>
                     </Grid>
@@ -893,7 +829,7 @@ export default function AssetDetails() {
                             options={labData !== undefined ? labData : []}
                             getOptionLabel={(option: any) => option.label}
                             isOptionEqualToValue={(option: any, value: any) =>
-                              value.id == option.id
+                              value.id === option.id
                             }
                             disableCloseOnSelect
                             value={laboratory}
@@ -901,7 +837,7 @@ export default function AssetDetails() {
                               <TextField
                                 {...params}
                                 placeholder={
-                                  laboratory?.length == 0
+                                  laboratory?.length === 0
                                     ? "Laboratory/ies"
                                     : ""
                                 }
@@ -1094,7 +1030,7 @@ export default function AssetDetails() {
           <CustomTabPanel value={value} index={1}>
             <Box className="asset-id-name">
               <img
-                src={uploadedFile == null ? test : uploadedFile}
+                src={uploadedFile === null ? test : uploadedFile}
                 alt="test"
                 className="dynamic-img"
               />

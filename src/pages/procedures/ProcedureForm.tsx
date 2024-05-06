@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Dialog from "@mui/material/Dialog";
 import {
   Box,
@@ -277,7 +277,7 @@ const ProcedureForm = React.forwardRef(
 
     const clearForm = () => {
       formik.resetForm();
-      if (type == "create") {
+      if (type === "create") {
         setDepartments([]);
         setLaboratory([]);
       }
@@ -301,7 +301,7 @@ const ProcedureForm = React.forwardRef(
       onSubmit: onSubmit,
     });
 
-    React.useEffect(() => {
+    useEffect(() => {
       if (labSliceData) {
         const transformedLabs = labSliceData.map((obj: any) => ({
           label: obj.name,
@@ -323,7 +323,7 @@ const ProcedureForm = React.forwardRef(
       }
     }, [labSliceData]);
 
-    React.useEffect(() => {
+    useEffect(() => {
       const mappedDepartments = (singleUserData?.departmentId || [])
         .map((id: string) => {
           var department = departmentSliceData?.find(
@@ -376,7 +376,7 @@ const ProcedureForm = React.forwardRef(
       setFormOpen(false);
       toast(
         `${
-          type == "edit"
+          type === "edit"
             ? "Procedure has been updated successfully!"
             : "Procedure has been successfully created!"
         } !`,
@@ -394,7 +394,7 @@ const ProcedureForm = React.forwardRef(
     };
 
     const createdOn =
-      type == "edit"
+      type === "edit"
         ? dayjs(
             moment(parseInt(formData?.createdAt)).local().format("MM/DD/YYYY")
           )
@@ -539,7 +539,7 @@ const ProcedureForm = React.forwardRef(
                             }
                             getOptionLabel={(option: any) => option.label}
                             isOptionEqualToValue={(option: any, value: any) =>
-                              value.id == option.id
+                              value.id === option.id
                             }
                             renderInput={(params) => (
                               <TextField
@@ -633,7 +633,7 @@ const ProcedureForm = React.forwardRef(
                             options={labData !== undefined ? labData : []}
                             getOptionLabel={(option: any) => option?.label}
                             isOptionEqualToValue={(option: any, value: any) =>
-                              value.id == option.id
+                              value.id === option.id
                             }
                             disabled={departments?.length === 0}
                             disableCloseOnSelect
@@ -641,7 +641,7 @@ const ProcedureForm = React.forwardRef(
                               <TextField
                                 {...params}
                                 placeholder={
-                                  laboratory?.length == 0
+                                  laboratory?.length === 0
                                     ? "Laboratory/ies"
                                     : ""
                                 }
@@ -738,9 +738,9 @@ const ProcedureForm = React.forwardRef(
                         variant="contained"
                         className="add-btn"
                         disabled={
-                          type == "edit"
+                          type === "edit"
                             ? !formik.dirty
-                            : Object.keys(formik.errors).length == 0 &&
+                            : Object.keys(formik.errors).length === 0 &&
                               formik.dirty
                             ? false
                             : true

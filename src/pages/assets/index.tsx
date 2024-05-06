@@ -169,12 +169,12 @@ export default function Assets() {
       sortOrder: queryStrings.sortOrder,
     };
     if (
-      loginUserSliceData?.verifyToken?.role[0]?.name == "Tester" ||
-      loginUserSliceData?.verifyToken?.role[0]?.name == "Requester"
+      loginUserSliceData?.verifyToken?.role[0]?.name === "Tester" ||
+      loginUserSliceData?.verifyToken?.role[0]?.name === "Requester"
     ) {
       payload["laboratoryId"] = loginUserSliceData?.verifyToken?.laboratoryId;
     }
-    if (loginUserSliceData?.verifyToken?.role[0]?.name == "Admin") {
+    if (loginUserSliceData?.verifyToken?.role[0]?.name === "Admin") {
       payload["organisationId"] =
         loginUserSliceData?.verifyToken?.organisationId;
     }
@@ -228,7 +228,7 @@ export default function Assets() {
 
   React.useEffect(() => {
     let opt: any = [];
-    if (filterFieldName == "Assets ID") {
+    if (filterFieldName === "Assets ID") {
       assetsIdSliceData?.Assets?.map((element: any) => {
         opt.push({
           id: element.assetNumber,
@@ -251,12 +251,12 @@ export default function Assets() {
       sortOrder: "desc",
     };
     if (
-      loginUserSliceData?.verifyToken?.role[0]?.name == "Tester" ||
-      loginUserSliceData?.verifyToken?.role[0]?.name == "Requester"
+      loginUserSliceData?.verifyToken?.role[0]?.name === "Tester" ||
+      loginUserSliceData?.verifyToken?.role[0]?.name === "Requester"
     ) {
       payload["laboratoryId"] = loginUserSliceData?.verifyToken?.laboratoryId;
     }
-    if (loginUserSliceData?.verifyToken?.role[0]?.name == "Admin") {
+    if (loginUserSliceData?.verifyToken?.role[0]?.name === "Admin") {
       payload["organisationId"] =
         loginUserSliceData?.verifyToken?.organisationId;
     }
@@ -294,16 +294,16 @@ export default function Assets() {
     var assetsChange: any = {
       _id: row._id,
     };
-    if (e.target.name == "status") {
+    if (e.target.name === "status") {
       assetsChange["status"] = e.target.value;
     }
-    if (e.target.name == "availability") {
+    if (e.target.name === "availability") {
       assetsChange["availability"] = e.target.value;
     }
     dispatch(fetchUpdateAssetsData(assetsChange));
     toast(
       `${
-        e.target.name == "availability"
+        e.target.name === "availability"
           ? "Asset availability has been updated successfully!"
           : "Asset status has been updated successfully!"
       } updated !`,
@@ -838,7 +838,7 @@ export default function Assets() {
                   />
                 </TableBody>
               ) : !assetsData ||
-                (assetsData?.length === 0 && loader == false) ? (
+                (assetsData?.length === 0 && loader === false) ? (
                 <TableBody>
                   <Box
                     sx={{
@@ -883,7 +883,7 @@ export default function Assets() {
                                   <Checkbox
                                     color="primary"
                                     checked={
-                                      row.is_checked == true ? true : false
+                                      row.is_checked === true ? true : false
                                     }
                                     onClick={(e: any) => clickHandler(e)}
                                     onChange={(event) => {
@@ -899,7 +899,7 @@ export default function Assets() {
                                   <Box>
                                     <img
                                       src={
-                                        row?.assetImageUrl == null
+                                        row?.assetImageUrl === null
                                           ? test
                                           : row?.assetImageUrl
                                       }

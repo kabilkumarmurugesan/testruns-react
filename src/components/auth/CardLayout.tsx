@@ -261,8 +261,9 @@ export const CardLayout = ({ children }: any, props: any) => {
               <Typography className="welcome-to">Welcome to</Typography>
               <Typography className="test-runz">Test Runs</Typography>
             </Box>
-            {(children.props.uri === "/login" ||
-              children.props.uri == "/") && (
+            {((typeof window !== "undefined" &&
+              window.location.pathname === "/login") ||
+              window.location.pathname === "/") && (
               <Box className="login-center">
                 <Typography className="sign-via">Sign In via</Typography>
                 <Box className="sign-via-btn">
@@ -298,81 +299,95 @@ export const CardLayout = ({ children }: any, props: any) => {
                 </Box>
               </Box>
             )}
-            {children.props.uri === "/signup" && (
-              <Box>
-                <Typography className="sign-via">Sign up via</Typography>
-                <Box className="sign-via-btn">
-                  <Button
-                    variant="contained"
-                    style={{
-                      fontWeight: 600,
-                      color: "#181818",
-                      fontSize: "15px",
-                      textTransform: "none",
-                    }}
-                    onClick={() => googleSignup("SignUp")}
-                  >
-                    {" "}
-                    <img src={google} alt="google" />
-                    Sign up with Google
-                  </Button>
-                  <Button
-                    variant="contained"
-                    style={{
-                      fontWeight: 600,
-                      color: "#181818",
-                      fontSize: "15px",
-                      textTransform: "none",
-                    }}
-                    onClick={() => microsoftSignup("SignUp")}
-                  >
-                    {" "}
-                    <img src={microsoft} alt="microsoft" />
-                    Sign up with Microsoft
-                  </Button>
+            {typeof window !== "undefined" &&
+              window.location.pathname === "/signup" && (
+                <Box>
+                  <Typography className="sign-via">Sign up via</Typography>
+                  <Box className="sign-via-btn">
+                    <Button
+                      variant="contained"
+                      style={{
+                        fontWeight: 600,
+                        color: "#181818",
+                        fontSize: "15px",
+                        textTransform: "none",
+                      }}
+                      onClick={() => googleSignup("SignUp")}
+                    >
+                      {" "}
+                      <img src={google} alt="google" />
+                      Sign up with Google
+                    </Button>
+                    <Button
+                      variant="contained"
+                      style={{
+                        fontWeight: 600,
+                        color: "#181818",
+                        fontSize: "15px",
+                        textTransform: "none",
+                      }}
+                      onClick={() => microsoftSignup("SignUp")}
+                    >
+                      {" "}
+                      <img src={microsoft} alt="microsoft" />
+                      Sign up with Microsoft
+                    </Button>
+                  </Box>
                 </Box>
-              </Box>
-            )}
+              )}
             <Box>
-              {children.props.uri === "/forgot-password" && (
-                <Box className="auth-inner-text">
-                  <Box>
-                    <Typography variant="h5">Forgot your password?</Typography>
+              {typeof window !== "undefined" &&
+                window.location.pathname === "/forgot-password" && (
+                  <Box className="auth-inner-text">
+                    <Box>
+                      <Typography variant="h5">
+                        Forgot your password?
+                      </Typography>
+                    </Box>
+                    <Box>
+                      <Typography variant="h4">
+                        Don't worry we got you
+                      </Typography>
+                    </Box>
+                    <Box>
+                      <Typography variant="h1">Covered</Typography>
+                    </Box>
                   </Box>
-                  <Box>
-                    <Typography variant="h4">Don't worry we got you</Typography>
+                )}
+              {typeof window !== "undefined" &&
+                window.location.pathname === "/create-password" && (
+                  <Box className="auth-inner-text">
+                    <Box>
+                      <Typography variant="h5">Create your password</Typography>
+                    </Box>
+                    <Box>
+                      <Typography variant="h4">
+                        Don't worry we got you
+                      </Typography>
+                    </Box>
+                    <Box>
+                      <Typography variant="h1">Covered</Typography>
+                    </Box>
                   </Box>
-                  <Box>
-                    <Typography variant="h1">Covered</Typography>
+                )}
+              {typeof window !== "undefined" &&
+                window.location.pathname === "/otp" && (
+                  <Box className="auth-inner-text">
+                    <Box>
+                      <Typography variant="h5">
+                        Forgot your password?
+                      </Typography>
+                    </Box>
+                    <Box>
+                      <Typography variant="h4">
+                        Don't worry we got you
+                      </Typography>
+                    </Box>
+                    <Box>
+                      <Typography variant="h1">Covered</Typography>
+                    </Box>
                   </Box>
-                </Box>
-              )}
-              {children.props.uri === "/create-password" && (
-                <Box className="auth-inner-text">
-                  <Box>
-                    <Typography variant="h5">Create your password</Typography>
-                  </Box>
-                  <Box>
-                    <Typography variant="h4">Don't worry we got you</Typography>
-                  </Box>
-                  <Box>
-                    <Typography variant="h1">Covered</Typography>
-                  </Box>
-                </Box>
-              )}
-              {children.props.uri === "/otp" && (
-                <Box className="auth-inner-text">
-                  <Box>
-                    <Typography variant="h5">Forgot your password?</Typography>
-                  </Box>
-                  <Box>
-                    <Typography variant="h4">Don't worry we got you</Typography>
-                  </Box>
-                  <Box>
-                    <Typography variant="h1">Covered</Typography>
-                  </Box>
-                </Box>
-              )}
+                )}
               <Box className="country-term-section">
                 <Box className="country-section">
                   <InfoOutlinedIcon sx={{ color: "#565656", mr: 2 }} />

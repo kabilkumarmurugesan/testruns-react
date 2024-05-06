@@ -21,8 +21,6 @@ import "../../assets/styles/css/setting.css";
 import "../../assets/styles/css/App.css";
 import { useSelector } from "react-redux";
 import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutlined";
-import procedures from "../../assets/images/procedures.svg";
-import proceduresActive from "../../assets/images/procedures-active.svg";
 import { useNavigate } from "react-router";
 
 export const SettingsLayout = ({ children }: any, props: any) => {
@@ -99,7 +97,7 @@ export const SettingsLayout = ({ children }: any, props: any) => {
 
   const selectPath = (item: any) => {
     if (typeof window !== "undefined") {
-      return window.location.pathname.split("/")[2] == item.split("/")[2];
+      return window.location.pathname.split("/")[2] === item.split("/")[2];
     } else {
       return;
     }

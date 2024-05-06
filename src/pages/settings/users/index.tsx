@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Badge,
   Box,
@@ -9,45 +9,45 @@ import {
   Select,
   TextField,
   Typography,
-} from '@mui/material';
-import Table from '@mui/material/Table';
-import TablePagination from '../../../components/table/TablePagination';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableRow from '@mui/material/TableRow';
-import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined';
-import AddIcon from '@mui/icons-material/Add';
-import { withSettingsLayout } from '../../../components/settings';
-import TableHeader from '../../../components/table/TableHeader';
-import { StatusList, UserHeaders, UserRows } from '../../../utils/data';
-import { UserRowData } from '../../../modals/user.modal';
-import TableFilters from '../../../components/table/TableFilters';
-import DeletePopup from '../../../components/DeletePopup';
-import UserForm from './UserForm';
+} from "@mui/material";
+import Table from "@mui/material/Table";
+import TablePagination from "../../../components/table/TablePagination";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableRow from "@mui/material/TableRow";
+import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined";
+import AddIcon from "@mui/icons-material/Add";
+import { withSettingsLayout } from "../../../components/settings";
+import TableHeader from "../../../components/table/TableHeader";
+import { StatusList, UserHeaders, UserRows } from "../../../utils/data";
+import { UserRowData } from "../../../modals/user.modal";
+import TableFilters from "../../../components/table/TableFilters";
+import DeletePopup from "../../../components/DeletePopup";
+import UserForm from "./UserForm";
 import {
   fetchUserData,
   deleteUserData,
   fetchUpdateUserData,
-} from '../../../api/userAPI';
-import { useDispatch, useSelector } from 'react-redux';
+} from "../../../api/userAPI";
+import { useDispatch, useSelector } from "react-redux";
 import {
   handleCheckboxChange,
   handleDeCheckboxChange,
   handledAllSelected,
-} from '../../../utils/common-services';
-import moment from 'moment';
-import TableSkeleton from '../../../components/table/TableSkeleton';
+} from "../../../utils/common-services";
+import moment from "moment";
+import TableSkeleton from "../../../components/table/TableSkeleton";
 // table start
-import filterIcon from '../../../assets/images/filter-icon1.svg';
-import CloseIcon from '@mui/icons-material/Close';
-import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import userr from '../../../assets/images/profile/profile.svg';
-import { toast } from 'react-toastify';
-import dayjs from 'dayjs';
-import Emptystate from '../../../assets/images/Emptystate.svg';
-import { fetchOrganizationById } from '../../../api/organizationAPI';
+import filterIcon from "../../../assets/images/filter-icon1.svg";
+import CloseIcon from "@mui/icons-material/Close";
+import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import userr from "../../../assets/images/profile/profile.svg";
+import { toast } from "react-toastify";
+import dayjs from "dayjs";
+import Emptystate from "../../../assets/images/Emptystate.svg";
+import { fetchOrganizationById } from "../../../api/organizationAPI";
 
 const users: UserRowData[] = UserRows;
 const userStatus = StatusList;
@@ -75,7 +75,7 @@ const Users = () => {
   const [filterStatus, setFilterStatus] = React.useState(null);
   const [filterSearchBy, setFilterSearchBy] = React.useState(null);
   const [filterSearchValue, setFilterSearchValue] = React.useState(null);
-  const [filterFieldName, setFilterFieldName] = React.useState('');
+  const [filterFieldName, setFilterFieldName] = React.useState("");
   const [filterType, setFilterType] = React.useState(null);
   const [filterAvailability, setFilterAvailability] = React.useState(null);
   const [filterKey, setFilterKey] = React.useState<any>(null);
@@ -83,8 +83,6 @@ const Users = () => {
 
   const loginUserSliceData = useSelector((state: any) => state.userLogin.data);
 
-  const [columnAnchorEl, setColumnAnchorEl] =
-    React.useState<null | HTMLElement>(null);
   const [filterPopoverEl, setFilterPopoverEl] =
     React.useState<null | HTMLElement>(null);
   const filterAnchorOpen = Boolean(filterPopoverEl);
@@ -94,8 +92,8 @@ const Users = () => {
     searchBy: null,
     search: null,
     sortBy: null,
-    sortOrder: 'desc',
-    organisationId:loginUserSliceData?.verifyToken?.organisationId,
+    sortOrder: "desc",
+    organisationId: loginUserSliceData?.verifyToken?.organisationId,
     instituteId: loginUserSliceData?.verifyToken?.instituteId,
   });
 
@@ -113,37 +111,34 @@ const Users = () => {
   const [visibleRow, setVisibleRow] = React.useState<any>(userData);
 
   const roleSliceData = useSelector(
-    (state: any) => state.role.data?.find_roles,
+    (state: any) => state.role.data?.find_roles
   );
   const organizationSliceData = useSelector(
-    (state: any) => state.organization.data?.get_all_organisations,
+    (state: any) => state.organization.data?.get_all_organisations
   );
-  const [organizationData,setOrganizationData]=React.useState('')
+  const [organizationData, setOrganizationData] = React.useState("");
   React.useEffect(() => {
-  dispatch(
-    fetchOrganizationById({ instituteId: loginUserSliceData?.instituteId }),
-  );
-
-}, [loginUserSliceData]);
+    dispatch(
+      fetchOrganizationById({ instituteId: loginUserSliceData?.instituteId })
+    );
+  }, [loginUserSliceData]);
   React.useEffect(() => {
     userData && setUserData(userData);
   }, [userData]);
   React.useEffect(() => {
     var organization = organizationSliceData?.filter(
       (organization: any) =>
-        organization._id === loginUserSliceData?.verifyToken?.organisationId,
+        organization._id === loginUserSliceData?.verifyToken?.organisationId
     );
-    
-    setOrganizationData(
-      organization)
-    
+
+    setOrganizationData(organization);
   }, [organizationSliceData]);
-  
+
   React.useEffect(() => {
     return () => {
       const headersList: any = [...headers];
       headersList.map((item: any) => {
-        return (item.sort = 'asc');
+        return (item.sort = "asc");
       });
       setHeaders(headersList);
     };
@@ -169,12 +164,12 @@ const Users = () => {
 
   React.useEffect(() => {
     const page: any = { ...pageInfo };
-    page['currentPage'] = userSliceData?.get_all_users?.pageInfo.currentPage;
-    page['totalPages'] = userSliceData?.get_all_users?.pageInfo.totalPages;
-    page['hasNextPage'] = userSliceData?.get_all_users?.pageInfo.hasNextPage;
-    page['hasPreviousPage'] =
+    page["currentPage"] = userSliceData?.get_all_users?.pageInfo.currentPage;
+    page["totalPages"] = userSliceData?.get_all_users?.pageInfo.totalPages;
+    page["hasNextPage"] = userSliceData?.get_all_users?.pageInfo.hasNextPage;
+    page["hasPreviousPage"] =
       userSliceData?.get_all_users?.pageInfo.hasPreviousPage;
-    page['totalCount'] = userSliceData?.get_all_users?.pageInfo.totalCount;
+    page["totalCount"] = userSliceData?.get_all_users?.pageInfo.totalCount;
     userSliceData?.get_all_users?.Identity &&
       setUserData(userSliceData?.get_all_users?.Identity);
     setPageInfo(page);
@@ -183,8 +178,8 @@ const Users = () => {
   const handlePageChange = (even: any, page_no: number) => {
     const payload: any = { ...queryStrings };
     const page: any = { ...pageInfo };
-    payload['page'] = page_no;
-    page['currentPage'] = page_no;
+    payload["page"] = page_no;
+    page["currentPage"] = page_no;
     setPageInfo(page);
     setQueryString(payload);
     setCurrentPage(page_no);
@@ -197,7 +192,7 @@ const Users = () => {
       setIsDeselectAllChecked,
       setIsselectAllChecked,
       setTableHeaderVisible,
-      setVisibleRow,
+      setVisibleRow
     )(event, id);
   };
 
@@ -216,7 +211,7 @@ const Users = () => {
     setIsDeselectAllChecked,
     setIsselectAllChecked,
     setTableHeaderVisible,
-    setVisibleRow,
+    setVisibleRow
   );
   const handledAllchange = handledAllSelected(
     isselectAllChecked,
@@ -225,16 +220,16 @@ const Users = () => {
     setIsDeselectAllChecked,
     setIsselectAllChecked,
     setVisibleRow,
-    setRowId,
+    setRowId
   );
 
   const handleTableSorting = (_event: any, _data: any, _index: any) => {
     const payload: any = { ...queryStrings };
     const headersList: any = [...headers];
-    payload['sortBy'] = headersList[_index].id;
-    payload['sortOrder'] = headersList[_index].sort === 'asc' ? 'desc' : 'asc';
+    payload["sortBy"] = headersList[_index].id;
+    payload["sortOrder"] = headersList[_index].sort === "asc" ? "desc" : "asc";
     headersList[_index].sort =
-      headersList[_index].sort === 'asc' ? 'desc' : 'asc';
+      headersList[_index].sort === "asc" ? "desc" : "asc";
     setHeaders(headersList);
     setQueryString(payload);
   };
@@ -270,9 +265,9 @@ const Users = () => {
 
   const handleSubmitFormPopup = () => {
     formPopupRef.current.open(false);
-    successPopupRef.current.open(true, 'User');
+    successPopupRef.current.open(true, "User");
     setTimeout(() => {
-      successPopupRef.current.open(false, 'User');
+      successPopupRef.current.open(false, "User");
     }, 3000);
   };
 
@@ -293,8 +288,8 @@ const Users = () => {
       await dispatch(deleteUserData(assetVal));
       toast(`User has been deleted successfully!`, {
         style: {
-          background: '#00bf70',
-          color: '#fff',
+          background: "#00bf70",
+          color: "#fff",
         },
       });
       setRowId([]);
@@ -304,15 +299,15 @@ const Users = () => {
     deletePopupRef.current.open(false);
   };
   const handleOpenDeletePopup = () => {
-    deletePopupRef.current.open(true, 'User');
+    deletePopupRef.current.open(true, "User");
   };
 
   const applyFilters = (field: any, value: any) => {
     const payload: any = { ...queryStrings };
-    payload['searchBy'] = field;
-    payload['page'] = 1;
-    payload['search'] =
-      typeof value === 'string' ? value : moment(value).format('MM/DD/YYYY');
+    payload["searchBy"] = field;
+    payload["page"] = 1;
+    payload["search"] =
+      typeof value === "string" ? value : moment(value).format("MM/DD/YYYY");
     setQueryString(payload);
     setFilter(true);
   };
@@ -323,13 +318,13 @@ const Users = () => {
     var assetsChange: any = {
       _id: row._id,
     };
-    assetsChange['status'] = e.target.value;
+    assetsChange["status"] = e.target.value;
 
     dispatch(fetchUpdateUserData(assetsChange));
     toast(`User status has been updated successfully!`, {
       style: {
-        background: '#00bf70',
-        color: '#fff',
+        background: "#00bf70",
+        color: "#fff",
       },
     });
     reload();
@@ -339,7 +334,7 @@ const Users = () => {
   };
 
   const handleFilterPopoverClick = (
-    event: React.MouseEvent<HTMLButtonElement>,
+    event: React.MouseEvent<HTMLButtonElement>
   ) => {
     setFilterPopoverEl(event.currentTarget);
   };
@@ -351,7 +346,7 @@ const Users = () => {
     setFilterSearchValue(null);
     setFilterOptions([]);
     setFilterType(null);
-    applyFilters('search', '');
+    applyFilters("search", "");
     handleFilterPopoverClose();
     setFilterKey(null);
     setFilter(false);
@@ -360,9 +355,9 @@ const Users = () => {
   const Placeholder = ({ children }: any) => {
     return <div>{children}</div>;
   };
-  const inputValue = 'someValue';
+  const inputValue = "someValue";
 
-  const dataArray = ['value1', 'value2', 'someValue', 'value3'];
+  const dataArray = ["value1", "value2", "someValue", "value3"];
 
   const filteredArray = dataArray.filter((value) => value !== inputValue);
 
@@ -382,11 +377,11 @@ const Users = () => {
   return (
     <Box
       className="user-setting-page"
-      style={{ padding: '24px', paddingTop: '15px' }}
+      style={{ padding: "24px", paddingTop: "15px" }}
     >
       <Box
         className="title-main"
-        sx={{ borderBottom: '1px solid #F3F3F3', paddingBottom: '8px' }}
+        sx={{ borderBottom: "1px solid #F3F3F3", paddingBottom: "8px" }}
       >
         <Box>
           <Typography>User settings</Typography>
@@ -396,32 +391,32 @@ const Users = () => {
         </Box>
         <div className="buttonFilter">
           <Button
-            style={{ marginBottom: '8px', marginTop: '16px' }}
+            style={{ marginBottom: "8px", marginTop: "16px" }}
             type="submit"
             variant="contained"
             onClick={() => {
-              formPopupRef.current.open(true, 'create', {});
+              formPopupRef.current.open(true, "create", {});
             }}
             disabled={!credencial?.user_management?.create}
           >
             <AddIcon sx={{ mr: 1 }} />
             Create User
           </Button>
-          <Box sx={{ position: 'relative' }}>
+          <Box sx={{ position: "relative" }}>
             <Button
               variant="contained"
               onClick={handleFilterPopoverClick}
               style={{
-                boxShadow: 'none',
-                backgroundColor: 'white',
-                padding: '0px',
-                justifyContent: 'center',
+                boxShadow: "none",
+                backgroundColor: "white",
+                padding: "0px",
+                justifyContent: "center",
               }}
               className="filterButton"
             >
               <Badge
                 color="secondary"
-                variant={filter ? 'dot' : 'standard'}
+                variant={filter ? "dot" : "standard"}
                 invisible={false}
                 className="red-badge-filter"
               >
@@ -429,10 +424,10 @@ const Users = () => {
                   src={filterIcon}
                   alt="no_image"
                   style={{
-                    width: '25px',
-                    height: '25px',
+                    width: "25px",
+                    height: "25px",
                     opacity: 0.9,
-                    cursor: 'pointer',
+                    cursor: "pointer",
                   }}
                 />
               </Badge>
@@ -444,29 +439,29 @@ const Users = () => {
               onClose={handleFilterPopoverClose}
               disableScrollLock={true}
               anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
+                vertical: "bottom",
+                horizontal: "left",
               }}
             >
               <Box>
                 <Box
                   sx={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    borderBottom: '1px solid #d0d0d0',
-                    alignContent: 'center',
-                    padding: '1rem',
+                    display: "flex",
+                    justifyContent: "space-between",
+                    borderBottom: "1px solid #d0d0d0",
+                    alignContent: "center",
+                    padding: "1rem",
                   }}
                 >
                   <Typography fontWeight={600} variant="body1">
                     Filters
                   </Typography>
                   <CloseIcon
-                    sx={{ cursor: 'pointer' }}
+                    sx={{ cursor: "pointer" }}
                     onClick={handleFilterPopoverClose}
                   />
                 </Box>
-                <Box sx={{ padding: '0rem 1rem 1rem 1rem' }}>
+                <Box sx={{ padding: "0rem 1rem 1rem 1rem" }}>
                   <Box sx={{ my: 1 }}>
                     <Typography variant="body2" paddingY={1}>
                       Search by
@@ -489,15 +484,13 @@ const Users = () => {
                         setFilterSearchValue(null);
                         setFilterSearchBy(event.target?.value);
                         setFilterFieldName(data.props.children);
-                        if (event.target?.value === 'role') {
+                        if (event.target?.value === "role") {
                           setFilterOptions(getFilterOptions(roleSliceData));
                         }
-                        if (event.target?.value === 'organisationId') {
-                          setFilterOptions(
-                            getFilterOptions(organizationData),
-                          );
+                        if (event.target?.value === "organisationId") {
+                          setFilterOptions(getFilterOptions(organizationData));
                         }
-                        if (event.target?.value === 'status') {
+                        if (event.target?.value === "status") {
                           setFilterOptions(StatusList);
                         }
                       }}
@@ -525,22 +518,22 @@ const Users = () => {
                   <Box sx={{ my: 1 }}>
                     {filterType !== null && (
                       <Typography variant="body2" paddingY={1}>
-                        {filterType === 'text'
+                        {filterType === "text"
                           ? `Search ${filterFieldName}`
-                          : filterType === 'date'
+                          : filterType === "date"
                           ? `Date ${filterFieldName}`
                           : `Select ${filterFieldName}`}
                       </Typography>
                     )}
 
-                    {filterType === null ? null : filterType === 'text' ? (
+                    {filterType === null ? null : filterType === "text" ? (
                       <TextField
                         margin="normal"
                         required
                         fullWidth
                         name="Search"
                         id="Search"
-                        style={{ margin: '0px' }}
+                        style={{ margin: "0px" }}
                         InputLabelProps={{ shrink: false }}
                         placeholder="Search"
                         size="small"
@@ -550,7 +543,7 @@ const Users = () => {
                           setFilterSearchValue(event.target.value)
                         }
                       />
-                    ) : filterType === 'date' ? (
+                    ) : filterType === "date" ? (
                       <Box id="filterDatePicker">
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                           <DatePicker
@@ -601,18 +594,18 @@ const Users = () => {
                 </Box>
                 <Box
                   sx={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    borderTop: '1px solid #d0d0d0',
-                    alignContent: 'center',
-                    padding: '1rem',
+                    display: "flex",
+                    justifyContent: "space-between",
+                    borderTop: "1px solid #d0d0d0",
+                    alignContent: "center",
+                    padding: "1rem",
                   }}
                 >
                   <Button
                     style={{
-                      border: '1px solid #d3d3d3',
-                      color: '#181818',
-                      textTransform: 'capitalize',
+                      border: "1px solid #d3d3d3",
+                      color: "#181818",
+                      textTransform: "capitalize",
                     }}
                     onClick={handleClearFilter}
                   >
@@ -620,10 +613,10 @@ const Users = () => {
                   </Button>
                   <Button
                     style={{
-                      border: '1px solid #d3d3d3',
-                      background: '#FFC60B',
-                      color: '#181818',
-                      textTransform: 'capitalize',
+                      border: "1px solid #d3d3d3",
+                      background: "#FFC60B",
+                      color: "#181818",
+                      textTransform: "capitalize",
                     }}
                     disabled={
                       filterKey !== null && filterSearchValue !== null
@@ -658,10 +651,10 @@ const Users = () => {
         status={userStatus}
       />
 
-      <Box className="table-outer" sx={{ width: '100%' }}>
+      <Box className="table-outer" sx={{ width: "100%" }}>
         <TableContainer className="userTableHeight">
           <Table
-            sx={{ minWidth: 750, position: 'relative' }}
+            sx={{ minWidth: 750, position: "relative" }}
             aria-labelledby="tableTitle"
             size="medium"
             stickyHeader
@@ -670,12 +663,12 @@ const Users = () => {
               numSelected={0}
               onRequestSort={handleRequestSort}
               onSelectAllClick={function (
-                event: React.ChangeEvent<HTMLInputElement>,
+                event: React.ChangeEvent<HTMLInputElement>
               ): void {
-                throw new Error('Function not implemented.');
+                throw new Error("Function not implemented.");
               }}
-              order={'asc'}
-              orderBy={''}
+              order={"asc"}
+              orderBy={""}
               rowCount={0}
               columns={headers}
               handleTableSorting={handleTableSorting}
@@ -692,12 +685,12 @@ const Users = () => {
               <TableBody>
                 <Box
                   sx={{
-                    textAlign: 'center',
-                    position: 'absolute',
-                    left: '0rem',
-                    right: '0rem',
-                    padding: '10%',
-                    width: '100%',
+                    textAlign: "center",
+                    position: "absolute",
+                    left: "0rem",
+                    right: "0rem",
+                    padding: "10%",
+                    width: "100%",
                   }}
                 >
                   <img src={Emptystate} alt="" />
@@ -715,18 +708,18 @@ const Users = () => {
                       hover
                       tabIndex={-1}
                       key={index}
-                      sx={{ cursor: 'pointer' }}
+                      sx={{ cursor: "pointer" }}
                       onClick={(e: any) =>
                         formPopupRef.current.open(
                           credencial?.user_management?.edit,
-                          'edit',
-                          row,
+                          "edit",
+                          row
                         )
                       }
                     >
                       {headers[0].is_show && (
                         <TableCell align="center">
-                          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                          <Box sx={{ display: "flex", alignItems: "center" }}>
                             <Box sx={{ mt: 0, mr: 1 }}>
                               <Checkbox
                                 color="primary"
@@ -734,25 +727,25 @@ const Users = () => {
                                 onClick={(e: any) => clickHandler(e)}
                                 onChange={(event) => {
                                   handleCheckboxValues(row._id);
-                                    handleChange(event, row._id);
+                                  handleChange(event, row._id);
                                 }}
                               />
                             </Box>
 
-                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                            <Box sx={{ display: "flex", alignItems: "center" }}>
                               <Box>
                                 <img
                                   src={
                                     row?.imageUrl !== null &&
-                                    row.imageUrl !== ''
+                                    row.imageUrl !== ""
                                       ? row?.imageUrl
                                       : userr
                                   }
                                   alt="no_image"
                                   style={{
-                                    width: '42px',
-                                    height: '42px',
-                                    borderRadius: '28px',
+                                    width: "42px",
+                                    height: "42px",
+                                    borderRadius: "28px",
                                   }}
                                 />
                               </Box>
@@ -768,9 +761,11 @@ const Users = () => {
                       )}
                       {headers[2].is_show && (
                         <TableCell align="center">
-                          {organizationSliceData?.find(
-                            (obj: any) => obj._id == row.organisationId,
-                          )?.name }
+                          {
+                            organizationSliceData?.find(
+                              (obj: any) => obj._id == row.organisationId
+                            )?.name
+                          }
                         </TableCell>
                       )}
                       {headers[3].is_show && (
@@ -779,8 +774,8 @@ const Users = () => {
                       {headers[4].is_show && (
                         <TableCell align="center">
                           {roleSliceData?.find(
-                            (obj: any) => obj._id == row.role,
-                          )?.name || 'Tester'}
+                            (obj: any) => obj._id == row.role
+                          )?.name || "Tester"}
                         </TableCell>
                       )}
                       {headers[5].is_show && (
@@ -791,20 +786,20 @@ const Users = () => {
                               marginThreshold: null,
                             }}
                             className={
-                              row.status == 'Active'
-                                ? 'active-select td-select'
-                                : 'inactive-select td-select'
+                              row.status == "Active"
+                                ? "active-select td-select"
+                                : "inactive-select td-select"
                             }
-                            value={row.status == null ? 'Inactive' : row.status}
+                            value={row.status == null ? "Inactive" : row.status}
                             displayEmpty
                             onChange={(e) => handleOnChange(e, row)}
                             onClick={(e: any) => clickHandler(e)}
                             IconComponent={ExpandMoreOutlinedIcon}
                           >
-                            <MenuItem value={'Active'} key={'Active'}>
+                            <MenuItem value={"Active"} key={"Active"}>
                               Active
                             </MenuItem>
-                            <MenuItem value={'Inactive'} key={'Inactive'}>
+                            <MenuItem value={"Inactive"} key={"Inactive"}>
                               In-Active
                             </MenuItem>
                           </Select>
@@ -839,7 +834,7 @@ const Users = () => {
           rowId={rowId}
           ref={deletePopupRef}
           closeDeletePopup={() =>
-            deletePopupRef.current.open(false, 'User', rowId)
+            deletePopupRef.current.open(false, "User", rowId)
           }
           deleteConfirmation={handleDeleteConfirmation}
         />

@@ -10,7 +10,7 @@ import {
   Select,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined";
@@ -126,17 +126,8 @@ export default function RealtimeChart({
     },
 
     xaxis: {
-      // title: {
-      //   text: 'Time',
-      // },
-      // distribution: 'linear',
       type: "datetime",
       range: 1000 * 10,
-      // tickAmount: 15, // Specifies the number of ticks on the y-axis
-      // categories: realTimeData.map(
-      //   (_item: any, index: number) =>
-      //     new Date().getTime() - (realTimeData.length - index),
-      // ),
     },
     yaxis: yAxisList,
 
@@ -144,88 +135,6 @@ export default function RealtimeChart({
       show: false,
     },
   };
-  // console.log("realTimeData", realTimeData.map(
-  //   (_item: any, index: number) => {
-  //     const currentTime = new Date().getTime();
-  //     const offset = 5.5 * 60 * 60 * 1000; // 5.5 hours in milliseconds
-  //     return new Date(currentTime - (realTimeData.length - index) * 1000 - offset).toLocaleString("en-IN", {timeZone: "Asia/Kolkata"});
-  //   }
-  // ));
-
-  //   const fluxQuery = `from(bucket: "${bucket}")
-  //   |> range(start: -duration(v: 1s))
-  //   |> filter(fn: (r) => r["_measurement"] == "Simulated_connect")
-  //   |> aggregateWindow(every: 1s, fn: mean, createEmpty: false)
-  //   |> yield(name: "mean")`;
-
-  // from(queryApi.rows(fluxQuery))
-  //   .pipe(
-  //     map(({values, tableMeta}) => tableMeta.toObject(values))
-  //   )
-  //   .subscribe({
-  //     next(o) {
-  //       console.log(
-  //         `hello ${o._time} ${o._measurement} in '${o.location}' (${o.example}): ${o._field}=${o._value}`
-  //       );
-  //     },
-  //     error(e) {
-  //       console.error(e);
-  //       console.log('\nFinished ERROR');
-  //     },
-  //     complete() {
-  //       console.log('\nFinished SUCCESS');
-  //     }
-  //   });
-
-  // const options: any = {
-  //   elements: {
-  //     line: {
-  //       tension: 0.5,
-  //     },
-  //   },
-  //   events: [],
-  //   tooltips: { enabled: false },
-  //   hover: { mode: null },
-  //   plugins: {
-  //     streaming: {
-  //       pause: isChartPause,
-  //       duration: 10000,
-  //       refresh: 1000,
-  //       delay: 5000,
-  //       onRefresh: onRefresh,
-  //     },
-  //   },
-  //   scales: {
-  //     xAxes: [
-  //       {
-  //         type: 'realtime',
-  //         distribution: 'linear',
-  //         ticks: {
-  //           displayFormats: 1,
-  //           maxRotation: 0,
-  //           minRotation: 0,
-  //           stepSize: 1,
-  //           maxTicksLimit: 30,
-  //           minUnit: 'second',
-  //           source: 'auto',
-  //           autoSkip: true,
-  //           callback: function (value: moment.MomentInput) {
-  //             return moment(value, 'HH:mm:ss').format('hh:mm:ss');
-  //           },
-  //         },
-  //       },
-  //     ],
-  //     yAxes: [
-  //       {
-  //         ticks: {
-  //           beginAtZero: true,
-  //           max: 50,
-  //         },
-  //       },
-  //     ],
-  //   },
-  //   height: 300,
-  // };
 
   const optionsapex: any = {
     chart: {
@@ -326,17 +235,17 @@ export default function RealtimeChart({
     return <div style={{ color: "lightgrey" }}>{children}</div>;
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     const payload: any = {};
     payload["organisationId"] = loginUserSliceData?.verifyToken.organisationId;
     dispatch(fetchAssetsName(payload));
   }, [loginUserSliceData]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setIsChartPause(isPause);
   }, [isPause]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (endDate && endDate !== null && assets && assets !== null) {
       setShowArchivedChart(true);
       setIsChartPause(true);
@@ -345,7 +254,7 @@ export default function RealtimeChart({
     }
   }, [endDate, isSets]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (assetsSliceData) {
       const assetsFilterData: any = assetsSliceData.filter((item: any) =>
         item.name.includes("_connect")
@@ -354,7 +263,7 @@ export default function RealtimeChart({
 
       if (usedAsset !== null) {
         const temp = assetsSliceData.filter(
-          (item: any) => item._id == usedAsset
+          (item: any) => item._id === usedAsset
         );
         const atemp = temp.length > 0 ? temp[0].name : null;
         handleAssetsChange({ target: { value: atemp } });
@@ -373,14 +282,11 @@ export default function RealtimeChart({
         .join(" or ");
       const stemp: any = moment(startDate);
       const etemp: any = moment(endDate);
-      // let etemp: any = moment('2024-01-31T13:58:54.037Z');
-      // let stemp: any = moment('2024-01-30T21:53:55.637Z');
       const query2: any = `from(bucket: "${bucket}")
         |> range(start: ${stemp.toISOString()}, stop: ${etemp.toISOString()})
         |> filter(fn: (r) => r["_measurement"] == "${measure}" and ${fields})
         |> yield(name: "mean")`;
 
-      // const chart2: any = { ...chartData2 };
       const channels = [...channelList];
       const seriesData: any = {};
       const seriesList: any = [];
@@ -398,16 +304,12 @@ export default function RealtimeChart({
       const result = await queryApi.collectRows(query2);
       result.forEach((dataset: any) => {
         selectedChannel.forEach((channal: any, index: number) => {
-          // const sets = chart2.datasets[index];
-          // const labels = chart2['labels'];
           if (
             dataset._value !== undefined &&
             dataset._value !== null &&
             channal === dataset._field
           ) {
             channelSeriesList[index].sensor = channal;
-            // labels.push(moment(dataset._time, 'HH:mm:ss').format('hh:mm:ss'));
-            // sets.data.push(dataset._value);
             seriesData[`${dataset._field}`].push([
               new Date(dataset._time).getTime(),
               dataset._value.toFixed(2),
@@ -425,8 +327,6 @@ export default function RealtimeChart({
 
       setSeries(seriesList);
       setChannelList(channelSeriesList);
-      // setChannelList(channels);
-      // setChartData2(chart2);
     } catch (error) {
       setShowArchivedChart(false);
       toast(`Invalid: Compilation failed!`, {
@@ -438,57 +338,6 @@ export default function RealtimeChart({
     }
   };
 
-  const onRefresh = React.useCallback(
-    async (values: any) => {
-      if (channelTemp.length !== 0) {
-        try {
-          const selectedChannel: any = channelTemp.filter(
-            (item: any, index: number, inputArray: any) => {
-              return inputArray.indexOf(item) == index;
-            }
-          );
-          const fields = selectedChannel
-            .map((item: any) => `r._field == "${item}"`)
-            .join(" or ");
-          const query1: any = `from(bucket: "${bucket}")
-          |> range(start: -duration(v: 1s))
-          |> filter(fn: (r) => r["_measurement"] == "${measure}" and ${fields})
-          |> aggregateWindow(every: 1s, fn: mean, createEmpty: false)
-          |> yield(name: "mean")`;
-          const chart: any = { ...chartData };
-          const result = await queryApi.collectRows(query1);
-          if (result.length !== 0 && selectedChannel.length === result.length) {
-            channelTemp.forEach((channal: any, index: number) => {
-              result.forEach((dataset: any) => {
-                const sets = chart.datasets[index];
-                if (
-                  dataset._value !== undefined &&
-                  dataset._value !== null &&
-                  channal === dataset._field
-                ) {
-                  sets.data.push({
-                    x: moment(dataset._stop),
-                    y: dataset._value,
-                  });
-                }
-              });
-            });
-          }
-        } catch (error) {
-          console.error(error);
-        }
-      }
-    },
-    [channelTemp]
-  );
-
-  const chart: any = { ...chartData };
-
-  const channels = [...channelList];
-  const seriesData: any = realTimeSeriesList;
-  const RealTimeData: any = [...realTimeData];
-  const seriesList: any = [];
-
   const streamData = (socket: any) => {
     const chart: any = { ...chartData };
 
@@ -496,7 +345,6 @@ export default function RealtimeChart({
     const seriesData: any = realTimeSeriesList;
     const RealTimeData: any = [...realTimeData];
     const seriesList: any = [];
-    // console.log(channelTemp.toString(),"channelTemp");
 
     // Connect to the Socket.IO server
 
@@ -509,16 +357,12 @@ export default function RealtimeChart({
     const newData: any = {};
     // Example: Listen for messages from the server
     socket.on("message", (data: any) => {
-      console.log("setMessages", data);
       // setMessages(data);
 
       channelTemp.forEach((channal: any, index: number) => {
-        // console.log("datasets");
         data.forEach((dataset: any) => {
           const sets = chart.datasets[index];
-          console.log("dataset", dataset);
           const series = dataset._field || dataset._measurement;
-          console.log("series", series);
           if (!(series in newData)) {
             newData[series] = [];
           }
@@ -528,7 +372,6 @@ export default function RealtimeChart({
             y: parseFloat(yValue),
           });
 
-          console.log("newData", newData);
           if (
             dataset !== undefined &&
             dataset._value !== undefined &&
@@ -549,17 +392,12 @@ export default function RealtimeChart({
       });
       Object.keys(newData).forEach((series) => {
         // Limiting to 10 data points for each series
-        console.log("series", series);
-        console.log("newData", newData);
+
         var newDataPoints: any = [...newData[series]];
         // setTimeout(()=>{
         const maxLength = 40;
         newDataPoints = newData[series].slice(-maxLength);
-        // },1000)
-        // var newDataPoints = newData[series].slice(-maxLength);
-        console.log("newDataPoints", newDataPoints);
-        console.log("chartDatas", chartDatas);
-        console.log("Series:", series);
+
         setChartDatas((prevChartData: any) => ({
           ...prevChartData,
           [series]: newDataPoints,
@@ -572,26 +410,12 @@ export default function RealtimeChart({
         ]);
       });
     });
-    // Object.keys(newData).forEach(series => {
-    //   const maxLength = 60; // Limiting to 10 data points for each series
-    //   const newDataPoints = newData[series].slice(-maxLength);
-    //   console.log("newDataPoints",newDataPoints)
-    //   setChartDatas((prevChartData:any) => ({
-    //     ...prevChartData,
-    //     [series]: newDataPoints,
-    //   }));
 
-    //   ApexCharts.exec("realtime-chart", "updateSeries", [{
-    //       data: chartDatas
-    //     }]);
-    // });
     setRealTimeSeriesList(seriesData);
     setRealTimeData(RealTimeData);
     setRealTimeSeries(seriesList); // Update state with the received data
-    console.log("seriesList--", seriesList);
     // Clean up the socket connection when the component unmounts
     return () => {
-      console.log("hello");
       // socket.emit("leaveRoom", measure);
 
       socket.disconnect();
@@ -606,8 +430,8 @@ export default function RealtimeChart({
     clearData();
   }, 1000);
 
-  React.useEffect(() => {
-    var url: any = process.env.REACT_BASE_URL;
+  useEffect(() => {
+    var url: any = process.env.REACT_APP_BASE_URL;
     const socket: any = io(url);
     if (channelTemp.length !== 0) {
       ApexCharts.exec(
@@ -632,7 +456,7 @@ export default function RealtimeChart({
     handleAddChannelColor(colorsList[data.length + 1], data.length + 1);
     data.length < 10
       ? data.push({
-          color: colorsList[data.length == 4 ? 4 : data.length],
+          color: colorsList[data.length === 4 ? 4 : data.length],
           sensor: null,
           axis: "Y1",
         })
@@ -686,7 +510,6 @@ export default function RealtimeChart({
     });
   };
   const [selectedOptions, setSelectedOptions] = useState<any>([]);
-  console.log(selectedOptions, "selectedOptions");
 
   // const checkUsername = ((element:any) => element == Object.keys(dataObj)[0]);
   const handleChannelChange = (event: any, index: any) => {
@@ -695,7 +518,6 @@ export default function RealtimeChart({
     let yaxisList: any = [...yAxisList];
     const chartDatasValue = chartDatas;
     const realTimeSeries = realTimeSeriesList;
-    console.log("realTimeSeries1", realTimeSeries);
     const prevChannel = channels[index].sensor;
     let colorValue = [...selectedcolor];
     var updatedSelectedOptions: any;
@@ -720,7 +542,7 @@ export default function RealtimeChart({
           // If Y1 hasn't occurred already, push it into the array
           yaxisList.push({
             opposite:
-              channels[index].axis == "Y1" || channels[index].axis == "Y3"
+              channels[index].axis === "Y1" || channels[index].axis === "Y3"
                 ? false
                 : true,
             axisTicks: {
@@ -794,7 +616,7 @@ export default function RealtimeChart({
     channelList.map((item: any, index: any) => {
       if (item.sensor !== null) {
         newYAxis.push({
-          opposite: item.axis == "Y1" || item.axis == "Y3" ? false : true,
+          opposite: item.axis === "Y1" || item.axis === "Y3" ? false : true,
           axisTicks: {
             show: true,
           },
@@ -903,7 +725,7 @@ export default function RealtimeChart({
         setChannelOptions(sensors);
         setAssets(event.target.value);
         const atemp: any = assetsSliceData.filter(
-          (item: any) => item.name == event.target.value
+          (item: any) => item.name === event.target.value
         );
         getsetUsedAsset(atemp[0]._id);
         channelList.forEach((item: any, index: any) => {
@@ -943,7 +765,7 @@ export default function RealtimeChart({
     }
   };
 
-  // React.useEffect(() => {
+  // useEffect(() => {
   //   if (channelTemp.length !== 0) {
   //     interval = setInterval(() => {
   //       getRealTimeChartDate();
@@ -957,7 +779,7 @@ export default function RealtimeChart({
   //   return () => clearInterval(interval);
   // }, [channelTemp]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     return () => {
       let temp = {
         assets,
@@ -1110,7 +932,7 @@ export default function RealtimeChart({
                 }
                 sx={{ mr: 2 }}
                 onClick={() => handleAddChannel()}
-                disabled={channelList[0].sensor == null}
+                disabled={channelList[0].sensor === null}
               >
                 <AddIcon />
               </Button>
@@ -1151,7 +973,7 @@ export default function RealtimeChart({
                             displayEmpty
                             IconComponent={ExpandMoreOutlinedIcon}
                             onChange={(event) => {
-                              key == 0
+                              key === 0
                                 ? handleChannelChange(event, key)
                                 : channelList[key - 1].sensor == null
                                 ? errorToast()

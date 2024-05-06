@@ -16,7 +16,6 @@ import ProfilePage from "../pages/settings/profile";
 import UsersPage from "../pages/settings/users";
 import RolesPage from "../pages/settings/roles";
 import Billings from "../pages/billings";
-import ProtectedRoute from "./ProtectedRoute";
 import PrivateRoute from "../components/PrivateRoute";
 
 function AppRoute() {

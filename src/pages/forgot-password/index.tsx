@@ -17,9 +17,8 @@ import { ToastContainer, toast } from "react-toastify";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "../../firebase.config";
 import { fetchUserData } from "../../api/userAPI";
-// import firebase from 'firebase/app';
 import "firebase/auth";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 
 const generateRandomText = () => {
@@ -37,7 +36,6 @@ const generateRandomText = () => {
 
 const ForgotPassword = () => {
   const dispatch: any = useDispatch();
-  const [getUser, setGetUser] = React.useState<any>([]);
   const [captchaText, setCaptchaText] = React.useState(generateRandomText());
   const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
   const validationSchema = Yup.object().shape({
@@ -50,7 +48,7 @@ const ForgotPassword = () => {
     captcha: Yup.string()
       .required("Captcha is required")
       .test("captcha-required", "Invalid Captcha", function (value) {
-        if (value == captchaText) {
+        if (value === captchaText) {
           return true;
         } else {
           return false;
@@ -86,7 +84,6 @@ const ForgotPassword = () => {
                 navigate("/login");
               }, 3000);
             });
-            setGetUser([]);
           } else {
             toast(`Email does not exist!`, {
               style: {
@@ -106,7 +103,7 @@ const ForgotPassword = () => {
   };
 
   const checkCredentials = (email: any, captcha: any) => {
-    if (captcha == captchaText) {
+    if (captcha === captchaText) {
       return true;
     } else {
       return false;

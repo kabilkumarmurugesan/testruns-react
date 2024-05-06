@@ -1,20 +1,20 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React from 'react';
-import TablePagination from '../../../components/table/TablePagination';
-import { Box, Chip, Typography } from '@mui/material';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableRow from '@mui/material/TableRow';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchRunsData } from '../../../api/RunsAPI';
-import { HistoryHeaders, HistoryRows } from '../../../utils/data';
-import TableHeader from '../../../components/table/TableHeader';
-import TablePopup from '../../../components/table/TablePopup';
-import { fetchRunsByProcedure } from '../../../api/assetsAPI';
-import TableSkeleton from '../../../components/table/TableSkeleton';
-import Emptystate from '../../../assets/images/Emptystate.svg';
+import React from "react";
+import TablePagination from "../../../components/table/TablePagination";
+import { Box, Chip, Typography } from "@mui/material";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableRow from "@mui/material/TableRow";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchRunsData } from "../../../api/RunsAPI";
+import { HistoryHeaders, HistoryRows } from "../../../utils/data";
+import TableHeader from "../../../components/table/TableHeader";
+import TablePopup from "../../../components/table/TablePopup";
+import { fetchRunsByProcedure } from "../../../api/assetsAPI";
+import TableSkeleton from "../../../components/table/TableSkeleton";
+import Emptystate from "../../../assets/images/Emptystate.svg";
 // import RunsForm from './RunsForm';
 
 // table start
@@ -23,7 +23,6 @@ const rows = HistoryRows;
 
 export default function HistoryTable({ procedureId }: any) {
   const [headers, setHeaders] = React.useState<any>(HistoryHeaders);
-  const [Rows, setSelectedRows] = React.useState(rows);
   const [currentPage, setCurrentPage] = React.useState(1);
   const tablePopupRef: any = React.useRef(null);
 
@@ -34,10 +33,10 @@ export default function HistoryTable({ procedureId }: any) {
   const [runzData, setRunzData] = React.useState<any>([]);
   const loginUserSliceData = useSelector((state: any) => state.userLogin.data);
   const RunsSliceData = useSelector(
-    (state: any) => state.runs.data?.get_all_runs,
+    (state: any) => state.runs.data?.get_all_runs
   );
   const singleUserData = useSelector(
-    (state: any) => state.user?.data?.get_user,
+    (state: any) => state.user?.data?.get_user
   );
   const dispatch: any = useDispatch();
   React.useEffect(() => {
@@ -57,7 +56,7 @@ export default function HistoryTable({ procedureId }: any) {
     searchBy: null,
     search: null,
     sortBy: null,
-    sortOrder: 'desc',
+    sortOrder: "desc",
   });
   const filters = () => {
     dispatch(fetchRunsData(queryStrings));
@@ -75,7 +74,7 @@ export default function HistoryTable({ procedureId }: any) {
       sortOrder: queryStrings.sortOrder,
     };
     if (procedureId.length !== 0) {
-      payload['procedureId'] = procedureId;
+      payload["procedureId"] = procedureId;
 
       setLoader(true);
       dispatch(fetchRunsByProcedure(payload))
@@ -93,11 +92,11 @@ export default function HistoryTable({ procedureId }: any) {
 
   React.useEffect(() => {
     const page: any = { ...pageInfo };
-    page['currentPage'] = pagesInfo?.currentPage;
-    page['totalPages'] = pagesInfo?.totalPages;
-    page['hasNextPage'] = pagesInfo?.hasNextPage;
-    page['hasPreviousPage'] = pagesInfo?.hasPreviousPage;
-    page['totalCount'] = pagesInfo?.totalCount;
+    page["currentPage"] = pagesInfo?.currentPage;
+    page["totalPages"] = pagesInfo?.totalPages;
+    page["hasNextPage"] = pagesInfo?.hasNextPage;
+    page["hasPreviousPage"] = pagesInfo?.hasPreviousPage;
+    page["totalCount"] = pagesInfo?.totalCount;
     setRunzData(runzData?.Runs);
     setPageInfo(page);
   }, [pagesInfo]);
@@ -116,7 +115,7 @@ export default function HistoryTable({ procedureId }: any) {
     return () => {
       const headersList: any = [...headers];
       headersList.map((item: any) => {
-        return (item.sort = 'asc');
+        return (item.sort = "asc");
       });
       setHeaders(headersList);
     };
@@ -125,8 +124,8 @@ export default function HistoryTable({ procedureId }: any) {
   const handlePageChange = (even: any, page_no: number) => {
     const payload: any = { ...queryStrings };
     const page: any = { ...pageInfo };
-    payload['page'] = page_no;
-    page['currentPage'] = page_no;
+    payload["page"] = page_no;
+    page["currentPage"] = page_no;
     setPageInfo(page);
     setQueryString(payload);
     setCurrentPage(page_no);
@@ -135,21 +134,21 @@ export default function HistoryTable({ procedureId }: any) {
   const handleTableSorting = (_event: any, _data: any, _index: any) => {
     const payload: any = { ...queryStrings };
     const headersList: any = [...headers];
-    payload['sortBy'] = headersList[_index].id;
-    payload['sortOrder'] = headersList[_index].sort === 'asc' ? 'desc' : 'asc';
+    payload["sortBy"] = headersList[_index].id;
+    payload["sortOrder"] = headersList[_index].sort === "asc" ? "desc" : "asc";
     headersList[_index].sort =
-      headersList[_index].sort === 'asc' ? 'desc' : 'asc';
+      headersList[_index].sort === "asc" ? "desc" : "asc";
     setHeaders(headersList);
     setQueryString(payload);
   };
   const filteredData = headers.filter((item: any) => item.is_show !== false);
 
   return (
-    <Box className="runz-page" sx={{ padding: '24px 0px' }}>
-      <Box className="table-outer" sx={{ width: '100%' }}>
+    <Box className="runz-page" sx={{ padding: "24px 0px" }}>
+      <Box className="table-outer" sx={{ width: "100%" }}>
         <TableContainer className="tableHeight3">
           <Table
-            sx={{ minWidth: 500, position: 'relative' }}
+            sx={{ minWidth: 500, position: "relative" }}
             aria-labelledby="tableTitle"
             stickyHeader
           >
@@ -157,12 +156,12 @@ export default function HistoryTable({ procedureId }: any) {
               numSelected={0}
               onRequestSort={handleRequestSort}
               onSelectAllClick={function (
-                event: React.ChangeEvent<HTMLInputElement>,
+                event: React.ChangeEvent<HTMLInputElement>
               ): void {
-                throw new Error('Function not implemented.');
+                throw new Error("Function not implemented.");
               }}
-              order={'asc'}
-              orderBy={''}
+              order={"asc"}
+              orderBy={""}
               rowCount={0}
               columns={headers}
               filters={filters}
@@ -172,16 +171,16 @@ export default function HistoryTable({ procedureId }: any) {
               <TableBody>
                 <TableSkeleton columns={filteredData} image={false} rows={5} />
               </TableBody>
-            ) : !runzData || (runzData?.length === 0 && loader == false) ? (
+            ) : !runzData || (runzData?.length === 0 && !loader) ? (
               <TableBody>
                 <Box
                   sx={{
-                    textAlign: 'center',
-                    position: 'absolute',
-                    left: '0rem',
-                    right: '0rem',
-                    padding: '5%',
-                    width: '100%',
+                    textAlign: "center",
+                    position: "absolute",
+                    left: "0rem",
+                    right: "0rem",
+                    padding: "5%",
+                    width: "100%",
                   }}
                 >
                   <img src={Emptystate} alt="" />
@@ -199,11 +198,11 @@ export default function HistoryTable({ procedureId }: any) {
                       hover
                       tabIndex={-1}
                       key={index}
-                      sx={{ cursor: 'pointer' }}
+                      sx={{ cursor: "pointer" }}
                     >
                       {headers[0].is_show && (
                         <TableCell scope="row">
-                          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                          <Box sx={{ display: "flex", alignItems: "center" }}>
                             <Box>
                               <Box>{row.runNumber}</Box>
                             </Box>
@@ -218,31 +217,31 @@ export default function HistoryTable({ procedureId }: any) {
                       {headers[2].is_show && (
                         <TableCell>
                           {row.departmentId[0] !== null ? (
-                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                            <Box sx={{ display: "flex", alignItems: "center" }}>
                               <>
                                 <Chip
                                   key={index}
                                   label={row.departmentId[0].name}
                                   sx={{
                                     m: 0.5,
-                                    padding: '0px 3px',
+                                    padding: "0px 3px",
                                   }}
                                 />
                                 {row.departmentId.length > 1 && (
                                   <span
                                     style={{
                                       fontWeight: 500,
-                                      color: '#9F9F9F',
-                                      fontSize: '12px',
-                                      whiteSpace: 'nowrap',
+                                      color: "#9F9F9F",
+                                      fontSize: "12px",
+                                      whiteSpace: "nowrap",
                                     }}
                                     onClick={(_event) => {
                                       _event.preventDefault();
                                       _event.stopPropagation();
                                       tablePopupRef.current.open(
                                         true,
-                                        'departments',
-                                        row.departmentId,
+                                        "departments",
+                                        row.departmentId
                                       );
                                     }}
                                   >
@@ -252,7 +251,7 @@ export default function HistoryTable({ procedureId }: any) {
                               </>
                             </Box>
                           ) : (
-                            '-'
+                            "-"
                           )}
                         </TableCell>
                       )}
@@ -260,31 +259,31 @@ export default function HistoryTable({ procedureId }: any) {
                       {headers[3].is_show && (
                         <TableCell>
                           {row.laboratoryId[0] !== null ? (
-                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                            <Box sx={{ display: "flex", alignItems: "center" }}>
                               <>
                                 <Chip
                                   key={index}
                                   label={row.laboratoryId[0].name}
                                   sx={{
                                     m: 0.5,
-                                    padding: '0px 3px',
+                                    padding: "0px 3px",
                                   }}
                                 />
                                 {row.laboratoryId.length > 1 && (
                                   <span
                                     style={{
                                       fontWeight: 500,
-                                      color: '#9F9F9F',
-                                      fontSize: '12px',
-                                      whiteSpace: 'nowrap',
+                                      color: "#9F9F9F",
+                                      fontSize: "12px",
+                                      whiteSpace: "nowrap",
                                     }}
                                     onClick={(_event) => {
                                       _event.preventDefault();
                                       _event.stopPropagation();
                                       tablePopupRef.current.open(
                                         true,
-                                        'lab',
-                                        row.laboratoryId,
+                                        "lab",
+                                        row.laboratoryId
                                       );
                                     }}
                                   >
@@ -294,7 +293,7 @@ export default function HistoryTable({ procedureId }: any) {
                               </>
                             </Box>
                           ) : (
-                            <span style={{ textAlign: 'center' }}>-</span>
+                            <span style={{ textAlign: "center" }}>-</span>
                           )}
                         </TableCell>
                       )}
@@ -315,37 +314,37 @@ export default function HistoryTable({ procedureId }: any) {
                           {/* <FormControl className="Status-info" style={{ marginTop: '7px'}}> */}
                           <Box
                             style={{
-                              borderRadius: '20px',
-                              color: 'white',
-                              width: '110px',
-                              padding: '9px 0px',
-                              alignItems: 'center',
-                              textAlign: 'center',
-                              height: '24px',
-                              display: 'flex',
-                              justifyContent: 'center',
-                              fontSize: '12px',
+                              borderRadius: "20px",
+                              color: "white",
+                              width: "110px",
+                              padding: "9px 0px",
+                              alignItems: "center",
+                              textAlign: "center",
+                              height: "24px",
+                              display: "flex",
+                              justifyContent: "center",
+                              fontSize: "12px",
                               backgroundColor:
-                                row?.status == 'Created'
-                                  ? '#8d8d8d'
-                                  : row?.status == 'Started'
-                                  ? '#faaa49'
-                                  : row?.status == 'Completed'
-                                  ? '#00bf70'
-                                  : row?.status == 'Submitted'
-                                  ? '#a01fb1'
-                                  : '#e2445c',
+                                row?.status === "Created"
+                                  ? "#8d8d8d"
+                                  : row?.status === "Started"
+                                  ? "#faaa49"
+                                  : row?.status === "Completed"
+                                  ? "#00bf70"
+                                  : row?.status === "Submitted"
+                                  ? "#a01fb1"
+                                  : "#e2445c",
                             }}
                           >
-                            {row?.status == 'Created'
-                              ? 'Created'
-                              : row?.status == 'Started'
-                              ? 'Started'
-                              : row?.status == 'Completed'
-                              ? 'Completed'
-                              : row?.status == 'Submitted'
-                              ? 'Submitted'
-                              : 'Stopped'}
+                            {row?.status === "Created"
+                              ? "Created"
+                              : row?.status === "Started"
+                              ? "Started"
+                              : row?.status === "Completed"
+                              ? "Completed"
+                              : row?.status === "Submitted"
+                              ? "Submitted"
+                              : "Stopped"}
                           </Box>
                         </TableCell>
                       )}
@@ -357,7 +356,7 @@ export default function HistoryTable({ procedureId }: any) {
           </Table>
         </TableContainer>
         {!runzData ||
-          (runzData?.length === 0 && loader == false && (
+          (runzData?.length === 0 && !loader && (
             <TablePagination
               currentPage={currentPage}
               perPage={queryStrings.perPage}

@@ -9,6 +9,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import CircularProgress from "@mui/material/CircularProgress";
 import InputLabel from "@mui/material/InputLabel";
+import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -20,7 +21,6 @@ import { auth } from "../../firebase.config";
 import { useDispatch } from "react-redux";
 import { fetchLoginUser, fetchSingleUserData } from "../../api/userAPI";
 import { useNavigate } from "react-router";
-import { FormControlLabel } from "@mui/material";
 
 const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 

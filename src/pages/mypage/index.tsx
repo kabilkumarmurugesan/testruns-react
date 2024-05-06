@@ -116,18 +116,18 @@ export default function MyPage() {
     setLoader(true);
 
     //requester 65741c069d53d19df8321e6e
-    if (loginUserSliceData?.verifyToken?.role[0]?.name == "Requester") {
+    if (loginUserSliceData?.verifyToken?.role[0]?.name === "Requester") {
       // setQueryString({...queryStrings,["assignedTo"]:loginUserSliceData?.verifyToken?._id,["assignedBy"]:loginUserSliceData?.verifyToken?._id})
       payload["assignedTo"] = loginUserSliceData?.verifyToken?._id;
       payload["assignedBy"] = loginUserSliceData?.verifyToken?._id;
       payload["userId"] = loginUserSliceData?.verifyToken?._id;
     }
     //tester 65741c069d53d19df8321e6c
-    if (loginUserSliceData?.verifyToken?.role[0]?.name == "Tester") {
+    if (loginUserSliceData?.verifyToken?.role[0]?.name === "Tester") {
       payload["userId"] = loginUserSliceData?.verifyToken?._id;
       // setQueryString({...queryStrings,["userId"]:loginUserSliceData?.verifyToken?._id})
     }
-    if (loginUserSliceData?.verifyToken?.role[0]?.name == "Admin") {
+    if (loginUserSliceData?.verifyToken?.role[0]?.name === "Admin") {
       payload["organisationId"] =
         loginUserSliceData?.verifyToken.organisationId;
     }
@@ -196,7 +196,7 @@ export default function MyPage() {
       const daysDifference: number = Math.floor(hoursDifference / 24);
       return `${daysDifference} day${daysDifference > 1 ? "s" : ""} ago`;
     }
-    if (Math.floor(minutesDifference) == 0) {
+    if (Math.floor(minutesDifference) === 0) {
       return `Just now`;
     }
     return `${Math.floor(minutesDifference)}min ago`;
@@ -227,7 +227,7 @@ export default function MyPage() {
     // setLoader1(true)
     const filCalendarContent = calendarEventData?.filter(
       (item: any) =>
-        moment(item?.dueDate).format("MM/DD/YYYY") ==
+        moment(item?.dueDate).format("MM/DD/YYYY") ===
         moment(date).format("MM/DD/YYYY")
     );
     setCalendarContent(filCalendarContent);
@@ -278,7 +278,7 @@ export default function MyPage() {
                     rows={queryStrings.perPage}
                   />
                 </TableBody>
-              ) : !runzData || (runzData?.length === 0 && loader == false) ? (
+              ) : !runzData || (runzData?.length === 0 && loader === false) ? (
                 <TableBody>
                   <Box
                     sx={{
@@ -475,7 +475,9 @@ export default function MyPage() {
                         key={index}
                         style={{
                           backgroundColor:
-                            notification?.isRead == false ? "#F3F3F3" : "white", // Apply different background for the first notification
+                            notification?.isRead === false
+                              ? "#F3F3F3"
+                              : "white", // Apply different background for the first notification
                         }}
                         onClick={() => {
                           handleReadNotification(notification._id);
@@ -531,7 +533,7 @@ export default function MyPage() {
                     calendarEventData?.length !== 0 &&
                     calendarEventData?.find(
                       (item: any) =>
-                        moment(item?.dueDate).format("MM/DD/YYYY") ==
+                        moment(item?.dueDate).format("MM/DD/YYYY") ===
                         moment(date).format("MM/DD/YYYY")
                     )
                   ) {
@@ -601,7 +603,7 @@ export default function MyPage() {
                                         ? "#faaa49"
                                         : item.status === "Stopped"
                                         ? "#e2445c"
-                                        : item?.status == "Submitted"
+                                        : item?.status === "Submitted"
                                         ? "#a01fb1"
                                         : "#00bf70",
                                     padding: "6px",
